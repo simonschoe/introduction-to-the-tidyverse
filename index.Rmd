@@ -31,6 +31,7 @@ library(xaringanthemer)
 style_mono_accent(
   base_color = "#000000",
   link_color = "#0000EE",
+  text_bold_color = "#f34213", 
   header_font_google = google_font("Josefin Sans"),
   text_font_google   = google_font("Montserrat", "300", "300i", "700b"),
   code_font_google   = google_font("Fira Mono"),
