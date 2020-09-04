@@ -1,5 +1,0 @@
-"0","plot <- penguins %>%"
-"0","  dplyr::count(species) %>%"
-"0","  dplyr::mutate(prop = n / sum(n)) %>%"
-"0","  ggplot() +"
-"0","    geom_col(aes(x = prop, y = species))"
