@@ -7,7 +7,7 @@ date: "2020-08-20 (updated: `r Sys.Date()`)"
 
 output:
   xaringan::moon_reader:
-    css: [xaringan-themer.css, ./custom/custom-theme.css]
+    css: [./custom/xaringan-themer.css, ./custom/custom-theme.css]
     lib_dir: libs
     nature:
       titleSlideClass: [left, middle, inverse]
@@ -38,7 +38,8 @@ style_mono_accent(
     red = "#f34213",
     white = "#FFFFFF"
   ),
-  code_font_size = "smaller"
+  code_font_size = "smaller",
+  outfile = "./custom/xaringan-themer.css"
 )
 ```
 
@@ -49,47 +50,86 @@ pacman::p_load(tidyverse, glue, showtext)
 pacman::p_load_gh("allisonhorst/palmerpenguins")
 ```
 
-```{r child='01_intro.Rmd', eval=T}
+name: agenda
+
+##Agenda
+
+**1. Learning Objectives**
+
+**2. Introduction to the `Tidyverse`**
+  1. What is the `Tidyverse`
+  2. The Concept of Tidy Data
+  
+**3. `palmerpenguins` Data Set**
+
+**4. The Core `Tidyverse` Packages**
+  1. `magrittr`: A Forward-Pipe Operator for R
+  2. `tibble`: Simple Data Frames
+  3. `readr`: Read Rectangular Text Data
+  4. `tidyr`: Tidy Messy Data
+  5. `dplyr`: A Grammar of Data Manipulation
+  6. `purrr`: Functional Programming Tools
+  7. `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
+
+???
+comment
+
+---
+
+##Learning Objectives
+
+- Learn about the `Tidyverse` and how it differs from `base R`<br><br>
+- Become familiar with the core packages of the `Tidyverse`<br><br>
+- Be able to process (*non-tidy*) data of any shape and quality<br><br>
+- Be able to produce high-quality, fully customizable visualisations<br><br>
+- Strengthen your overall data literacy
+
+???
+comments
+
+---
+
+```{r child='./slides/01_intro.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='02_tidy_data.Rmd', eval=F}
+```{r child='./slides/02_tidy_data.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='03_magrittr.Rmd', eval=F}
+```{r child='./slides/03_magrittr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='04_tibble.Rmd', eval=F}
+```{r child='./slides/04_tibble.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='05_readr.Rmd', eval=F}
+```{r child='./slides/05_readr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='06_tidyr.Rmd', eval=F}
+```{r child='./slides/06_tidyr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='07_dplyr.Rmd', eval=F}
+```{r child='./slides/07_dplyr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='08_purrr.Rmd', eval=F}
+```{r child='./slides/08_purrr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='09_ggplot2.Rmd', eval=F}
+```{r child='./slides/09_ggplot2.Rmd', eval=T}
 ```
 
 ---

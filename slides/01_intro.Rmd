@@ -1,55 +1,6 @@
 ---
 title: "01_intro"
-
-output:
-  xaringan::moon_reader:
-    css: [xaringan-themer.css, ./custom/custom-theme.css]
-    lib_dir: libs
-    nature:
-      titleSlideClass: [left, middle, inverse]
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: '16:9'
----
-
-name: agenda
-
-##Agenda
-
-**1. Learning Objectives**
-
-**2. Introduction to the `Tidyverse`**
-  1. What is the `Tidyverse`
-  2. The Concept of Tidy Data
-  
-**3. `palmerpenguins` Data Set**
-
-**4. The Core `Tidyverse` Packages**
-  1. `magrittr`: A Forward-Pipe Operator for R
-  2. `tibble`: Simple Data Frames
-  3. `readr`: Read Rectangular Text Data
-  4. `tidyr`: Tidy Messy Data
-  5. `dplyr`: A Grammar of Data Manipulation
-  6. `purrr`: Functional Programming Tools
-  7. `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
-
-???
-comment
-
----
-
-##Learning Objectives
-
-- Learn about the `Tidyverse` and how it differs from `base R`<br><br>
-- Become familiar with the core packages of the `Tidyverse`<br><br>
-- Be able to process (*non-tidy*) data of any shape and quality<br><br>
-- Be able to produce high-quality, fully customizable visualisations<br><br>
-- Strengthen your overall data literacy
-
-???
-comments
-
+output: html_document
 ---
 
 background-image: url(https://www.tidyverse.org/images/hex-tidyverse.png)
@@ -105,7 +56,7 @@ comments
 ]
 .pull-right[
 ```{r, echo=F, out.width='95%', out.height='95%', fig.align='center'}
-knitr::include_graphics("./img/01.PNG")
+knitr::include_graphics("../img/tidyverse-hex.PNG")
 ```
 ]
 

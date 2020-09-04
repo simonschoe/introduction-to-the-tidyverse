@@ -1,16 +1,6 @@
 ---
 title: "08_purrr"
-
-output:
-  xaringan::moon_reader:
-    css: [xaringan-themer.css, ./custom/custom-theme.css]
-    lib_dir: libs
-    nature:
-      titleSlideClass: [left, middle, inverse]
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: '16:9'
+output: html_document
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/purrr/master/man/figures/logo.png)

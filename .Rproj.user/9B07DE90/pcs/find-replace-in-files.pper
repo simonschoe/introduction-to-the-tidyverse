@@ -1,12 +1,12 @@
 {
     "dialog-state": {
-        "query": "r4ds",
+        "query": "data/",
         "path": "C:/Users/s_scho53/Desktop/L09_Desktop/workshops/04_tidyverse",
         "regex": false,
         "caseSensitive": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 4,
+        "resultsCount": 3,
         "errorCount": 0,
         "replaceErrors": ""
     }

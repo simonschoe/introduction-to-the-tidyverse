@@ -1,16 +1,6 @@
 ---
 title: "05_readr"
-
-output:
-  xaringan::moon_reader:
-    css: [xaringan-themer.css, ./custom/custom-theme.css]
-    lib_dir: libs
-    nature:
-      titleSlideClass: [left, middle, inverse]
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: '16:9'
+output: html_document
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/readr/master/man/figures/logo.png)
@@ -44,7 +34,7 @@ In addition, use the `readxl` package for Excel files or the `haven` package for
 Let's try it out by reading in some penguins data (note that the output of any `read_()` function is a `tibble` object.). For the purpose of illustrating the `readr` package the `penguins` data has been written to a csv-file.
 
 ```{r}
-penguins <- readr::read_csv("./data/penguins.csv")
+penguins <- readr::read_csv("../data/penguins.csv")
 ```
 
 ???
@@ -59,7 +49,7 @@ Note that `readr` prints the column specifications after importing. By default, 
 - Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly. 
 ```{r, eval=F}
 readr::read_csv(
-  "./data/penguins.csv",
+  "../data/penguins.csv",
     col_types = cols(
       species = col_character(),
       year = col_datetime(format = "%Y"),
@@ -79,7 +69,7 @@ Note that `readr` prints the column specifications after importing. By default, 
 
 - Parsing only the first 1000 rows is efficient but can lead to erroneous guesses.  
 ```{r, eval=F}
-readr::read_csv(file = "./data/penguins.csv", guess_max = 1001)
+readr::read_csv(file = "../data/penguins.csv", guess_max = 1001)
 ```
 
 .footnote[
