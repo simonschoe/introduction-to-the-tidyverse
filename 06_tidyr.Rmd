@@ -37,7 +37,7 @@ comments
 
 ##`tidyr`: Tidy Messy Data
 
-1) “**Pivotting**” which converts between long and wide forms using `pivot_longer()` and `pivot_wider()`:
+**“Pivotting”** which converts between long and wide forms using `pivot_longer()` and `pivot_wider()`:
 
 ```{r}
 tidy_penguins <- penguins %>% 
@@ -79,7 +79,7 @@ name: tidyr_nest
 
 ##`tidyr`: Tidy Messy Data
 
-2) "**Nesting**" which groups similar data such that each group becomes a single row in a data frame (the structure is then referred to as *nested data frame*).
+**"Nesting"** which groups similar data such that each group becomes a single row in a data frame (the structure is then referred to as *nested data frame*).
 
 ```{r}
 nested_penguins <- penguins %>% 
@@ -106,9 +106,9 @@ comments
 
 ##`tidyr`: Tidy Messy Data
 
-3) “**Rectangling**” which disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy* format (see `unnest_longer()`, `unnest_wider()`).
+**“Rectangling”** which disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy* format (see `unnest_longer()`, `unnest_wider()`).
 
-4) "**Splitting**" and "**combining**" to transform a single character column into multiple columns and vice versa.
+**"Splitting"** and **"combining"** to transform a single character column into multiple columns and vice versa.
 
 ```{r}
 penguins %>% 
@@ -125,7 +125,7 @@ Here again, I am only presenting the first 6 rows.
 
 ##`tidyr`: Tidy Messy Data
 
-5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+**"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
 ```{r, echo=F}
 incompl_penguins <- tibble(
@@ -154,7 +154,7 @@ comments
 
 ##`tidyr`: Tidy Messy Data
 
-5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+**"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
 ```{r, echo=F}
 incompl_penguins2 <- incompl_penguins %>% 
@@ -181,7 +181,7 @@ comments
 
 ##`tidyr`: Tidy Messy Data
 
-5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+**"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
 
 ```{r}
@@ -202,7 +202,7 @@ comments
 
 ##`tidyr`: Tidy Messy Data
 
-5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+**"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
 ```{r}
 incompl_penguins2
