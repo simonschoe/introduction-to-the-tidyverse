@@ -94,7 +94,7 @@ pacman::p_load_gh("allisonhorst/palmerpenguins")
 
 ---
 
-##Thank You
+##Thank You!
 
 .pull-left[
 .center[**Right now:**]<br>
