@@ -31,9 +31,8 @@ library(xaringanthemer)
 style_mono_accent(
   base_color = "#000000",
   link_color = "#0000EE",
-  text_bold_color = "#f34213", 
   header_font_google = google_font("Josefin Sans"),
-  text_font_google   = google_font("Montserrat", "300", "300i", "700b"),
+  text_font_google   = google_font("Montserrat", "700b", "400"),
   code_font_google   = google_font("Fira Mono"),
   colors = c(
     red = "#f34213",
@@ -55,42 +54,42 @@ pacman::p_load_gh("allisonhorst/palmerpenguins")
 
 ---
 
-```{r child='02_tidy_data.Rmd', eval=T}
+```{r child='02_tidy_data.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='03_magrittr.Rmd', eval=T}
+```{r child='03_magrittr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='04_tibble.Rmd', eval=T}
+```{r child='04_tibble.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='05_readr.Rmd', eval=T}
+```{r child='05_readr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='06_tidyr.Rmd', eval=T}
+```{r child='06_tidyr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='07_dplyr.Rmd', eval=T}
+```{r child='07_dplyr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='08_purrr.Rmd', eval=T}
+```{r child='08_purrr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='09_ggplot2.Rmd', eval=T}
+```{r child='09_ggplot2.Rmd', eval=F}
 ```
 
 ---

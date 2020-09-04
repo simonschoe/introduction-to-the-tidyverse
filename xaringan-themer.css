@@ -18,7 +18,7 @@
  *  Version: 0.3.0
  *
  * ------------------------------------------------------- */
-@import url(https://fonts.googleapis.com/css?family=Montserrat:300,300i,700b&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700b,400&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Fira+Mono&display=swap);
 
@@ -46,7 +46,7 @@
   --header-color: #000000;
   --background-color: #FFFFFF;
   --link-color: #0000EE;
-  --text-bold-color: #f34213;
+  --text-bold-color: #000000;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #FFFFFF;
   --inverse-background-color: #000000;
@@ -68,7 +68,7 @@ html {
 
 body {
   font-family: var(--text-font-family), var(--text-font-family-fallback), var(--text-font-base);
-  font-weight: 300;
+  font-weight: 700b;
   color: var(--text-color);
 }
 h1, h2, h3 {
