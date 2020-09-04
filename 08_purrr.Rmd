@@ -1,0 +1,332 @@
+---
+title: "08_purrr"
+
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, ./custom/custom-theme.css]
+    lib_dir: libs
+    nature:
+      titleSlideClass: [left, middle, inverse]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+---
+
+background-image: url(https://raw.githubusercontent.com/tidyverse/purrr/master/man/figures/logo.png)
+background-position: 95% 5%
+background-size: 7.5%
+layout: true
+
+---
+
+##`purrr`: Functional Programming Tools
+
+`purrr` facilitates functional programming (*FP*) with data frame objects (e.g., `tibbles`) in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a data manipulation pipeline.
+
+**Three types of `map_*()` function:**
+- `map(.x, .f, ...)` takes the input `.x` and applies `.f` to each element in `.x`.
+- `group_map(.data, .f, ...)` takes a grouped `tibble` and applies `.f` to each subgroup.
+- `map2(.x, .y, .f, ...)` takes the inputs `.x` and `.y` and applies `.f` to `.x` and `.y` in parallel.
+- `pmap(.l, .f, ...)` takes a list `.l` of inputs and applies `.f` to each element in `.l` in parallel.
+
+.pull-left[
+By default `map()` returns a list. If you want to be more explicit about the output you may refer to
+- `map_lgl()` to receive an output type logical,
+- `map_chr()` to receive an output type character,
+- `map_int()` to receive an output type integer,
+- `map_dbl()` to receive an output type double, or
+- `map_df()` to receive a data frame output.
+]
+.pull-right[
+The input `.x` to any `map()_*` function can be either a vector, list or data frame.
+- **Vector:** Iteration over vector entries
+- **List:** Iteration over list elements
+- **Data frame:** Iteration over columns
+]
+
+???
+Comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+**Use Case:** Apply the z-normalization to multiple variables
+
+- Write a *named function* for performing z-normalization [1] that takes a vector `.x` as input.
+
+```{r}
+z_transform <- function(.x) {
+  mean <- mean(.x)
+  sd <- sd(.x)
+  return( (.x - mean) / sd )
+}
+```
+
+- Draw some from a Gaussian using `rnorm(n, mean, sd)` and store them as double vectors in a list.
+
+```{r}
+samples <- list(sample1 = rnorm(10, 75, 22), sample2 = rnorm(10, 52, 11), sample3 = rnorm(10, 99, 33))
+```
+```{r, echo=F}
+samples
+```
+
+???
+comment
+
+---
+
+##`purrr`: Functional Programming Tools
+
+**Use Case:** Applying the z-normalization to multiple variables
+
+- Perform the z-normalization using a `for`-loop.
+
+```{r, eval=F}
+for (s in samples) {
+  print(z_transform(s))
+}
+```
+
+- Or simply perform the z-normalization using `map()`.
+
+```{r}
+map(.x = samples, .f = ~z_transform(.x)) #equivalent to map(samples, z_transform)
+```
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+**Use Case:** Applying the z-normalization to multiple variables
+
+- Perform the z-normalization using `map()` but use an *anonymous function*.
+
+```{r, eval=F}
+map(
+  .x = samples,
+  .f = function(.x) {
+    (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
+  })
+```
+
+- Perform the z-normalization using `map()` but use an *`purrr`-style function*.
+
+```{r, eval=F}
+map(
+  .x = samples,
+  .f = ~(.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T))
+```
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+.center[
+**This is great right?!?!**
+
+```{r, echo=F}
+knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
+```
+]
+--
+.center[
+<br><br>
+Now let us look at some other practical use cases!
+]
+
+???
+src: https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041
+
+---
+
+##`purrr`: Functional Programming Tools
+
+Check the data types of my columns:
+```{r}
+penguins %>%
+  map_df(class)
+```
+Check the number of missing values per column:
+```{r}
+penguins %>%
+  map_df(~sum(is.na(.)))
+```
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+Check the number of distinct values per column:
+```{r}
+penguins %>%
+  map_df(n_distinct)
+```
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+Check the highest value in each subset of the data (e.g., largest `flipper_length_mm` per `sex`):
+```{r}
+penguins %>%
+  drop_na %>% 
+  group_by(sex) %>%
+  group_map(~slice_max(., flipper_length_mm, n = 1), .keep = T)
+```
+
+???
+drop_na: because otherwise I would also have a subgroup of NA
+
+---
+
+##`purrr`: Functional Programming Tools
+
+`map()` also comes in handy, if you like to produce a series of identical plots, each depicting a separate subset of the underlying data:
+```{r, out.height='20%', out.width='20%'}
+species <- penguins %>% distinct(species, year) %>% pull(species) #.x argument for map()
+years <- penguins %>% distinct(species, year) %>% pull(year)      #.y argument for map()
+
+penguin_plots <- map2(
+  .x = species,
+  .y = years,
+  .f = ~{
+    penguins %>%
+      drop_na %>% 
+      filter(species == .x, year == .y) %>% 
+      ggplot() +
+        geom_point(aes(x = bill_length_mm, y = body_mass_g)) +
+        labs(title = glue::glue("Scatter Plot Bill Length vs. BMI ({.x}, {.y})"))
+    })
+```
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+.pull-left[
+```{r, out.height='80%', out.width='80%', fig.retina=3}
+penguin_plots[[1]]
+```
+]
+.pull-right[
+```{r, out.height='80%', out.width='80%', fig.retina=3}
+penguin_plots[[4]]
+```
+]
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+Finally, `map()` is really powerful in the context of modelling. In the following we fit a linear regression model for each `species`-`island` subset.
+
+- Create a nested data frame that contains a `tibble` of data for each `species`-`island` combination.
+
+```{r}
+nested_penguins <- penguins %>% 
+  drop_na %>% 
+  group_by(species, island) %>% 
+  nest
+```
+```{r, echo=F}
+nested_penguins
+```
+
+.pull-right[
+.footnote[
+*Note: For accessing elements in a nested `tibble` you may use the `pluck()`. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)`.*
+]]
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+- Fit a linear model to each data subset. In our model `body_mass_g` is regressed (`~`) on all other variables (denoted by a dot in the `lm()` formula).
+
+```{r}
+nested_penguins <- nested_penguins %>% 
+  mutate(lin_reg = map(.x = data, .f = ~lm(body_mass_g ~ ., data = .x))) 
+```
+```{r, echo=F}
+nested_penguins
+```
+
+???
+comments
+
+---
+
+##`purrr`: Functional Programming Tools
+
+- For each linear model, generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, use the `unnest()` function to receive a tidy data frame.
+
+```{r, results=F}
+nested_penguins %>% 
+  mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
+  unnest(coefs)
+```
+```{r, echo=F}
+print(
+  nested_penguins %>% 
+    mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
+    unnest(coefs),
+  n = 4)
+```
+
+.footnote[
+*Note: You may eventually want to drop the `lin_reg` and `data`, otherwise you carry around a lot of redundant data in your `tibble` which may exceed your memory storage capacity very quickly.*
+]
+
+???
+there are packages for automatically doing this with just one line of code, see `broom`
+
+---
+
+##`purrr`: Functional Programming Tools
+
+.pull-left[
+.center[
+How you may probably feel right now<br><br>
+```{r, echo=F, fig.align='center'}
+knitr::include_graphics("https://tenor.com/view/matg-calculate-confusing-figure-out-gif-6237717.gif")
+```
+]]
+
+--
+
+.pull-right[
+.center[
+How you do after mastering the intricacies of FP<br><br>
+```{r, echo=F, fig.align='center'}
+knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
+```
+]]
+
+.footnote[
+.pull-left[
+For a great tutorial that help you master the notion of functional programming with `R` see this [blog post](http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map) by Rebecca Barter.
+]]

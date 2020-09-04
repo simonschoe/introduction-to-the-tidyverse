@@ -1,0 +1,90 @@
+---
+title: "05_readr"
+
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, ./custom/custom-theme.css]
+    lib_dir: libs
+    nature:
+      titleSlideClass: [left, middle, inverse]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+---
+
+background-image: url(https://raw.githubusercontent.com/tidyverse/readr/master/man/figures/logo.png)
+background-position: 95% 5%
+background-size: 7.5%
+layout: true
+
+---
+
+##`readr`: Read Rectangular Text Data
+
+`readr` provides read functions for multiple different file formats:
+
+- `read_delim()`: general delimited files
+- `read_csv()`: comma separated files  
+*Note: In most European Countries MS Excel is using `;` as the common delimiter, which can be important by simply switchting to the `read_csv2()` function.*
+- `read_tsv()`: tab separated files
+- `read_fwf()`: fixed width files
+- `read_table()`: white-space separated files
+- `read_log()`: web log files
+
+In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
+
+???
+`read_delim()` as a generalization of the other functions
+
+---
+
+##`readr`: Read Rectangular Text Data
+
+Let's try it out by reading in some penguins data (note that the output of any `read_()` function is a `tibble` object.). For the purpose of illustrating the `readr` package the `penguins` data has been written to a csv-file.
+
+```{r}
+penguins <- readr::read_csv("./data/penguins.csv")
+```
+
+???
+comment
+
+---
+
+##`readr`: Read Rectangular Text Data
+
+Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., integer, numeric, character, factor, date, logical) from the first 1000 rows and parses the columns accordingly using the built-in `parse_()` functions.
+
+- Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly. 
+```{r, eval=F}
+readr::read_csv(
+  "./data/penguins.csv",
+    col_types = cols(
+      species = col_character(),
+      year = col_datetime(format = "%Y"),
+      island = col_skip()
+    )
+  )
+```
+
+???
+comments
+
+---
+
+##`readr`: Read Rectangular Text Data
+
+Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., integer, numeric, character, factor, date, logical) from the first 1000 rows and parses the columns accordingly using the built-in `parse_()` functions.
+
+- Parsing only the first 1000 rows is efficient but can lead to erroneous guesses.  
+```{r, eval=F}
+readr::read_csv(file = "./data/penguins.csv", guess_max = 1001)
+```
+
+.footnote[
+Find more information and functions on the `readr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
+]
+
+???
+comments

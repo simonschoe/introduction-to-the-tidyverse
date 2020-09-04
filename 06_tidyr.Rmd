@@ -1,0 +1,230 @@
+---
+title: "06_tidyr"
+
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, ./custom/custom-theme.css]
+    lib_dir: libs
+    nature:
+      titleSlideClass: [left, middle, inverse]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+---
+
+background-image: url(https://raw.githubusercontent.com/tidyverse/tidyr/master/man/figures/logo.png)
+background-position: 95% 5%
+background-size: 7.5%
+layout: true
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+`tidyr` provides several functions that help you bring your data into *tidy data* format (cf. [tidy data](#tidy data)), i.e. change the structure of your data set.
+
+Let's again start with our `penguins` data set by looking at the first six observations:
+```{r}
+penguins %>% head(6) 
+```
+Dimensionality: [`r dim(penguins)`]
+
+???
+comments
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+1) “**Pivotting**” which converts between long and wide forms using `pivot_longer()` and `pivot_wider()`:
+
+```{r}
+tidy_penguins <- penguins %>% 
+  tidyr::pivot_longer(
+    cols = contains("_mm"),
+    names_to = "meas_type", values_to = "measurement"
+  )
+
+tidy_penguins %>% head(6)
+```
+
+Dimensionality: [`r dim(tidy_penguins)`]
+
+???
+comments
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+.right[
+```{r, echo=F, out.height='80%', out.width='80%'}
+knitr::include_graphics("https://raw.githubusercontent.com/apreshill/teachthat/master/pivot/pivot_longer_smaller.gif")
+```
+]
+
+.footnote[
+Source: [Allison Hill](https://github.com/apreshill/teachthat/blob/master/pivot/pivot_longer_smaller.gif).  
+Find more information about  
+`pivot_*()` in the [pivoting vignette](https://tidyr.tidyverse.org/articles/pivot.html).
+]
+
+???
+src: https://raw.githubusercontent.com/apreshill/teachthat/master/pivot/pivot_longer_smaller.gif
+
+---
+
+name: tidyr_nest
+
+##`tidyr`: Tidy Messy Data
+
+2) "**Nesting**" which groups similar data such that each group becomes a single row in a data frame (the structure is then referred to as *nested data frame*).
+
+```{r}
+nested_penguins <- penguins %>% 
+  tidyr::nest(
+    nested_data = c(island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex)
+  )
+```
+.pull-left[
+```{r, echo=F}
+nested_penguins
+```
+]
+.pull-right[
+- `nest()` produces a nested data frame with one row per species and year.
+- The `nested_data` column contains data frame objects with six columns each and a varying amount of observations.
+- Access individual tables from the `nested_data` column using `dpylr::pull()`.
+- Revert nesting using `unnest()`.
+]
+
+???
+comments
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+3) “**Rectangling**” which disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy* format (see `unnest_longer()`, `unnest_wider()`).
+
+4) "**Splitting**" and "**combining**" to transform a single character column into multiple columns and vice versa.
+
+```{r}
+penguins %>% 
+  tidyr::unite(col = "spec_gender", c(species, sex), sep = "_", remove = T) %>% 
+  head(6)
+```
+
+Revert union using the `separate()` function. Alternatively, use `separate_rows()` if there are two observations for the same variable in one cell.
+
+???
+Here again, I am only presenting the first 6 rows.
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+.pull-left[
+```{r, echo=F}
+incompl_penguins <- tibble(
+  species = c(rep("Adelie", 2), rep("Gentoo", 1), rep("Chinstrap", 1)),
+  year = c(2007, 2008, 2008, 2007),
+  value = rnorm(4, mean = 50, sd = 15)
+)
+```
+```{r}
+incompl_penguins
+```
+]
+.pull-right[
+```{r}
+incompl_penguins %>% 
+  tidyr::complete(
+    species, year, fill = list(value = NA)
+)
+```
+]
+
+???
+comments
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+.pull-left[
+```{r, echo=F}
+incompl_penguins2 <- incompl_penguins %>% 
+  tidyr::complete(
+    species, year,
+    fill = list(value = NA)
+  )
+```
+```{r}
+incompl_penguins2
+```
+]
+.pull-right[
+```{r}
+incompl_penguins2 %>% 
+  tidyr::drop_na(value)
+```
+]
+
+???
+comments
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+.pull-left[
+
+```{r}
+incompl_penguins2
+```
+]
+.pull-right[
+```{r}
+incompl_penguins2 %>% 
+  tidyr::fill(value, .direction = "down")
+```
+]
+
+???
+comments
+
+---
+
+##`tidyr`: Tidy Messy Data
+
+5) "**Handling missing values**" by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
+.pull-left[
+```{r}
+incompl_penguins2
+```
+]
+.pull-right[
+```{r}
+incompl_penguins2 %>%
+  tidyr::replace_na(
+    replace = list(
+      value = mean(.$value,na.rm = T)
+    )
+  )
+```
+]
+
+.pull-left[
+.footnote[
+Find more information and functions  
+on the `tidyr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
+]
+]
+
+???
+comments
