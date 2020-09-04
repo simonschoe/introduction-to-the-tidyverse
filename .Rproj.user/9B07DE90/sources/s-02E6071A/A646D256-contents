@@ -1,0 +1,213 @@
+---
+title: "01_intro"
+
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, ./custom/custom-theme.css]
+    lib_dir: libs
+    nature:
+      titleSlideClass: [left, middle, inverse]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+---
+
+name: agenda
+
+##Agenda
+
+**1. Learning Objectives**
+
+**2. Introduction to the `Tidyverse`**
+  1. What is the `Tidyverse`
+  2. The Concept of Tidy Data
+  
+**3. `palmerpenguins` Data Set**
+
+**4. The Core `Tidyverse` Packages**
+  1. `magrittr`: A Forward-Pipe Operator for R
+  2. `tibble`: Simple Data Frames
+  3. `readr`: Read Rectangular Text Data
+  4. `tidyr`: Tidy Messy Data
+  5. `dplyr`: A Grammar of Data Manipulation
+  6. `purrr`: Functional Programming Tools
+  7. `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
+
+???
+comment
+
+---
+
+##Learning Objectives
+
+- Learn about the `Tidyverse` and how it differs from `base R`
+
+- Become familiar with the core packages of the `Tidyverse`
+
+- Be able to process (*non-tidy*) data of any shape and quality
+
+- Be able to produce high-quality, fully customizable visualisations
+
+- Strengthen your overall data literacy
+
+???
+comments
+
+---
+
+background-image: url(https://www.tidyverse.org/images/hex-tidyverse.png)
+background-position: 95% 5%
+background-size: 7.5%
+layout: true
+
+---
+
+##What is the `Tidyverse`?
+
+> The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
+
+
+> Its primary goal is to facilitate a conversation between a human and a computer about data.  
+~ [Hadley Wickham](https://joss.theoj.org/papers/10.21105/joss.01686.pdf)
+
+.pull-left[
+.center[
+```{r, echo=F, out.width='45%', out.height='45%'}
+knitr::include_graphics("https://www.tidyverse.org/images/hex-tidyverse.png")
+```
+
+Official Tidyverse [Hex Sticker](https://github.com/rstudio/hex-stickers)
+]]
+.pull-right[
+```{r, echo=F, out.width='50%', out.height='50%'}
+knitr::include_graphics("https://pbs.twimg.com/profile_images/905186381995147264/7zKAG5sY.jpg")
+```
+
+Hadley Wickham - Chief Scientist @ RStudio  
+[Founding father](https://twitter.com/hadleywickham/status/959507805282582528?s=20) of the `tidyverse`
+]
+
+???
+comments
+
+---
+
+##What is the `Tidyverse`?
+
+> The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
+
+.pull-left[
+- **`readr`:** data import<br><br>
+- **`tibble`:** modern data frame object<br><br>
+- **`stringr`:** working with strings<br><br>
+- **`forcats`:** working with factors<br><br>
+- **`tidyr`:** data tidying<br><br>
+- **`dplyr`:** data manipulation<br><br>
+- **`ggplot2`:** data visualization<br><br>
+- **`purrr`:** functional programming
+]
+.pull-right[
+```{r, echo=F, out.width='95%', out.height='95%', fig.align='center'}
+knitr::include_graphics("./img/01.PNG")
+```
+]
+
+???
+src: https://www.tidyverse.org/
+Tidyverse can be viewed as a meta-package
+each package has its own goal which makes the tidyverse a modular collection of packages
+these are the core packages (there are many others for special purposes which integrate seamlessly)
+R data structures: atomic vector (character, integer, numeric, logical, complex), list, matrix, data frame, factors
+
+---
+
+##What is the `Tidyverse`?
+
+> The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
+
+```{r, eval=F}
+install.packages("tidyverse") #[1]
+library(tidyverse)
+```
+```
+Registered S3 methods overwritten by 'dbplyr':
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+-- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+v ggplot2 3.3.2     v purrr   0.3.4
+v tibble  3.0.3     v dplyr   1.0.2
+v tidyr   1.1.2     v stringr 1.4.0
+v readr   1.3.1     v forcats 0.5.0
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+```
+
+.footnote[
+[1]: This is equivalent to running `install.packages("ggplot2")`, `install.packages("tibble")`, `install.packages("tidyr")`, `install.packages("readr")`, ...
+]
+
+???
+Explain:
+- see tidyverse package version as well as the version of the eight core packages
+- the eight core packages are loaded by loading the `tidyverse` package
+- note that some `base R` functions (`stats` namespace) are overwritten by their `tidyverse` equivalents (`dplyr` namespace)
+- when working with a new or rarely used package, i prefer to explicitely state the namespace to remember where the function is coming from 
+
+---
+
+##What is the `Tidyverse`?
+
+> The tidyverse is an opinionated collection of R packages designed **for data science**. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
+
+These packages are geared towards facilitating the day-2-day data science workflow:
+<br><br>
+```{r, echo=F, out.width='60%', out.height='60%', out.extra='style="float:left; padding:20px"'}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png")
+```
+<br><br>
+**Import:** `readr`  
+**Tidy:** `tidyr`  
+**Transform:** `dplyr`, `forcats`, `stringr` [1]  
+**Visualise:** `ggplot2`  
+**Model:** `tidymodels`[2]  
+**Communicate:** `rmarkdown`[3]  
+**Program:** `magrittr`, `purrr`, `tibble`
+
+.footnote[
+[1]: Will not be in the focus of this workshop.  
+[2]: For further information refer to our `tidymodels` workshop.  
+[3]: For further information refer to our `rmarkdown` workshop.
+]
+
+???
+src: https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png
+
+---
+
+##What is the `Tidyverse`?
+
+> The tidyverse is an opinionated collection of R packages designed for data science. All packages share an **underlying design philosophy, grammar, and data structures**. ~ [tidyverse.org](https://www.tidyverse.org/)
+
+This underlying design philosophy and grammar boils down to a consistent and easy-to-use API:
+
+- The `tibble` as the core underlying data structure.
+- Extensive use of the `%>%`-operator for gluing together multiple function calls.
+- Consistently applied naming conventions (e.g., function names in *snakecase* [[Link](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/coding_cases.png)]).
+- Consistent structuring of function arguments (e.g., `arg1 = data.frame, arg2 = col names, ...`)
+- ...
+
+When familiar with the `tidyverse` syntax you will be able to easily transfer your knowledge about one function or package to other components of the `tidyverse`.
+
+.footnote[
+For further information cf.
+**Tidyverse team (2020):** Tidyverse design guide. URL: https://design.tidyverse.org/;
+**Wickham, H. (2019):** The tidy tools manifesto. URL: https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html.
+]
+
+???
+API: application programming interface
+snakecase: underscores, numbers and lowercase characters
+
