@@ -728,7 +728,7 @@ loess: local regression fits the relationship between y and x locally and allows
 
 ##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
-By now, there is a whole ecosystem [3] of amazing packages around `ggplot2` that further extent its capabilities:
+By now, there is a whole ecosystem (aka **ggverse** [3]) of amazing packages around `ggplot2` that further extent its capabilities:
 .pull-left[
 - `scales`: Scale Functions for Visualization
 - `ggtext`: Improved Text Rendering Support for `ggplot2`
