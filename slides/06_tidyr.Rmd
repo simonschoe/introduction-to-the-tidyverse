@@ -12,7 +12,7 @@ layout: true
 
 ##`tidyr`: Tidy Messy Data
 
-`tidyr` provides several functions that help you bring your data into *tidy data* format (cf. [tidy data](#tidy data)), i.e. change the structure of your data set.
+`tidyr` provides several functions that help you to bring your data into *tidy data* format (cf. [tidy data](#tidy data)), i.e. change the structure of your data set.
 
 Let's again start with our `penguins` data set by looking at the first six observations:
 ```{r}

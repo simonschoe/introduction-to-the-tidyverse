@@ -36,7 +36,7 @@ Hadley Wickham - Chief Scientist @ RStudio
 ]
 
 ???
-comments
+Can also be seen as a philosophy of how to write code in R. Often when googling for specific solutions and reading the stackoverflow answers, you may find solutions which can be implemented using plain `base R` or using the `tidyverse` syntax.
 
 ---
 
@@ -45,14 +45,15 @@ comments
 > The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
 .pull-left[
-- **`readr`:** data import<br><br>
-- **`tibble`:** modern data frame object<br><br>
-- **`stringr`:** working with strings<br><br>
-- **`forcats`:** working with factors<br><br>
-- **`tidyr`:** data tidying<br><br>
-- **`dplyr`:** data manipulation<br><br>
-- **`ggplot2`:** data visualization<br><br>
-- **`purrr`:** functional programming
+**`Tidyverse` core packages:**
+- `readr`: data import<br><br>
+- `tibble`: modern data frame object<br><br>
+- `stringr`: working with strings<br><br>
+- `forcats`: working with factors<br><br>
+- `tidyr`: data tidying<br><br>
+- `dplyr`: data manipulation<br><br>
+- `ggplot2`: data visualization<br><br>
+- `purrr`: functional programming
 ]
 .pull-right[
 ```{r, echo=F, out.width='95%', out.height='95%', fig.align='center'}

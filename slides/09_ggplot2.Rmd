@@ -498,12 +498,15 @@ penguins %>%
         fill = island),
         position = "dodge")
 ```
-*Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes a variable `x` and computes the `y`-quantity internally (e.g., the number of observations).*
 ]
 .pull-right[
 ```{r ref.label='p_step_o4', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
 ```
 ]
+.pull-left[
+.footnote[
+*Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes a variable `x` and computes the `y`-quantity internally (e.g., the number of observations).*
+]]
 
 ---
 
@@ -601,7 +604,7 @@ p
 ```{r p_step_o9, eval=F}
 p <- p +
   labs(
-    title = "Density Function for 3 Penguin Species of Palmer Penguins",
+    title = "Density Function for Three Penguin Species of Palmer Penguins",
     subtitle = "Palmer Archipelago (2007-2009)",
     caption = "Data: https://github.com/allisonhorst/palmerpenguins",
     x = "Body Mass [grams]",
@@ -666,7 +669,7 @@ p
 ##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
-**Other examples:** Violine Plot
+**Other examples:** Violin Plot
 ```{r p_step_o12, eval=F}
 penguins %>% 
   ggplot(

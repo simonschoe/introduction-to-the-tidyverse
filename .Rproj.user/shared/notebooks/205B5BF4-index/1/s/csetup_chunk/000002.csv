@@ -2,5 +2,5 @@
 "0","  #set comment formatting"
 "0","  comment = "">"","
 "0","  #collapse code and output"
-"0","  collapse = FALSE"
+"0","  collapse = F"
 "0",")"

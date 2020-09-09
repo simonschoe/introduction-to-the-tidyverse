@@ -42,9 +42,9 @@ Comments
 
 ##`purrr`: Functional Programming Tools
 
-**Use Case:** Apply the z-normalization to multiple variables
+**Use Case:** Applying the z-normalization to multiple variables
 
-- Write a *named function* for performing z-normalization [1] that takes a vector `.x` as input.
+First, write a *named function* for performing z-normalization [1] that takes a vector `.x` as input.
 
 ```{r}
 z_transform <- function(.x) {
@@ -54,17 +54,17 @@ z_transform <- function(.x) {
 }
 ```
 
-- Draw some from a Gaussian using `rnorm(n, mean, sd)` and store them as double vectors in a list.
+Second, draw samples from a Gaussian using `rnorm(n, mean, sd)` and store them as double vectors in a list.
 
 ```{r}
-samples <- list(sample1 = rnorm(10, 75, 22), sample2 = rnorm(10, 52, 11), sample3 = rnorm(10, 99, 33))
+samples <- list(sample1 = rnorm(8, 75, 22), sample2 = rnorm(8, 52, 11), sample3 = rnorm(8, 99, 33))
 ```
 ```{r, echo=F}
 samples
 ```
 
 ???
-comment
+here: different means and sd
 
 ---
 
@@ -72,16 +72,14 @@ comment
 
 **Use Case:** Applying the z-normalization to multiple variables
 
-- Perform the z-normalization using a `for`-loop.
-
+Third, perform the z-normalization using a `for`-loop.
 ```{r, eval=F}
 for (s in samples) {
   print(z_transform(s))
 }
 ```
 
-- Or simply perform the z-normalization using `map()`.
-
+Or simply perform the z-normalization using `map()`.
 ```{r}
 map(.x = samples, .f = ~z_transform(.x)) #equivalent to map(samples, z_transform)
 ```
@@ -95,8 +93,7 @@ comments
 
 **Use Case:** Applying the z-normalization to multiple variables
 
-- Perform the z-normalization using `map()` but use an *anonymous function*.
-
+Or perform the z-normalization using `map()` but use an *anonymous function*.
 ```{r, eval=F}
 map(
   .x = samples,
@@ -105,8 +102,7 @@ map(
   })
 ```
 
-- Perform the z-normalization using `map()` but use an *`purrr`-style function*.
-
+Or perform the z-normalization using `map()` but use an *`purrr`-style function*.
 ```{r, eval=F}
 map(
   .x = samples,
@@ -123,7 +119,7 @@ comments
 .center[
 **This is great right?!?!**
 
-```{r, echo=F}
+```{r, echo=F, out.width='100%'}
 knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
 ```
 ]

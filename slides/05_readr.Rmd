@@ -15,14 +15,17 @@ layout: true
 `readr` provides read functions for multiple different file formats:
 
 - `read_delim()`: general delimited files
-- `read_csv()`: comma separated files  
-*Note: In most European Countries MS Excel is using `;` as the common delimiter, which can be important by simply switchting to the `read_csv2()` function.*
+- `read_csv()`: comma separated files
 - `read_tsv()`: tab separated files
 - `read_fwf()`: fixed width files
 - `read_table()`: white-space separated files
 - `read_log()`: web log files
 
 In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
+
+.footnote[
+*Note: In most European countries MS Excel is using `;` as the common delimiter, which can be important by simply switching to the `read_csv2()` function.*
+]
 
 ???
 `read_delim()` as a generalization of the other functions

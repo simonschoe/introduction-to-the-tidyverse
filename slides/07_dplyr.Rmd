@@ -51,7 +51,7 @@ penguins %>%
   filter(species == "Adelie")
 ```
 
-Filter for all penguins where the a missing value in the `bill_length_mm` measurement:
+Filter for all penguins where the is a missing value in the `bill_length_mm` measurement:
 ```{r, eval=F}
 penguins %>% 
   filter(is.na(bill_length_mm) == T)
@@ -183,6 +183,7 @@ penguins %>%
 
 ???
 - feed a function that takes a vector and returns T or F
+- if you want to deselect something put a minus in front
 - when using a function within another function you usually require the formula (~) notation (see `purrr` part), except when only using a function with one argument
 
 ---
@@ -458,7 +459,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 <br>
 *Note: Instead of using `ungroup()` you may also set the `.groups` argument in `summarise()` equal to "drop".*
 
-*But never forget to ungroup your data, otherwise you may run into errors later on!*
+*But never forget to ungroup your data, otherwise you may run into errors later on in your analysis!*
 
 ???
 comments
@@ -469,7 +470,7 @@ comments
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
-**Stacked `group_by()`:** If `.add = T` is omitted, the second `gruop_by()`overrides the first.
+**Stacked `group_by()`:** If `.add = T` is omitted, the second `group_by()`overrides the first.
 ```{r, eval=F}
 penguins %>% 
   group_by(species) %>% 
@@ -582,7 +583,7 @@ Group by all unique `species`-`island` combinations and filter for the penguins 
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
-**Nesting of grouped data:** Usually, you will find it more intuitiv to use `group_by()` followed by `nest()` to produce a nested data frame compared to example on [slide 27](#tidyr_nest).
+**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example on [slide 27](#tidyr_nest).
 ```{r, eval=F}
 penguins %>% 
   group_by(species, year) %>% 

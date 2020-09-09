@@ -39,6 +39,7 @@ style_mono_accent(
     white = "#FFFFFF"
   ),
   code_font_size = "smaller",
+  code_inline_background_color = "#F4F4F4",
   outfile = "./custom/xaringan-themer.css"
 )
 ```
@@ -47,7 +48,7 @@ style_mono_accent(
 #install.packages("pacman")
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, glue, showtext)
-pacman::p_load_gh("allisonhorst/palmerpenguins")
+pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo")
 ```
 
 name: agenda
@@ -76,7 +77,7 @@ comment
 
 ---
 
-##Learning Objectives
+##Learning Objectives `r emo::ji("idea")`
 
 - Learn about the `Tidyverse` and how it differs from `base R`<br><br>
 - Become familiar with the core packages of the `Tidyverse`<br><br>
@@ -160,6 +161,8 @@ But not all is great in the `Tidyverse` - be aware of its [downsides](https://gi
 Best read for starting in the `Tidyverse`: **Grolemund, G.; Wickham H. (2017):** R for Data Science. URL: https://r4ds.had.co.nz/. Online Publication 2017.
 
 Stay up-to-date with recent developments in the `Tidyverse`: https://www.tidyverse.org/blog/
+
+Watch live-coding sessions related to the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) Project, e.g., the episodes by David Robinson: https://www.youtube.com/user/safe4democracy/videos
 
 ##Credits
 
