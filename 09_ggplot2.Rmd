@@ -15,7 +15,7 @@ layout: true
 `ggplot2` is Hadley Wickham's reimplementation [1] of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [2]. It provides a large amount of functions for generating high-quality graphs in layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
 <br><br>
 ```{r, echo=F, out.width='70%', fig.align='center'}
-knitr::include_graphics("../img/grammar-of-graphic-layers.PNG")
+knitr::include_graphics("./img/grammar-of-graphic-layers.PNG")
 ```
 <br>
 Source: [towardsdatascience.com](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149)
@@ -677,7 +677,7 @@ penguins %>%
     geom_violin(aes(fill = species), na.rm = T) +
   theme_classic()
 
-ggsave("../img/violin-plot.PNG",
+ggsave("./img/violin-plot.PNG",
        device = "png", dpi = 300)
 ```
 - `geom_violin()` creates a cross-over version of a box-plot and a density plot, particularly suitable for visualizing continuous variables.

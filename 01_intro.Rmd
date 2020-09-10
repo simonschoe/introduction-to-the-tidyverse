@@ -46,18 +46,18 @@ Can also be seen as a philosophy of how to write code in R. Often when googling 
 
 .pull-left[
 **`Tidyverse` core packages:**
-- `readr`: data import<br><br>
-- `tibble`: modern data frame object<br><br>
-- `stringr`: working with strings<br><br>
-- `forcats`: working with factors<br><br>
-- `tidyr`: data tidying<br><br>
-- `dplyr`: data manipulation<br><br>
-- `ggplot2`: data visualization<br><br>
+- `readr`: data import
+- `tibble`: modern data frame object
+- `stringr`: working with strings
+- `forcats`: working with factors
+- `tidyr`: data tidying
+- `dplyr`: data manipulation
+- `ggplot2`: data visualization
 - `purrr`: functional programming
 ]
 .pull-right[
 ```{r, echo=F, out.width='95%', out.height='95%', fig.align='center'}
-knitr::include_graphics("../img/tidyverse-hex.PNG")
+knitr::include_graphics("./img/tidyverse-hex.PNG")
 ```
 ]
 

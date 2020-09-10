@@ -79,58 +79,61 @@ comment
 
 ##Learning Objectives `r emo::ji("idea")`
 
-- Learn about the `Tidyverse` and how it differs from `base R`<br><br>
-- Become familiar with the core packages of the `Tidyverse`<br><br>
-- Be able to process (*non-tidy*) data of any shape and quality<br><br>
-- Be able to produce high-quality, fully customizable visualisations<br><br>
-- Strengthen your overall data literacy
+This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of package which ease your data science workflow in terms of data import, data clearning, data transformation and data visualization.
+
+More specifically, after this workshop you should
+- be familiar with the main tools of the `Tidyverse` and how it differs from `base R`,<br><br>
+- know your way around in working with the core packages of the `Tidyverse` for importing, tidying, transforming and visualizing data,<br><br>
+- be proficient in processing (*non-tidy*) data of any shape and quality,<br><br>
+- be able to produce high-quality, fully customizable visualizations,<br><br>
+- have improved your your overall data literacy.
 
 ???
 comments
 
 ---
 
-```{r child='./slides/01_intro.Rmd', eval=T}
+```{r child='./01_intro.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/02_tidy_data.Rmd', eval=T}
+```{r child='./02_tidy_data.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/03_magrittr.Rmd', eval=T}
+```{r child='./03_magrittr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/04_tibble.Rmd', eval=T}
+```{r child='./04_tibble.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/05_readr.Rmd', eval=T}
+```{r child='./05_readr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/06_tidyr.Rmd', eval=T}
+```{r child='./06_tidyr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/07_dplyr.Rmd', eval=T}
+```{r child='./07_dplyr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/08_purrr.Rmd', eval=T}
+```{r child='./08_purrr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./slides/09_ggplot2.Rmd', eval=T}
+```{r child='./09_ggplot2.Rmd', eval=T}
 ```
 
 ---
