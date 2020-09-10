@@ -1,6 +1,6 @@
 ---
 title: "Machine Learning in R:<br/>Workshop Series"
-subtitle: "Introduction to the Tidyverse"
+subtitle: "Introduction to the<br>Tidyverse"
 author: "Simon Schölzel"
 institute: "*Research Team Berens*"
 date: "2020-08-20 (updated: `r Sys.Date()`)"
