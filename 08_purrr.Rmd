@@ -116,20 +116,13 @@ comments
 
 ##`purrr`: Functional Programming Tools
 
-.center[
-**This is great right?!?!**
-
-```{r, echo=F, out.width='100%'}
+```{r, echo=F, out.width='80%'}
 knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
 ```
-]
---
-.center[
-<br><br>
-Now let us look at some other practical use cases!
-]
 
 ???
+This is great right?!?!
+Now let us look at some other practical use cases!
 src: https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041
 
 ---
