@@ -3,6 +3,13 @@ title: "09_ggplot2"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `ggplot2`:<br><br>Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+
+---
+
 background-image: url(https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,7 +17,7 @@ layout: true
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 `ggplot2` is Hadley Wickham's reimplementation [1] of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [2]. It provides a large amount of functions for generating high-quality graphs in layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
 <br><br>
@@ -38,14 +45,14 @@ comment
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Data:** The data set (usually a `tibble`) from which to select the variables that are about to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
 .pull-left[
 **Univariate example:**
 ```{r p_step_u1, eval=F}
 penguins %>% 
-  ggplot(data = .) #equivalent to ggplot() #<<
+  ggplot(data = .) #equivalent to ggplot() 
 ```
 ]
 .pull-right[
@@ -60,7 +67,7 @@ Again, a good go-to-guide when crafting visualisations with `ggplot2` is the off
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Aesthetics:** Mappings that describe how variables in my data are mapped to aesthetic attributes of the plot, such as axes, shapes, sizes or colors.
 .pull-left[
@@ -68,7 +75,7 @@ Again, a good go-to-guide when crafting visualisations with `ggplot2` is the off
 ```{r p_step_u2, eval=F}
 penguins %>% 
   ggplot(
-    aes(x = flipper_length_mm)) #<<
+    aes(x = flipper_length_mm)) 
 ```
 ]
 .pull-right[
@@ -78,7 +85,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points, boxplots. They specify the graphical representation of your data.
 .pull-left[
@@ -86,7 +93,7 @@ penguins %>%
 ```{r p_step_u3, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_histogram(na.rm = TRUE) #<<
+    geom_histogram(na.rm = TRUE) 
 ```
 `ggplot2` comes with very decent *default* settings. Each `geom_*()` comes with its own options for customizing the geom, e.g., 
 - change number of bins with `bins` argument,
@@ -99,7 +106,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points, boxplots. They specify the graphical representation of your data.
 .pull-left[
@@ -107,7 +114,7 @@ penguins %>%
 ```{r p_step_u4, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_bar(na.rm = TRUE) #<<
+    geom_bar(na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -117,7 +124,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Stats:** Statistical transformations provide a summary of the data. They can be used to transform a given variable without changing the plot type (i.e. geom).
 .pull-left[
@@ -126,7 +133,7 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
     geom_bar(
-      stat = "density", #<<
+      stat = "density", 
       na.rm = TRUE) 
 ```
 ]
@@ -137,7 +144,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Stats:** Statistical transformations provide a summary of the data. They can be used to transform a given variable without changing the plot type (i.e. geom).
 .pull-left[
@@ -145,7 +152,7 @@ penguins %>%
 ```{r p_step_u6, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_density(na.rm = TRUE) #<<
+    geom_density(na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -155,14 +162,14 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Data:** The data set (usually a `tibble`) from which to select the variables that are about to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
 .pull-left[
 **Bivariate example:**
 ```{r p_step_b1, eval=F}
 penguins %>% 
-  ggplot() #<<
+  ggplot() 
 ```
 ]
 .pull-right[
@@ -172,15 +179,15 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Aesthetics:** Mappings that describe how variables in my data are mapped to aesthetic attributes of the plot, such as axes, shapes, sizes or colors.
 .pull-left[
 **Bivariate example:**
 ```{r p_step_b2, eval=F}
 penguins %>% 
-  ggplot(aes(x = flipper_length_mm, #<<
-             y = body_mass_g)) #<<
+  ggplot(aes(x = flipper_length_mm, 
+             y = body_mass_g)) 
 ```
 ]
 .pull-right[
@@ -202,7 +209,7 @@ You can already see that ggplot2 extract the ranges in your variables.
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(na.rm = TRUE) #<<
+    geom_point(na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -212,7 +219,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 There are multiple ways of changing the color, shape or size aesthetics. Remember that using the `aes()` argument **maps** variable values to your aesthetic. The behavior differs for discrete vs. continuous variables.
 .pull-left[
@@ -221,9 +228,9 @@ There are multiple ways of changing the color, shape or size aesthetics. Remembe
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(
-    aes(color = species), #<<
-    na.rm = TRUE) 
+    geom_point(
+      aes(color = species), 
+      na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -233,7 +240,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 There are multiple ways of changing the color, shape or size aesthetics. Remember that using the `aes()` argument **maps** variable values to your aesthetic. The behavior differs for discrete vs. continuous variables.
 .pull-left[
@@ -242,9 +249,9 @@ There are multiple ways of changing the color, shape or size aesthetics. Remembe
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(
-    aes(color = bill_depth_mm), #<<
-    na.rm = TRUE) 
+    geom_point(
+      aes(color = bill_depth_mm), 
+      na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -254,7 +261,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 By specifying the `color` argument outside of the `aes()` argument, we **set** the color without considering the values of any other variable.
 .pull-left[
@@ -263,9 +270,9 @@ By specifying the `color` argument outside of the `aes()` argument, we **set** t
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(
-    color = "red", #<<
-    na.rm = TRUE) 
+    geom_point(
+      color = "red", 
+      na.rm = TRUE) 
 ```
 For truly customized coloring plots you may refer to [HTML color codes](https://www.w3schools.com/colors/colors_picker.asp) (also called *hex codes*, e.g., `#ff0000` for red) instead of specifying colors by name.
 ]
@@ -279,7 +286,7 @@ Remember: Whenever you specify something outside of `aes()`, it will not be mapp
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 We can do the same for changing the `shape` and `size` of our data points. Either by mapping them to the values of another variable or by setting them manually outside of the `aes()` argument.
 .pull-left[
@@ -288,10 +295,10 @@ We can do the same for changing the `shape` and `size` of our data points. Eithe
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(
-    aes(shape = species),
-    size = 4, #<<
-    na.rm = TRUE) 
+    geom_point(
+      aes(shape = species),
+      size = 4, 
+      na.rm = TRUE) 
 ```
 `ggplot2` provides 24 available shapes for customizing your plot. When specifying the shape outside of `aes()` you may refer to the shape's index (see [shape overview](https://ggplot2.tidyverse.org/reference/scale_shape-6.png)).
 ]
@@ -302,7 +309,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Facets:** Facets allow you to split your plot into multiple subplots based on the levels of one or more variables not yet part of your plot.
 .pull-left[
@@ -313,7 +320,7 @@ penguins %>%
              y = body_mass_g)) +
   geom_point(aes(shape = species), 
              na.rm = TRUE) +
-  facet_wrap(~year) #<<
+  facet_wrap(~year) 
 ```
 ]
 .pull-right[
@@ -332,9 +339,9 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(aes(shape = species),
-             na.rm = TRUE) +
-  facet_wrap(~year + island) #<<
+    geom_point(aes(shape = species),
+               na.rm = TRUE) +
+    facet_wrap(~year + island) 
 ```
 ]
 .pull-right[
@@ -347,7 +354,7 @@ lets go back to one of the previous plots
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Scales:** Scales control the aesthetic mappings by overriding the *default* settings. For example, they allow to refine the presentation of x- and y-axis, labels or color palettes.
 .pull-left[
@@ -356,9 +363,9 @@ lets go back to one of the previous plots
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(aes(color = species), size = 3,
-             na.rm = TRUE) +
-  scale_colour_brewer(palette = "Set3") #<<
+    geom_point(aes(color = species), size = 3,
+               na.rm = TRUE) +
+    scale_colour_brewer(palette = "Set3") 
 ```
 The family of `scale_colour_*()` functions enables you to adjust the values of your `color` aesthetic ex post (e.g., `scale_colour_brewer()` to select a palette from the famous [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) project). 
 
@@ -370,7 +377,7 @@ The family of `scale_colour_*()` functions enables you to adjust the values of y
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 **Scales:** Scales control the aesthetic mappings by overriding the *default* settings. For example, they allow to refine the presentation of x- and y-axis, labels or color palettes.
 .pull-left[
@@ -381,7 +388,7 @@ penguins %>%
              y = body_mass_g)) +
   geom_point(aes(color = species),
              na.rm = TRUE) +
-  scale_y_log10()  #<<
+  scale_y_log10()  
 ```
 Or use the `scale_*_log10()` functions to improve the readability of your plot in the presence of high-variance variables.
 ]
@@ -392,7 +399,7 @@ Or use the `scale_*_log10()` functions to improve the readability of your plot i
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Boxplots for numeric variables
@@ -416,7 +423,7 @@ print(penguins_long, n = 4)
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Boxplots for numeric variables
@@ -436,7 +443,7 @@ penguins_long %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Ordered bar chart
@@ -449,9 +456,9 @@ plot <- penguins %>%
 plot +
   geom_col(aes(x = prop, y = species))
 ```
-- We can easily store an `ggplot` object in a user-defined variable.
+- You can easily store an `ggplot` object in a user-defined variable.
 - Use `dplyr::count()` as shortcut for `group_by()` and `summarise(n = n())`.
-- You can either set `aes()` in `ggplot()` (*global*) or in `geom_()` (*local*). In the latter case the mapping is only active on the *geom*-level.
+- You can either set `aes()` and `data` in `ggplot()` (*global*) or in `geom_*()` (*local*). In the latter case the data and mappings are only active on the *geom*-level.
 ]
 .pull-right[
 ```{r ref.label='p_step_o2', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
@@ -459,11 +466,11 @@ plot +
 ]
 
 ???
-Global vs. Local setting also applies to the `data` argument.
+global vs. local: if you want to use different data sets for each layer.
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Ordered bar chart
@@ -486,7 +493,7 @@ plot +
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Adjacent bar chart
@@ -503,14 +510,14 @@ penguins %>%
 ```{r ref.label='p_step_o4', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
 ```
 ]
-.pull-left[
-.footnote[
+
+.pull-left[.footnote[
 *Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes a variable `x` and computes the `y`-quantity internally (e.g., the number of observations).*
 ]]
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Stacked bar chart
@@ -530,7 +537,7 @@ penguins %>%
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Stacked bar chart
@@ -552,7 +559,7 @@ In this crude example we use `forcats::fct_lump()` to lumpy together all factor 
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** High-quality density plot
@@ -575,7 +582,7 @@ p
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** High-quality density plot
@@ -597,7 +604,7 @@ p
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** High-quality density plot
@@ -607,7 +614,7 @@ p <- p +
     title = "Density Function for Three Penguin Species of Palmer Penguins",
     subtitle = "Palmer Archipelago (2007-2009)",
     caption = "Data: https://github.com/allisonhorst/palmerpenguins",
-    x = "Body Mass [grams]",
+    x = "Body mass [grams]",
     y = "Statistical density"
   )
 
@@ -621,7 +628,7 @@ p
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** High-quality density plot
@@ -640,7 +647,7 @@ The `theme` function allows to customize all elements of your plot which are not
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** High-quality density plot
@@ -666,7 +673,7 @@ p
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Violin Plot
@@ -675,7 +682,7 @@ penguins %>%
   ggplot(
     aes(x = species, y = body_mass_g)) +
     geom_violin(aes(fill = species), na.rm = T) +
-  theme_classic()
+    theme_classic()
 
 ggsave("./img/violin-plot.PNG",
        device = "png", dpi = 300)
@@ -690,7 +697,7 @@ ggsave("./img/violin-plot.PNG",
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 .pull-left[
 **Other examples:** Lines of Best Fit
@@ -699,8 +706,8 @@ penguins %>%
   drop_na %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(aes(color = species)) +
-  geom_smooth(method = "lm", se = T)#<<
+    geom_point(aes(color = species)) +
+    geom_smooth(method = "lm", se = T)
 ```
 - Use `geom_smooth()` to fit a smooth line to visualise the relationship between `x` and `y`.
 - For the `method` argument specify one of: *lm* (linear model), *glm* (generalized linear model), *gam* (generalized additive model), *loess* (local regression).
@@ -719,7 +726,7 @@ loess: local regression fits the relationship between y and x locally and allows
 
 ---
 
-##`ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
+## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
 By now, there is a whole ecosystem (aka **ggverse** [3]) of amazing packages around `ggplot2` that further extent its capabilities:
 .pull-left[
@@ -751,7 +758,7 @@ background-position: 95% 5%
 background-size: 15%
 layout: false
 
-##`plotly`: Interactive Web Graphics
+## `plotly`: Interactive Web Graphics
 
 ```{r, out.height='70%', out.width='100%'}
 plotly::ggplotly(p)

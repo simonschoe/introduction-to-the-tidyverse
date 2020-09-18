@@ -3,6 +3,13 @@ title: "07_dplyr"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `dplyr`:<br><br>A Grammar of Data Manipulation
+
+---
+
 background-image: url(https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,13 +17,7 @@ layout: true
 
 ---
 
-```{r, echo=F, message=F, warning=F}
-library(tidyverse)
-library(palmerpenguins)
-```
-
-
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 `dplyr` provides a set of functions for manipulating data frame objects (e.g., `tibbles`) while relying on a consistent grammar. Functions are intuitively represented by "verbs" that reflect the underlying operations and always output a new or modified data frame object.
 
@@ -40,9 +41,9 @@ comment
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
-**Operations on rows:** `filter()` picks rows that meet a logical criteria
+**Operations on rows:** `filter()` picks rows that meet a logical criteria, i.e. condition
 
 .pull-left[
 Filter for all penguins of type "Adelie":
@@ -74,7 +75,7 @@ Note that using `=` instead of `==` is a common mistakes for beginners (`<-` = `
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on rows:** `slice()` picks rows based on location
 
@@ -92,18 +93,18 @@ slice_sample to generate bootstrapped samples
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on rows:** `arrange()` changes the order of rows
 
-Return the three observed penguins with the smallest bmi: 
+Return the three observed penguins with the smallest body mass: 
 ```{r}
 penguins %>% 
   arrange(body_mass_g) %>% 
   slice_head(n = 3)  #equivalent to using slice_min(order_by = body_mass_g, n = 3)
 ```
 
-Return the three observed penguins with the highest bmi: 
+Return the three observed penguins with the highest body mass: 
 ```{r, eval=F}
 penguins %>% 
   arrange(desc(body_mass_g)) %>% 
@@ -115,7 +116,7 @@ arrange by default always sorts from smallest to largest
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
@@ -148,7 +149,7 @@ comment
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
@@ -188,14 +189,14 @@ penguins %>%
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `rename()` changes the column names
 
-Change the name of the column `body_mass_g` (`sex`) to `bmi` (`gender`):
+Change the name of the column `body_mass_g` (`sex`) to `bm` (`gender`):
 ```{r}
 penguins %>% 
-  rename(bmi = body_mass_g, gender = sex) %>% 
+  rename(bm = body_mass_g, gender = sex) %>% 
   colnames()
 ```
 Convert the name of the columns that include the string "mm" to upper case:
@@ -239,16 +240,16 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 
 .pull-left[
-Engineer a new `bmi` variable which is measured in kilo grams:
-```{r bmi_kg, eval=F}
+Engineer a new `bm_kg` variable which is measured in kilo grams:
+```{r bm_kg, eval=F}
 penguins %>% 
   mutate(
-    bmi_kg = body_mass_g / 1000,
+    bm_kg = body_mass_g / 1000,
     .keep = "all",
     .after = body_mass_g) %>% 
   slice_head(n = 3)
@@ -260,7 +261,7 @@ penguins %>%
 - For overriding a given column simply use the same column name.
 - For keeping only the new column use `dplyr::transmute()`.
 ]
-```{r, ref.label = 'bmi_kg', echo=F}
+```{r, ref.label = 'bm_kg', echo=F}
 ```
 
 ???
@@ -268,7 +269,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 
@@ -301,7 +302,7 @@ case_when:
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 .pull-left[
@@ -335,7 +336,7 @@ across:
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 
@@ -369,7 +370,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns
 
@@ -394,7 +395,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns
 
@@ -429,7 +430,7 @@ comment
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -438,8 +439,7 @@ penguins %>%
   group_by(species) %>%
   summarise(
     across(contains("mm"), ~mean(., na.rm = T), .names = "{.col}_avg"),
-    .groups = "drop"
-  )
+    .groups = "drop")
 ```
 
 Using `group_by()`, followed by `summarise()` and `ungroup()` reflects the **split-apply-combine paradigm** in data analysis: Split the data into partitions, apply some function to the data and then merge the results.
@@ -449,7 +449,7 @@ comment
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -466,7 +466,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -489,7 +489,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -510,7 +510,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -518,14 +518,14 @@ comments
 ```{r, eval=F}
 penguins %>% 
   group_by(species) %>% 
-  mutate(stand_bmi = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / #<<
+  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / #<<
            sd(body_mass_g, na.rm = TRUE)) #<<
 ```
 ```{r, echo=F}
 print(
   penguins %>% 
     group_by(species) %>% 
-    mutate(stand_bmi = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / 
+    mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / 
            sd(body_mass_g, na.rm = TRUE)), #<<
   n = 4)
 ```
@@ -535,25 +535,25 @@ here example of the z-transformation on a group level
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
 **`group_by()` a transformed column:** Provide a `mutate()`-like expression in your `group_by()` statement.
 ```{r, eval=F}
-bmi_breaks <- mean(penguins$body_mass_g, na.rm = T) -
+bm_breaks <- mean(penguins$body_mass_g, na.rm = T) -
   (-3:3) * sd(penguins$body_mass_g, na.rm = T)
 
 penguins %>% 
-  group_by(species, bmi_cat = cut(body_mass_g, breaks = bmi_breaks)) %>% #<<
+  group_by(species, bm_cat = cut(body_mass_g, breaks = bm_breaks)) %>% #<<
   summarise(count = n(), .groups = "drop")
 ```
 ```{r, echo=F}
-bmi_breaks <- mean(penguins$body_mass_g, na.rm = T) - (-3:3) * sd(penguins$body_mass_g, na.rm = T)
+bm_breaks <- mean(penguins$body_mass_g, na.rm = T) - (-3:3) * sd(penguins$body_mass_g, na.rm = T)
 
 print(
   penguins %>% 
-    group_by(species, bmi_cat = cut(body_mass_g, breaks = bmi_breaks)) %>% #<<
+    group_by(species, bm_cat = cut(body_mass_g, breaks = bm_breaks)) %>% #<<
     summarise(count = n(), .groups = "drop"),
   n = 5)
 ```
@@ -563,7 +563,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -579,7 +579,7 @@ Group by all unique `species`-`island` combinations and filter for the penguins 
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -597,8 +597,7 @@ print(
   n = 5)
 ```
 
-.pull-right[
-.footnote[
+.pull-right[.footnote[
 Find more information about `group_by()` by running `vignette("grouping")`.
 ]]
 
@@ -607,23 +606,23 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Some more selected `dplyr` functions:**
 
-**`dplyr::distinct()`:** select only unique rows.
+**`dplyr::distinct()`:** selects only unique rows
 ```{r, eval=F}
 penguins %>% 
   distinct(species, island)
 ```
 
-**`dplyr::pull()`:** extract single columns as vectors.
+**`dplyr::pull()`:** extracts single columns as vectors
 ```{r, eval=F}
 penguins %>% 
   pull(year) #equivalent to penguins$year
 ```
 
-**`dplyr::if_else()`:** extract single columns as vectors.
+**`dplyr::if_else()`:** applies a vectorized if-else-statement
 ```{r, eval=F}
 penguins %>% 
   select(species, island, body_mass_g) %>% 
@@ -635,19 +634,18 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## `dplyr`: A Grammar of Data Manipulation
 
 **Some more selected `dplyr` functions:**
 
-**`dplyr::lag() and dplyr::lead() `:** shift column values by `n`.
+**`dplyr::lag()` and `dplyr::lead()`:** shifts column values by an offset `n`
 ```{r, eval=F}
 penguins %>% 
   select(species, body_mass_g) %>% 
   mutate(
-    lagged_bmi = lag(body_mass_g, n = 1),
-    lead_bmi = lead(body_mass_g, n = 2))
+    lagged_bm = lag(body_mass_g, n = 1),
+    lead_bm = lead(body_mass_g, n = 2))
 ```
-
 
 **`dplyr::left_join()`, `dplyr::right_join()`, `dplyr::inner_join()` and `dplyr::full_join()`**: merge different data frames by matching rows based on keys (similar to joins performed in SQL).
 

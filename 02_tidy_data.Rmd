@@ -12,7 +12,7 @@ layout: true
 
 name: tidy data
 
-##The Concept of Tidy Data
+## The Concept of Tidy Data
 
 > Tidy data sets are all alike; but every messy data set is messy in its own way.  
 ~ [Hadley Wickham](https://r4ds.had.co.nz/tidy-data.html)
@@ -48,7 +48,7 @@ consequently, the following tools and examples will be geared towards working wi
 
 ---
 
-##The Concept of Tidy Data
+## The Concept of Tidy Data
 
 .pull-left[
 **Violations of the Tidy Data Principles:**

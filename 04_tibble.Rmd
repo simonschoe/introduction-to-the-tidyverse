@@ -3,6 +3,13 @@ title: "04_tibble"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `tibble`:<br><br>Simple Data Frames
+
+---
+
 background-image: url(https://raw.githubusercontent.com/tidyverse/tibble/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,11 +17,11 @@ layout: true
 
 ---
 
-##`tibble`: Simple Data Frames
+## `tibble`: Simple Data Frames
 
 `tibble` provides an 'enhanced' data frame object of class `tbl_df`, a so-called *tibble*. *Tibbles* can be created in three different ways:
 .pull-left[
-Create *tibble* from column vectors with `tibble()`:
+Create a *tibble* from column vectors with `tibble()`:
 ```{r, results=F}
 tibble::tibble(
   x = c("a", "b"),
@@ -22,7 +29,7 @@ tibble::tibble(
   z = c(T, F)
 )
 ```
-Create *tibble* row by row with `tribble()`:
+Create a *transposed tibble* row by row with `tribble()`:
 ```{r, results=F}
 tibble::tribble(
   ~x, ~y,  ~z,
@@ -32,7 +39,7 @@ tibble::tribble(
 ```
 ]
 .pull-right[
-Create *tibble* from existing data frames with `as_tibble()` and from named vectors with `enframe()`:
+Create a *tibble* from existing data frames with `as_tibble()` and from named vectors with `enframe()`:
 ```{r}
 df <- data.frame(
   x = c("a", "b"), y = c(1, 2), z = c(T, F)
@@ -44,11 +51,11 @@ tibble::as_tibble(df)
 ]
 
 ???
-comments
+c(x = "a", y = "b") %>% tibble::enframe(name = "x", value = "y")
 
 ---
 
-##`tibble`: Simple Data Frames
+## `tibble`: Simple Data Frames
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
@@ -62,7 +69,7 @@ comments
 
 ---
 
-##`tibble`: Simple Data Frames
+## `tibble`: Simple Data Frames
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
@@ -90,3 +97,7 @@ Find more information about `tibbles` by running `vignette("tibble")`.
 
 ???
 also an advantage of tibbles: Giving you better warning messages to confront you with problems early on.
+
+
+
+add glimpse example

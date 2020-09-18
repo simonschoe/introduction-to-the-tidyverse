@@ -47,13 +47,13 @@ style_mono_accent(
 ```{r packages, warning=F, message=F, echo=F}
 #install.packages("pacman")
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, glue, showtext)
-pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo")
+pacman::p_load(tidyverse, magrittr, glue, showtext, plotly, patchwork)
+pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
 ```
 
 name: agenda
 
-##Agenda
+## Agenda
 
 **1. Learning Objectives**
 
@@ -61,7 +61,7 @@ name: agenda
   1. What is the `Tidyverse`
   2. The Concept of Tidy Data
   
-**3. `palmerpenguins` Data Set**
+**3. `palmerpenguins`: Palmer Archipelago (Antarctica) Penguin Data**
 
 **4. The Core `Tidyverse` Packages**
   1. `magrittr`: A Forward-Pipe Operator for R
@@ -77,7 +77,7 @@ comment
 
 ---
 
-##Learning Objectives `r emo::ji("idea")`
+## Learning Objectives `r emo::ji("idea")`
 
 This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of package which ease your data science workflow in terms of data import, data clearning, data transformation and data visualization.
 
@@ -138,7 +138,7 @@ comments
 
 ---
 
-##Thank You!
+## Thank You!
 
 .pull-left[
 .center[**Right now:**]<br>
@@ -159,7 +159,7 @@ But not all is great in the `Tidyverse` - be aware of its [downsides](https://gi
 
 ---
 
-##Further Resources
+## Further Resources
 
 Best read for starting in the `Tidyverse`: **Grolemund, G.; Wickham H. (2017):** R for Data Science. URL: https://r4ds.had.co.nz/. Online Publication 2017.
 
@@ -167,7 +167,7 @@ Stay up-to-date with recent developments in the `Tidyverse`: https://www.tidyver
 
 Watch live-coding sessions related to the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) Project, e.g., the episodes by David Robinson: https://www.youtube.com/user/safe4democracy/videos
 
-##Credits
+## Credits
 
 Educational resources are inspired by 
 - workshop materials of Garrett Grolemund:

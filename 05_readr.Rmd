@@ -3,6 +3,13 @@ title: "05_readr"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `readr`:<br><br>Read Rectangular Text Data
+
+---
+
 background-image: url(https://raw.githubusercontent.com/tidyverse/readr/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,9 +17,9 @@ layout: true
 
 ---
 
-##`readr`: Read Rectangular Text Data
+## `readr`: Read Rectangular Text Data
 
-`readr` provides read functions for multiple different file formats:
+`readr` provides read and write functions for multiple different file formats:
 
 - `read_delim()`: general delimited files
 - `read_csv()`: comma separated files
@@ -21,7 +28,7 @@ layout: true
 - `read_table()`: white-space separated files
 - `read_log()`: web log files
 
-In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
+Conveniently, the `write_*()` functions work analog. In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
 
 .footnote[
 *Note: In most European countries MS Excel is using `;` as the common delimiter, which can be important by simply switching to the `read_csv2()` function.*
@@ -32,9 +39,14 @@ In addition, use the `readxl` package for Excel files or the `haven` package for
 
 ---
 
-##`readr`: Read Rectangular Text Data
+## `readr`: Read Rectangular Text Data
 
-Let's try it out by reading in some penguins data (note that the output of any `read_()` function is a `tibble` object.). For the purpose of illustrating the `readr` package the `penguins` data has been written to a csv-file.
+Let's try it out by reading in some penguins data (note that the output of any `read_*()` function is a `tibble` object.). For the purpose of illustrating the `readr` package the `penguins` data is written to a csv-file a priori using `write_csv()`.
+
+```{r}
+penguins %>% 
+  readr::write_csv("./data/penguins.csv")
+```
 
 ```{r}
 penguins <- readr::read_csv("./data/penguins.csv")
@@ -45,7 +57,7 @@ comment
 
 ---
 
-##`readr`: Read Rectangular Text Data
+## `readr`: Read Rectangular Text Data
 
 Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., integer, numeric, character, factor, date, logical) from the first 1000 rows and parses the columns accordingly using the built-in `parse_()` functions.
 
@@ -62,11 +74,11 @@ readr::read_csv(
 ```
 
 ???
-comments
+komischer bindestrich
 
 ---
 
-##`readr`: Read Rectangular Text Data
+## `readr`: Read Rectangular Text Data
 
 Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., integer, numeric, character, factor, date, logical) from the first 1000 rows and parses the columns accordingly using the built-in `parse_()` functions.
 

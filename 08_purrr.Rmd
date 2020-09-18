@@ -3,6 +3,13 @@ title: "08_purrr"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `purrr`:<br><br>Functional Programming Tools
+
+---
+
 background-image: url(https://raw.githubusercontent.com/tidyverse/purrr/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,9 +17,9 @@ layout: true
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
-`purrr` facilitates functional programming (*FP*) with data frame objects (e.g., `tibbles`) in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a data manipulation pipeline.
+`purrr` facilitates *functional programming* (FP) with data frame objects (e.g., `tibbles`) in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a data manipulation pipeline.
 
 **Three types of `map_*()` function:**
 - `map(.x, .f, ...)` takes the input `.x` and applies `.f` to each element in `.x`.
@@ -25,7 +32,7 @@ By default `map()` returns a list. If you want to be more explicit about the out
 - `map_lgl()` to receive an output type logical,
 - `map_chr()` to receive an output type character,
 - `map_int()` to receive an output type integer,
-- `map_dbl()` to receive an output type double, or
+- `map_dbl()` to receive an output type double,
 - `map_df()` to receive a data frame output.
 ]
 .pull-right[
@@ -40,24 +47,23 @@ Comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 **Use Case:** Applying the z-normalization to multiple variables
 
-First, write a *named function* for performing z-normalization [1] that takes a vector `.x` as input.
-
+First, write a *named function* for performing z-normalization that takes a vector `.x` as input.
 ```{r}
 z_transform <- function(.x) {
-  mean <- mean(.x)
-  sd <- sd(.x)
-  return( (.x - mean) / sd )
+  mean <- mean(.x); sd <- sd(.x); return( (.x - mean) / sd )
 }
 ```
 
-Second, draw samples from a Gaussian using `rnorm(n, mean, sd)` and store them as double vectors in a list.
-
+Second, draw samples from the `penguin` data set and store them as double vectors in a list.
 ```{r}
-samples <- list(sample1 = rnorm(8, 75, 22), sample2 = rnorm(8, 52, 11), sample3 = rnorm(8, 99, 33))
+samples <- list(
+  sample1 = slice_sample(penguins, n = 10)$bill_length_mm,
+  sample2 = slice_sample(penguins, n = 10)$bill_depth_mm,
+  sample3 = slice_sample(penguins, n = 10)$flipper_length_mm)
 ```
 ```{r, echo=F}
 samples
@@ -68,7 +74,7 @@ here: different means and sd
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 **Use Case:** Applying the z-normalization to multiple variables
 
@@ -89,7 +95,7 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 **Use Case:** Applying the z-normalization to multiple variables
 
@@ -114,9 +120,9 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
-```{r, echo=F, out.width='80%'}
+```{r, echo=F, out.width='80%', fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
 ```
 
@@ -145,7 +151,7 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 Check the number of distinct values per column:
 ```{r}
@@ -158,7 +164,7 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 Check the highest value in each subset of the data (e.g., largest `flipper_length_mm` per `sex`):
 ```{r}
@@ -173,7 +179,7 @@ drop_na: because otherwise I would also have a subgroup of NA
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 `map()` also comes in handy, if you like to produce a series of identical plots, each depicting a separate subset of the underlying data:
 ```{r, out.height='20%', out.width='20%'}
@@ -216,12 +222,11 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
-Finally, `map()` is really powerful in the context of modelling. In the following we fit a linear regression model for each `species`-`island` subset.
+Finally, `map()` is really powerful in the context of modeling. In the following we fit a linear regression model for each `species`-`island` subset.
 
-- Create a nested data frame that contains a `tibble` of data for each `species`-`island` combination.
-
+First, we create a nested data frame that contains a `tibble` of data for each `species`-`island` combination.
 ```{r}
 nested_penguins <- penguins %>% 
   drop_na %>% 
@@ -232,8 +237,7 @@ nested_penguins <- penguins %>%
 nested_penguins
 ```
 
-.pull-right[
-.footnote[
+.pull-right[.footnote[
 *Note: For accessing elements in a nested `tibble` you may use the `pluck()`. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)`.*
 ]]
 
@@ -242,9 +246,9 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
-- Fit a linear model to each data subset. In our model `body_mass_g` is regressed (`~`) on all other variables (denoted by a dot in the `lm()` formula).
+Second, we fit a linear model to each data subset. In our model `body_mass_g` is regressed (`~`) on all other variables (denoted by a dot in the `lm()` formula).
 
 ```{r}
 nested_penguins <- nested_penguins %>% 
@@ -259,25 +263,27 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
-- For each linear model, generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, use the `unnest()` function to receive a tidy data frame.
+Third, for each linear model, we generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, we use `unnest()` to receive a tidy data frame.
 
 ```{r, results=F}
 nested_penguins %>% 
   mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
+  select(-data, -lin_reg) %>% 
   unnest(coefs)
 ```
 ```{r, echo=F}
 print(
   nested_penguins %>% 
     mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
+    select(-data, -lin_reg) %>% 
     unnest(coefs),
   n = 4)
 ```
 
 .footnote[
-*Note: You may eventually want to drop the `lin_reg` and `data`, otherwise you carry around a lot of redundant data in your `tibble` which may exceed your memory storage capacity very quickly.*
+*Note: Here we eventually dropped the `lin_reg` and `data` columns, otherwise we would have carried around a lot of redundant data which may exceed our memory storage capacity very quickly.*
 ]
 
 ???
@@ -285,7 +291,7 @@ there are packages for automatically doing this with just one line of code, see 
 
 ---
 
-##`purrr`: Functional Programming Tools
+## `purrr`: Functional Programming Tools
 
 .pull-left[
 .center[
@@ -305,7 +311,6 @@ knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
 ```
 ]]
 
-.footnote[
-.pull-left[
+.footnote[.pull-left[
 For a great tutorial that help you master the notion of functional programming with `R` see this [blog post](http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map) by Rebecca Barter.
 ]]

@@ -3,6 +3,13 @@ title: "03_magrittr"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `palmerpenguins`:<br><br>Palmer Archipelago (Antarctica) Penguin Data
+
+---
+
 background-image: url(https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,7 +17,7 @@ layout: true
 
 ---
 
-##`palmerpenguins` Data Set
+## `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 .pull-left[
 From here on, to illustrate the functioanilities for the `tidyverse` core packages we use data from the `palmerpenguins` package by [Allison Horst](https://allisonhorst.github.io/palmerpenguins/).
 
@@ -33,11 +40,18 @@ comments
 
 ---
 
-##`palmerpenguins` Data Set
+## `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 
 ```{r}
 penguins
 ```
+
+---
+
+class: middle, center, inverse
+layout: false
+
+# `magrittr`:<br><br>A Forward-Pipe Operator for R
 
 ---
 
@@ -48,7 +62,7 @@ layout: true
 
 ---
 
-##`magrittr`: A Forward-Pipe Operator for R
+## `magrittr`: A Forward-Pipe Operator for R
 
 .pull-left[
 `magrittr` comes with a set of operators which improve the readability of your code:
@@ -74,7 +88,7 @@ Find more information about `%>%` by running `vignette("magrittr")`. Type `%>%` 
 ]
 
 ???
-comments
+The exposition operator: %$% (explodes out variables in a data frame, no need to use pull())
 
 ---
 

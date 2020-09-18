@@ -3,6 +3,12 @@ title: "01_intro"
 output: html_document
 ---
 
+class: middle, center, inverse
+
+# Introduction to the `Tidyverse`
+
+---
+
 background-image: url(https://www.tidyverse.org/images/hex-tidyverse.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,7 +16,7 @@ layout: true
 
 ---
 
-##What is the `Tidyverse`?
+## What is the `Tidyverse`?
 
 > The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -40,7 +46,7 @@ Can also be seen as a philosophy of how to write code in R. Often when googling 
 
 ---
 
-##What is the `Tidyverse`?
+## What is the `Tidyverse`?
 
 > The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -70,7 +76,7 @@ R data structures: atomic vector (character, integer, numeric, logical, complex)
 
 ---
 
-##What is the `Tidyverse`?
+## What is the `Tidyverse`?
 
 > The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -106,7 +112,7 @@ Explain:
 
 ---
 
-##What is the `Tidyverse`?
+## What is the `Tidyverse`?
 
 > The tidyverse is an opinionated collection of R packages designed **for data science**. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -135,19 +141,19 @@ src: https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6
 
 ---
 
-##What is the `Tidyverse`?
+## What is the `Tidyverse`?
 
 > The tidyverse is an opinionated collection of R packages designed for data science. All packages share an **underlying design philosophy, grammar, and data structures**. ~ [tidyverse.org](https://www.tidyverse.org/)
 
 This underlying design philosophy and grammar boils down to a consistent and easy-to-use API:
 
-- The `tibble` as the core underlying data structure.
-- Extensive use of the `%>%`-operator for gluing together multiple function calls.
-- Consistently applied naming conventions (e.g., function names in *snakecase* [[Link](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/coding_cases.png)]).
+- The `tibble` as the core underlying data structure
+- Extensive use of the `%>%`-operator for gluing together multiple function calls
+- Consistently applied naming conventions (e.g., function names in *snakecase* [[Link](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/other-stats-artwork/coding_cases.png)])
 - Consistent structuring of function arguments (e.g., `arg1 = data.frame, arg2 = col names, ...`)
 - ...
 
-When familiar with the `tidyverse` syntax you will be able to easily transfer your knowledge about one function or package to other components of the `tidyverse`.
+The `tidyverse` syntax can be viewed as a "dialect" of `R`. When you have familiarized yourself with it, you will be able to easily transfer your knowledge about one function or package to other components of the `tidyverse`. Just like learning a new language.
 
 .footnote[
 For further information cf.

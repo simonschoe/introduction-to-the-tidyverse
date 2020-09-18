@@ -3,6 +3,13 @@ title: "06_tidyr"
 output: html_document
 ---
 
+class: middle, center, inverse
+layout: false
+
+# `tidyr`:<br><br>Tidy Messy Data
+
+---
+
 background-image: url(https://raw.githubusercontent.com/tidyverse/tidyr/master/man/figures/logo.png)
 background-position: 95% 5%
 background-size: 7.5%
@@ -10,7 +17,7 @@ layout: true
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 `tidyr` provides several functions that help you to bring your data into *tidy data* format (cf. [tidy data](#tidy data)), i.e. change the structure of your data set.
 
@@ -25,7 +32,7 @@ comments
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 **“Pivotting”** which converts between long and wide forms using `pivot_longer()` and `pivot_wider()`:
 
@@ -42,11 +49,11 @@ tidy_penguins %>% head(6)
 Dimensionality: [`r dim(tidy_penguins)`]
 
 ???
-comments
+with pivot_wider we can basically invert this operation
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 .right[
 ```{r, echo=F, out.height='80%', out.width='80%'}
@@ -67,7 +74,7 @@ src: https://raw.githubusercontent.com/apreshill/teachthat/master/pivot/pivot_lo
 
 name: tidyr_nest
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 **"Nesting"** which groups similar data such that each group becomes a single row in a data frame (the structure is then referred to as *nested data frame*).
 
@@ -94,9 +101,9 @@ comments
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
-**“Rectangling”** which disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy* format (see `unnest_longer()`, `unnest_wider()`).
+**“Rectangling”** which disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy* format (see `unnest()`, `unnest_longer()` and `unnest_wider()`).
 
 **"Splitting"** and **"combining"** to transform a single character column into multiple columns and vice versa.
 
@@ -113,7 +120,30 @@ Here again, I am only presenting the first 6 rows.
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## Excursus: The RStudio "Help"-Pane
+
+.center[
+```{r, echo=F}
+countdown::countdown(
+  minutes = 2, seconds = 0, 
+  left = 0, right = 0, top = 0.5, bottom = 0.5,
+  padding = "50px",
+  margin = "7.5%",
+  font_size = "5em"
+)
+```
+]
+
+???
+1. run help(unite) or ?unite or use pane itself for searching
+2. see from which package the function stems
+3. find a description, how to use the function, the arguments and their meaning, details of how it is implemented (e.g. `lm`), values (i.e. the output), examples, authors, references (where you can read more about the implemented method) 
+4. talk about default values for arguments as well as positional and keyword arguments
+5. search for "rectangling" to illustrate the integration of vignettes
+
+---
+
+## `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
@@ -121,7 +151,7 @@ Here again, I am only presenting the first 6 rows.
 incompl_penguins <- tibble(
   species = c(rep("Adelie", 2), rep("Gentoo", 1), rep("Chinstrap", 1)),
   year = c(2007, 2008, 2008, 2007),
-  value = rnorm(4, mean = 50, sd = 15)
+  value = c(rnorm(3, mean = 50, sd = 15), NA)
 )
 ```
 ```{r}
@@ -138,28 +168,21 @@ incompl_penguins %>%
 ]
 
 ???
-comments
+comment
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
-```{r, echo=F}
-incompl_penguins2 <- incompl_penguins %>% 
-  tidyr::complete(
-    species, year,
-    fill = list(value = NA)
-  )
-```
 ```{r}
-incompl_penguins2
+incompl_penguins
 ```
 ]
 .pull-right[
 ```{r}
-incompl_penguins2 %>% 
+incompl_penguins %>% 
   tidyr::drop_na(value)
 ```
 ]
@@ -169,52 +192,52 @@ comments
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
 
 ```{r}
-incompl_penguins2
+incompl_penguins
 ```
 ]
 .pull-right[
 ```{r}
-incompl_penguins2 %>% 
+incompl_penguins %>% 
   tidyr::fill(value, .direction = "down")
 ```
 ]
 
 ???
-comments
+Note: function arguments preceded by a dot in the tidyverse may have one of two reasons:
+- the function is still pre-mature, i.e. developers still think about the best of implementing and naming the function
+- the function is regularly applied within another function so that you dont confuse function arguments between the inner and outer function
 
 ---
 
-##`tidyr`: Tidy Messy Data
+## `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
 ```{r}
-incompl_penguins2
+incompl_penguins
 ```
 ]
 .pull-right[
 ```{r}
-incompl_penguins2 %>%
+incompl_penguins %>%
   tidyr::replace_na(
     replace = list(
-      value = mean(.$value,na.rm = T)
+      value = mean(.$value, na.rm = T)
     )
   )
 ```
 ]
 
-.pull-left[
-.footnote[
+.pull-left[.footnote[
 Find more information and functions  
 on the `tidyr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
-]
-]
+]]
 
 ???
 comments
