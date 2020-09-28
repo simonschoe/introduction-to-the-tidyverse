@@ -22,7 +22,7 @@ layout: true
 
 
 > Its primary goal is to facilitate a conversation between a human and a computer about data.  
-~ [Hadley Wickham](https://joss.theoj.org/papers/10.21105/joss.01686.pdf)
+~ [Wickham, H., et al. (2019)](#references)
 
 .pull-left[
 .center[
@@ -81,7 +81,7 @@ R data structures: atomic vector (character, integer, numeric, logical, complex)
 > The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
 ```{r, eval=F}
-install.packages("tidyverse") #[1]
+install.packages("tidyverse") #equivalent to `install.packages("ggplot2")`, `install.packages("tibble")`, `install.packages("tidyr")`, `install.packages("readr")`, ...
 library(tidyverse)
 ```
 ```
@@ -98,10 +98,6 @@ v readr   1.3.1     v forcats 0.5.0
 x dplyr::filter() masks stats::filter()
 x dplyr::lag()    masks stats::lag()
 ```
-
-.footnote[
-[1]: This is equivalent to running `install.packages("ggplot2")`, `install.packages("tibble")`, `install.packages("tidyr")`, `install.packages("readr")`, ...
-]
 
 ???
 Explain:
@@ -124,16 +120,15 @@ knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df
 <br><br>
 **Import:** `readr`  
 **Tidy:** `tidyr`  
-**Transform:** `dplyr`, `forcats`, `stringr` [1]  
+**Transform:** `dplyr`, `forcats`, `stringr`  
 **Visualise:** `ggplot2`  
-**Model:** `tidymodels`[2]  
-**Communicate:** `rmarkdown`[3]  
+**Model:** `tidymodels`[1]  
+**Communicate:** `rmarkdown`[2]  
 **Program:** `magrittr`, `purrr`, `tibble`
 
 .footnote[
-[1]: Will not be in the focus of this workshop.  
-[2]: For further information refer to our `tidymodels` workshop.  
-[3]: For further information refer to our `rmarkdown` workshop.
+[1]: For further information refer to our `tidymodels` workshop.  
+[2]: For further information refer to our `rmarkdown` workshop.
 ]
 
 ???
@@ -156,9 +151,7 @@ This underlying design philosophy and grammar boils down to a consistent and eas
 The `tidyverse` syntax can be viewed as a "dialect" of `R`. When you have familiarized yourself with it, you will be able to easily transfer your knowledge about one function or package to other components of the `tidyverse`. Just like learning a new language.
 
 .footnote[
-For further information cf.
-**Tidyverse team (2020):** Tidyverse design guide. URL: https://design.tidyverse.org/;
-**Wickham, H. (2019):** The tidy tools manifesto. URL: https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html.
+*Note: For further information cf. [[2]](#references) and [[3]](#references).*
 ]
 
 ???

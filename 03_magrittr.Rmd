@@ -84,7 +84,7 @@ knitr::include_graphics("https://tenor.com/view/angry-merlin-pipe-mad-smoke-gif-
 **The "Tee" Operator:** `%T>%` (used for the side-effect of a function, e.g., plotting or writing)
 
 .footnote[
-Find more information about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: *ctrl + shift + M*.
+_Note: Find more information about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: *ctrl + shift + M*._
 ]
 
 ???

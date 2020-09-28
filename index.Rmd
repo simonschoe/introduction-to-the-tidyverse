@@ -44,10 +44,35 @@ style_mono_accent(
 )
 ```
 
+```{r metathis, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_name("github-repo" = "simonschoe/Introduction-to-the-Tidyverse") %>% 
+  meta_social(
+    title = "Introduction to the Tidyverse",
+    description = paste(
+      "2 hours introductory workshop on the `tidyverse` meta-package as part of the",
+      "*Machine Learning in R* course at University of Münster (winter term 2020/21)."),
+    url = "https://simonschoe.github.io/Introduction-to-the-Tidyverse/#1",
+    image = "https://github.com/simonschoe/Introduction-to-the-Tidyverse/tree/master/custom/social-card.jpg",
+    image_alt = paste(
+      "Title slide of Introduction to the Tidyverse:", 
+      "2 hours introductory workshop on the `tidyverse` meta-package as part of the",
+      "*Machine Learning in R* course at University of Münster (winter term 2020/21)."),
+    og_type = "website",
+    og_author = "Simon Schölzel",
+    twitter_card_type = "summary_large_image"
+  )
+```
+
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+```
+
 ```{r packages, warning=F, message=F, echo=F}
 #install.packages("pacman")
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, magrittr, glue, showtext, plotly, patchwork)
+pacman::p_load(tidyverse, magrittr, glue, showtext, plotly, patchwork, ggforce)
 pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
 ```
 
@@ -79,7 +104,7 @@ comment
 
 ## Learning Objectives `r emo::ji("idea")`
 
-This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of package which ease your data science workflow in terms of data import, data clearning, data transformation and data visualization.
+This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of package which ease your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
 
 More specifically, after this workshop you should
 - be familiar with the main tools of the `Tidyverse` and how it differs from `base R`,<br><br>
@@ -159,24 +184,53 @@ But not all is great in the `Tidyverse` - be aware of its [downsides](https://gi
 
 ---
 
+name: references
+
+## References
+
+[1]: **Wickham, H., et al. (2019):** Welcome to the Tidyverse. Journal of Open Source Software, Vol. 4, 2019 No. 43, p. 1686. URL: https://joss.theoj.org/papers/10.21105/joss.01686.pdf.
+
+[2]: **Tidyverse team (2020):** Tidyverse Design Guide. URL: https://design.tidyverse.org/.
+
+[3]: **Wickham, H. (2019):** The Tidy Tools Manifesto. URL: https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html.
+
+[4]: **Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html, chapter 12 (Tidy data).
+
+[5]: **Barter, R. (2019):** Learn to purrr. URL: http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map.
+
+[6]: **Wickham, H. (2010):** A Layered Grammar of Graphics. Journal of Computational and Graphical Statistics, Vol. 19, 2010, No. 1, pp. 3-28.
+
+[7]: **Wilkinson, L. (2005):** The Grammar of Graphics. Springer: New York 2005.
+
+---
+
+name: references-2
+
+## References
+
+[8]: **Sarkar, D. (2018):** A Comprehensive Guide to the Grammar of Graphics for Effective Visualization of Multidimensional Data. towardsdatascience 2018-09-12. URL: https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149).
+
+[9]: **Gahner, E. (2020):** Awesome `ggplot2`. GitHub 2020-09-25. URL: https://github.com/erikgahner/awesome-ggplot2.
+
+---
+
 ## Further Resources
 
-Best read for starting in the `Tidyverse`: **Grolemund, G.; Wickham H. (2017):** R for Data Science. URL: https://r4ds.had.co.nz/. Online Publication 2017.
+Best read for starting in the `tidyverse`:  
+**Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html.
 
-Stay up-to-date with recent developments in the `Tidyverse`: https://www.tidyverse.org/blog/
+Additional resource for diving deeper into the world of `ggplot2`:  
+**Wickham, H/Navarro, D./Lin Pedersen, T. (2020):** ggplot2: Elegant Graphics for Data Analysis. 3rd. edition, Online Publication 2020. URL: https://ggplot2-book.org/. 
+
+Stay up-to-date with recent developments in the `tidyverse`: https://www.tidyverse.org/blog/
 
 Watch live-coding sessions related to the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) Project, e.g., the episodes by David Robinson: https://www.youtube.com/user/safe4democracy/videos
 
 ## Credits
 
-Educational resources are inspired by 
-- workshop materials of Garrett Grolemund:
-https://github.com/rstudio-education/remaster-the-tidyverse
-- blog posts by Mine Çetinkaya-Rundel of the RStudio Education team:
-https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/
+Educational resources are inspired by [workshop materials](https://github.com/rstudio-education/remaster-the-tidyverse) of Garrett Grolemund and [blog posts](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/) by Mine Çetinkaya-Rundel of the RStudio Education team.
 
-`Tidyverse` artworks and illustration are provided by Allison Horst:
-https://github.com/allisonhorst/stats-illustrations
+`tidyverse` [artworks and illustration](https://github.com/allisonhorst/stats-illustrations) are provided by Allison Horst.
 
 ???
 convert presentation to pdf:

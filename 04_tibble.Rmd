@@ -59,7 +59,7 @@ c(x = "a", y = "b") %>% tibble::enframe(name = "x", value = "y")
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
-**1) Printing:** `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
+1) **Printing:** `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
 ```{r, echo=T}
 penguins #adjust using print(tibble, n = 5) or options(tibble.print_max = 5)
 ```
@@ -73,7 +73,7 @@ comments
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
-**2) Subsetting:** Subsetting a `tibble` (`[]`) always returns another `tibble` and never a vector (in contrast to standard `data.frame` objects).
+2) **Subsetting:** Subsetting a `tibble` (`[]`) always returns another `tibble` and never a vector (in contrast to standard `data.frame` objects).
 .pull-left[
 ```{r}
 penguins[,"species"] %>%
@@ -89,10 +89,10 @@ penguins %>%
 ```
 ]
 
-**3) Partial Matching:** Subsetting with `tibbles` does not allow for partial matching, i.e. you must always provide the whole column name.
+3) **Partial Matching:** Subsetting with `tibbles` does not allow for partial matching, i.e. you must always provide the whole column name.
 
 .footnote[
-Find more information about `tibbles` by running `vignette("tibble")`.
+*Note: Find more information about `tibbles` by running `vignette("tibble")`.*
 ]
 
 ???

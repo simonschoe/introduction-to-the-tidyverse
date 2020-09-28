@@ -19,14 +19,13 @@ layout: true
 
 ## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
-`ggplot2` is Hadley Wickham's reimplementation [1] of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [2]. It provides a large amount of functions for generating high-quality graphs in layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
+`ggplot2` is Hadley Wickham's reimplementation [[6]](#references) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [[7]](#references). It provides a large amount of functions for generating high-quality graphs in layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
 <br><br>
 ```{r, echo=F, out.width='70%', fig.align='center'}
 knitr::include_graphics("./img/grammar-of-graphic-layers.png")
 ```
 <br>
-Source: [towardsdatascience.com](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149)
-
+Source: [[8]](#references-2)
 
 ???
 Where `dplyr` provides a grammar for data manipulation, `ggplot2` does the same for plotting
@@ -62,7 +61,7 @@ penguins %>%
 
 .footnote[
 .pull-left[
-Again, a good go-to-guide when crafting visualisations with `ggplot2` is the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf).
+*Note: Again, a good go-to-guide when crafting visualisations with `ggplot2` is the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf).*
 ]]
 
 ---
@@ -318,9 +317,9 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(aes(shape = species), 
-             na.rm = TRUE) +
-  facet_wrap(~year) 
+    geom_point(aes(shape = species), 
+               na.rm = TRUE) +
+    facet_wrap(~year) 
 ```
 ]
 .pull-right[
@@ -386,9 +385,9 @@ The family of `scale_colour_*()` functions enables you to adjust the values of y
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(aes(color = species),
-             na.rm = TRUE) +
-  scale_y_log10()  
+    geom_point(aes(color = species),
+               na.rm = TRUE) +
+    scale_y_log10()  
 ```
 Or use the `scale_*_log10()` functions to improve the readability of your plot in the presence of high-variance variables.
 ]
@@ -511,7 +510,7 @@ penguins %>%
 ```
 ]
 
-.pull-left[.footnote[
+.footnote[.pull-left[
 *Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes a variable `x` and computes the `y`-quantity internally (e.g., the number of observations).*
 ]]
 
@@ -638,7 +637,7 @@ p <- p +
 
 p
 ```
-The `theme` function allows to customize all elements of your plot which are not immediately related to your data, e.g., titles, labels, fonts, background, or legends. `ggplot2` also comes with a set of predefines, ready-2-go themes (`theme_*()`) .
+The `theme` function allows to customize all elements of your plot which are not immediately related to your data, e.g., titles, labels, fonts, background, or legends. `ggplot2` also comes with a set of predefined themes (`theme_*()`) .
 ]
 .pull-right[
 ```{r ref.label='p_step_o10', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
@@ -728,13 +727,14 @@ loess: local regression fits the relationship between y and x locally and allows
 
 ## `ggplot2`: Create Elegant Data Visualisations<br>Using the Grammar of Graphics
 
-By now, there is a whole ecosystem (aka **ggverse** [3]) of amazing packages around `ggplot2` that further extent its capabilities:
+By now, there is a whole ecosystem (aka the **ggverse** [[9]](#references-2)) of amazing packages around `ggplot2` that further extent its capabilities:
 .pull-left[
 - `scales`: Scale Functions for Visualization
 - `ggtext`: Improved Text Rendering Support for `ggplot2`
 - `ggraph`: An Implementation of Grammar of Graphics for Graphs and Networks
-- `patchwork`: The Composer of Plots
 - `plotly`: Create Interactive Web Graphics via `plotly.js`
+- `patchwork`: The Composer of Plots
+- `ggforce`: Accelerating `ggplot2`
 - ...
 ]
 .pull-right[
@@ -743,13 +743,8 @@ knitr::include_graphics("https://tenor.com/view/shocked-po-kung-fu-panda-gif-425
 ```
 ]
 
-.footnote[
-.pull-left[
-[3]: For a comprehensive overview of the *ggverse* visit the GitHub page of [Erik Gahner](https://github.com/erikgahner/awesome-ggplot2).
-]]
-
 ???
-comments
+ggforce: extensiuon off ggplot2 functionality to allows for more customizations
 
 ---
 
@@ -774,7 +769,7 @@ background-position: 95% 5%
 background-size: 7.5%
 layout: false
 
-##`patchwork`: The Composer of Plots
+## `patchwork`: The Composer of Plots
 
 .pull-left[
 ```{r, out.width='75%', out.height='75%', fig.retina=3, fig.align='center'}
@@ -794,15 +789,31 @@ comments
 
 ---
 
-##References
-[1]: **Wickham, H. (2010):** A Layered Grammar of Graphics. Journal of Computational and Graphical Statistics, Vol. 19, No. 1, pp. 3-28, DOI: 10.1198/jcgs.2009.07098.
+background-image: url(https://raw.githubusercontent.com/thomasp85/ggforce/master/man/figures/logo.png)
+background-position: 95% 5%
+background-size: 7.5%
+layout: false
 
-[2]: **Wilkinson, L. (2005):** The Grammar of Graphics. Springer: New York 2005.
+## `ggforce`: Accelerating `ggplot2`
 
-##Additional Resources
+.pull-left[
+```{r ggforce, eval=F}
+penguins %>% 
+  drop_na %>% 
+  ggplot(aes(x = .panel_x, y = .panel_y, col = sex, fill = sex)) +
+    ggforce::geom_autopoint(alpha = 0.5) +
+    ggforce::geom_autohistogram(alpha = 0.5) +
+    ggforce::facet_matrix(
+      rows = vars(species, island, body_mass_g, flipper_length_mm),
+      switch = "both", layer.diag = 2) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90))
+```
+]
+.pull-right[
+```{r ref.label='ggforce', echo=F, out.width='75%', out.height='75%', fig.retina=3, fig.align='center'}
+```
+]
 
-**Grolemund, G.; Wickham H. (2017):** R for Data Science. URL: https://r4ds.had.co.nz/. Chapter 3 and 28, Online Publication 2017.
-
-**Wickham, H. (2020):** ggplot2: Elegant Graphics for Data Analysis. URL: https://ggplot2-book.org/. 3rd. edition, Online Publication 2020.
-
-**Chang, W. (2013):** R Graphics Cookbook. O'Reilly 2013.
+???
+plot matrix for EDA

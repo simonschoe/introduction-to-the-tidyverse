@@ -312,5 +312,74 @@ knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
 ]]
 
 .footnote[.pull-left[
-For a great tutorial that help you master the notion of functional programming with `R` see this [blog post](http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map) by Rebecca Barter.
+*Note: For a great tutorial that helps you master the notion of functional programming with `R` see [[5]](#references).*
 ]]
+
+---
+
+## `purrr`: Functional Programming Tools
+
+Finally, `purrr` also provides convenient [wrapper functions](https://en.wikipedia.org/wiki/Wrapper_function) for **error handling**. These come in handy if your are iterating over a very large data set and your program would simply stop if an error occurs and you would loose the whole progress.
+
+For example, at some point you might want train a separate prediction model (`lm`) for each unique value of `species` (`r penguins$species %>% unique`). Unfortunately, the following code is throwing an error...
+```{r}
+grouped_penguins <- penguins %>% 
+  mutate(across(c(sex, island), as.factor)) %>% 
+  group_by(species)
+
+```
+```{r, eval=F}
+grouped_penguins %>% 
+  group_map(.f = ~lm(flipper_length_mm ~ bill_length_mm + island, data = .))
+```
+```
+> Error in `contrasts<-`(`*tmp*`, value = contr.funs[1 + isOF[nn]]) :
+> contrasts can be applied only to factors with 2 or more levels
+```
+<br><br>
+`r emo::ji("thinking")` **Which group is eventually responsible to the error?**
+
+???
+wrapper functions: wrap a function around another function, i.e. you call a function when applying another function
+
+---
+
+## `purrr`: Functional Programming Tools
+
+**`purrr::possibly()`:** returns a list containing the function's result respectively a user-defined value (`otherwise`) if an error occurs
+```{r}
+possibly_lm <- possibly(.f = lm, otherwise = "Error message")
+
+grouped_penguins %>% 
+  group_map(.f = ~possibly_lm(flipper_length_mm ~ bill_length_mm + island, data = .))
+```
+
+.footnote[.pull-right[
+*Note: Use `purrr::discard(. == "Error message")` (`purrr::keep()`) at the end of the pipeline to drop (keep) function calls that yielded an error.<br>These work like `dplyr::select()` and `dplyr::filter()` in the context of `tibbles`.*
+]]
+
+???
+comments
+
+---
+
+## `purrr`: Functional Programming Tools
+
+**`purrr::safely()`:** returns a named list containing the function's result (or `otherwise` if an error occurs) as well as an error object that captures the error message
+```{r, eval=F}
+safely_lm <- safely(.f = lm, otherwise = NULL)
+
+grouped_penguins %>% 
+  group_map(.f = ~safely_lm(flipper_length_mm ~ bill_length_mm + island, data = .)) 
+``` 
+
+- Use `purrr::map(., "result")` at the end of the pipeline to access the results of each function call stored in the list.
+- Use `purrr::map(., "error")` at the end of the pipeline to access the errors of each function call stored in the list.
+
+.footnote[
+*Note: Similarly, use __`purrr::quietly()`__  to return a named list containing not only the function's results and error but also other kinds of output, such as warnings or messages.*
+]
+
+???
+quietly: useful to capture warning messages that the code throws, e.g., `summarise()` frequently throws a warning if you do not specify the `.drop` argument 
+ 

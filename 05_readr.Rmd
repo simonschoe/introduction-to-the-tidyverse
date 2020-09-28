@@ -31,7 +31,7 @@ layout: true
 Conveniently, the `write_*()` functions work analog. In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
 
 .footnote[
-*Note: In most European countries MS Excel is using `;` as the common delimiter, which can be important by simply switching to the `read_csv2()` function.*
+*Note: In most European countries MS Excel is using `;` as the common delimiter, which can be accountet for by simply switching to the `read_csv2()` function.*
 ]
 
 ???
@@ -88,8 +88,41 @@ readr::read_csv(file = "./data/penguins.csv", guess_max = 1001)
 ```
 
 .footnote[
-Find more information and functions on the `readr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
+*Note: Find more information and functions on the `readr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).*
 ]
 
 ???
 comments
+
+---
+
+## `readr`: Read Rectangular Text Data
+
+.pull-left[
+Eventually, you would want to cease using `.xlsx` and `.csv` files as they are not capable of reliably storing your metadata (e.g., data types).
+
+```{r, echo=F, fig.align='center', out.height='40%', out.width='40%'}
+knitr::include_graphics("./img/excel.jpg")
+```
+]
+.pull-right[
+`write_rds()` and `read_rds()` provide a nice alternative for [serializing](https://en.wikipedia.org/wiki/Serialization) your `R` objects (e.g., `tibbles`, models) and storing them as `.rds` files. 
+```{r}
+penguins <- read_rds(path = "./data/penguins.rds")
+```
+```
+> Rows: 344
+> Columns: 8
+> $ species           <chr> "Adelie", "Adelie", ...
+> $ island            <chr> "Torgersen", "Torgersen", ...
+> $ bill_length_mm    <dbl> 39.1, 39.5, ...
+> ...
+```
+Note that
+- `write_rds()` can only be used to save one object at a time,
+- a loaded `.rds` file must be stored into a new variable, i.e. given a new name,
+- `read_rds()` preserves data types.
+]
+
+???
+serialization: the process of translating a data structure or object state into a format that can be stored (for example, in a file or memory data buffer) or transmitted (for example, across a computer network) and reconstructed later (possibly in a different computer environment).

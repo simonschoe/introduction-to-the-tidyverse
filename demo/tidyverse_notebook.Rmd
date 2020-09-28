@@ -10,13 +10,14 @@ output: html_notebook
 
 This notebook complements the "**Introduction to the Tidyverse**" workshop which is part of the Machine Learning in `R` (winter term 2020/21). For the purpose of reproducibility, it contains all examples and use cases discussed in the workshop.
 
+
 ## Package Management
 
 ```{r}
 #check if pacman is installed (install if evaluates to FALSE)
 if (!require(pacman) == T) install.packages("pacman")
 #load (or install if pacman cannot find an existing installation) the relevant packages
-pacman::p_load(tidyverse, plotly, patchwork)
+pacman::p_load(tidyverse, plotly, patchwork, ggforce)
 pacman::p_load_gh("allisonhorst/palmerpenguins")
 ```
 
@@ -36,7 +37,6 @@ mean(subset(penguins, year == 2007)$body_mass_g, na.rm = T)
 peng_bmi_2007 <- subset(penguins, year == 2007)$body_mass_g
 mean(peng_bmi_2007, na.rm = T)
 ```
-
 ```{r}
 penguins %>% 
   subset(year == 2007) %>% 
@@ -466,6 +466,26 @@ penguins %>%
   select(-data, -lin_reg) %>% 
   unnest(coefs)
 ```
+`possibly()` and `safely()` to capture error messages
+```{r}
+possibly_lm <- possibly(.f = lm, otherwise = "Error message")
+
+penguins %>% 
+  mutate(across(c(sex, island), as.factor)) %>% 
+  group_by(species) %>% 
+  group_map(.f = ~possibly_lm(flipper_length_mm ~ bill_length_mm + island, data = .)) 
+  #keep(., . == "Error message") #discard(., . == "Error message")
+```
+```{r}
+safely_lm <- safely(.f = lm, otherwise = NULL)
+
+penguins %>% 
+  mutate(across(c(sex, island), as.factor)) %>% 
+  group_by(species) %>% 
+  group_map(.f = ~safely_lm(flipper_length_mm ~ bill_length_mm + island, data = .)) 
+  #map(., "result") #map(., "error")
+```
+
 
 ## `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
 
@@ -663,4 +683,18 @@ p + p + p
 ```{r, out.width='75%', out.height='75%', fig.retina=3, fig.align='center'}
 library(patchwork)
 p + (p / p)
+```
+
+
+## `ggforce`: Accelerating `ggplot2`
+
+```{r ggforce, eval=F}
+penguins %>% 
+  drop_na %>% 
+  ggplot(aes(x = .panel_x, y = .panel_y, col = sex, fill = sex)) +
+    geom_autopoint(alpha = 0.5) +
+    geom_autohistogram(alpha = 0.5) +
+    facet_matrix(rows = vars(species, island, body_mass_g, flipper_length_mm), switch = "both", layer.diag = 2) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90))
 ```
