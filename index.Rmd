@@ -80,38 +80,38 @@ name: agenda
 
 ## Agenda
 
-**1. Learning Objectives**
+**1 Learning Objectives**
 
-**2. Introduction to the `Tidyverse`**
-  1. What is the `Tidyverse`
-  2. The Concept of Tidy Data
+**2 Introduction to the `tidyverse`**  
+> 2.1 What is the `tidyverse`  
+2.2 The Concept of Tidy Data
   
-**3. `palmerpenguins`: Palmer Archipelago (Antarctica) Penguin Data**
+**3 `palmerpenguins`: Palmer Archipelago (Antarctica) Penguin Data**
 
-**4. The Core `Tidyverse` Packages**
-  1. `magrittr`: A Forward-Pipe Operator for R
-  2. `tibble`: Simple Data Frames
-  3. `readr`: Read Rectangular Text Data
-  4. `tidyr`: Tidy Messy Data
-  5. `dplyr`: A Grammar of Data Manipulation
-  6. `purrr`: Functional Programming Tools
-  7. `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
+**4 The Core `tidyverse` Packages**  
+> 4.1 `magrittr`: A Forward-Pipe Operator for R  
+4.2 `tibble`: Simple Data Frames  
+4.3 `readr`: Read Rectangular Text Data  
+4.4 `tidyr`: Tidy Messy Data  
+4.5 `dplyr`: A Grammar of Data Manipulation  
+4.6 `purrr`: Functional Programming Tools  
+4.7 `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
 
 ???
 comment
 
 ---
 
-## Learning Objectives `r emo::ji("idea")`
+## 1 Learning Objectives `r emo::ji("idea")`
 
-This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of package which ease your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
+This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of packages which eases your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
 
-More specifically, after this workshop you should
-- be familiar with the main tools of the `Tidyverse` and how it differs from `base R`,<br><br>
-- know your way around in working with the core packages of the `Tidyverse` for importing, tidying, transforming and visualizing data,<br><br>
+More specifically, after this workshop you will
+- be familiar with the main tools of the `tidyverse` and how it differs from `base R`,<br><br>
+- know your way around in working with the core packages of the `tidyverse` for importing, tidying, transforming and visualizing data,<br><br>
 - be proficient in processing (*non-tidy*) data of any shape and quality,<br><br>
 - be able to produce high-quality, fully customizable visualizations,<br><br>
-- have improved your your overall data literacy.
+- have improved your overall data literacy.
 
 ???
 comments
@@ -233,6 +233,6 @@ Educational resources are inspired by [workshop materials](https://github.com/rs
 `tidyverse` [artworks and illustration](https://github.com/allisonhorst/stats-illustrations) are provided by Allison Horst.
 
 ???
-convert presentation to pdf:
-pagedown::chrome_print("index.Rmd", verbose = 1)
-  
+convert online presentation to pdf:
+
+docker run --rm -t -v %cd%/desktop/l09_desktop/workshops/02_tidyverse/slides:/slides astefanutti/decktape https://simonschoe.github.io/Introduction-to-the-Tidyverse/#1 index.pdf

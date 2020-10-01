@@ -6,7 +6,7 @@ output: html_document
 class: middle, center, inverse
 layout: false
 
-# `tidyr`:<br><br>Tidy Messy Data
+# 4.4 `tidyr`:<br><br>Tidy Messy Data
 
 ---
 
@@ -17,7 +17,7 @@ layout: true
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 `tidyr` provides several functions that help you to bring your data into *tidy data* format (cf. [tidy data](#tidy data)), i.e. change the structure of your data set.
 
@@ -32,7 +32,7 @@ comments
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **“Pivotting”** which converts between long and wide forms using `pivot_longer()` and `pivot_wider()`:
 
@@ -53,7 +53,7 @@ with pivot_wider we can basically invert this operation
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 .right[
 ```{r, echo=F, out.height='80%', out.width='80%'}
@@ -74,7 +74,7 @@ src: https://raw.githubusercontent.com/apreshill/teachthat/master/pivot/pivot_lo
 
 name: tidyr_nest
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **"Nesting"** which groups similar data such that each group becomes a single row in a data frame (the structure is then referred to as *nested data frame*).
 
@@ -101,7 +101,7 @@ comments
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **“Rectangling”** which disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy* format (see `unnest()`, `unnest_longer()` and `unnest_wider()`).
 
@@ -143,7 +143,7 @@ countdown::countdown(
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
@@ -172,7 +172,7 @@ comment
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
@@ -192,7 +192,7 @@ comments
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[
@@ -215,7 +215,7 @@ Note: function arguments preceded by a dot in the tidyverse may have one of two 
 
 ---
 
-## `tidyr`: Tidy Messy Data
+## 4.4 `tidyr`: Tidy Messy Data
 
 **"Handling missing values"** by making implicit `NA` explicit (`complete()`), by making explicit `NA` implicit (`drop_na()`) or by replacing `NA` with the next/previous value (`fill()`) or a known value (`replace_na()`).
 .pull-left[

@@ -5,7 +5,7 @@ output: html_document
 
 class: middle, center, inverse
 
-# Introduction to the `Tidyverse`
+# 2 Introduction to the `tidyverse`
 
 ---
 
@@ -16,7 +16,7 @@ layout: true
 
 ---
 
-## What is the `Tidyverse`?
+## 2.1 What is the `tidyverse`?
 
 > The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -30,7 +30,7 @@ layout: true
 knitr::include_graphics("https://www.tidyverse.org/images/hex-tidyverse.png")
 ```
 
-Official Tidyverse [Hex Sticker](https://github.com/rstudio/hex-stickers)
+Official `tidyverse` [Hex Sticker](https://github.com/rstudio/hex-stickers)
 ]]
 .pull-right[
 ```{r, echo=F, out.width='50%', out.height='50%'}
@@ -46,7 +46,7 @@ Can also be seen as a philosophy of how to write code in R. Often when googling 
 
 ---
 
-## What is the `Tidyverse`?
+## 2.1 What is the `tidyverse`?
 
 > The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -76,7 +76,7 @@ R data structures: atomic vector (character, integer, numeric, logical, complex)
 
 ---
 
-## What is the `Tidyverse`?
+## 2.1 What is the `tidyverse`?
 
 > The tidyverse is an opinionated **collection of R packages** designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -108,7 +108,7 @@ Explain:
 
 ---
 
-## What is the `Tidyverse`?
+## 2.1 What is the `tidyverse`?
 
 > The tidyverse is an opinionated collection of R packages designed **for data science**. All packages share an underlying design philosophy, grammar, and data structures. ~ [tidyverse.org](https://www.tidyverse.org/)
 
@@ -136,7 +136,7 @@ src: https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6
 
 ---
 
-## What is the `Tidyverse`?
+## 2.1 What is the `tidyverse`?
 
 > The tidyverse is an opinionated collection of R packages designed for data science. All packages share an **underlying design philosophy, grammar, and data structures**. ~ [tidyverse.org](https://www.tidyverse.org/)
 

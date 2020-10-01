@@ -6,7 +6,7 @@ output: html_document
 class: middle, center, inverse
 layout: false
 
-# `dplyr`:<br><br>A Grammar of Data Manipulation
+# 4.5 `dplyr`:<br><br>A Grammar of Data Manipulation
 
 ---
 
@@ -17,7 +17,7 @@ layout: true
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 `dplyr` provides a set of functions for manipulating data frame objects (e.g., `tibbles`) while relying on a consistent grammar. Functions are intuitively represented by "verbs" that reflect the underlying operations and always output a new or modified data frame object.
 
@@ -41,7 +41,7 @@ comment
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on rows:** `filter()` picks rows that meet a logical criteria, i.e. condition
 
@@ -56,26 +56,28 @@ Filter for all penguins where the is a missing value in the `bill_length_mm` mea
 ```{r, eval=F}
 penguins %>% 
   filter(is.na(bill_length_mm) == T)
+  #filter(!is.na(bill_length_mm) == F)
 ```
 ]
 .pull-right[
-```{r, echo=F, out.height='95%', out.width='95%', fig.align='center', dpi=100}
+```{r, echo=F, out.height='90%', out.width='90%', fig.align='center', dpi=100}
 knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_filter.jpg")
 ```
 ]
 
-Filter for all penguins observed in 2008 and where the body mass index lies between 3800 and 4000 grams:
+Filter for all penguins observed prior to 2008 or subsequent to 2008 and where the body mass index lies between 3800 and 4000 grams:
 ```{r, eval=F}
 penguins %>% 
-  filter(between(body_mass_g, 3800, 4000) & year < 2008)
+  filter(between(body_mass_g, 3800, 4000) & (year < 2008 | year > 2008))
 ```
 
 ???
-Note that using `=` instead of `==` is a common mistakes for beginners (`<-` = `=`)
+Note that using `=` instead of `==` is a common mistakes for beginners (`<-` = `=`).
+in missing value example: 
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on rows:** `slice()` picks rows based on location
 
@@ -93,7 +95,7 @@ slice_sample to generate bootstrapped samples
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on rows:** `arrange()` changes the order of rows
 
@@ -116,7 +118,7 @@ arrange by default always sorts from smallest to largest
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
@@ -149,7 +151,7 @@ comment
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
@@ -189,7 +191,7 @@ penguins %>%
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `rename()` changes the column names
 
@@ -211,7 +213,7 @@ comments
 
 ---
 
-##`dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `relocate()` changes the order of columns
 
@@ -240,7 +242,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 
@@ -269,7 +271,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 
@@ -302,7 +304,7 @@ case_when:
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 .pull-left[
@@ -336,7 +338,7 @@ across:
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on columns:** `mutate()` changes the values of columns and/or creates new columns
 
@@ -370,7 +372,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns
 
@@ -395,7 +397,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns
 
@@ -430,7 +432,7 @@ comment
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -449,7 +451,7 @@ comment
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -466,7 +468,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -489,7 +491,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -510,7 +512,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -535,7 +537,7 @@ here example of the z-transformation on a group level
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -563,7 +565,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -579,7 +581,7 @@ Group by all unique `species`-`island` combinations and filter for the penguins 
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
@@ -606,7 +608,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Some more selected `dplyr` functions:**
 
@@ -634,7 +636,7 @@ comments
 
 ---
 
-## `dplyr`: A Grammar of Data Manipulation
+## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Some more selected `dplyr` functions:**
 

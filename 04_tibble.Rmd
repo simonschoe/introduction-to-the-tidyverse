@@ -6,7 +6,7 @@ output: html_document
 class: middle, center, inverse
 layout: false
 
-# `tibble`:<br><br>Simple Data Frames
+# 4.2 `tibble`:<br><br>Simple Data Frames
 
 ---
 
@@ -17,7 +17,7 @@ layout: true
 
 ---
 
-## `tibble`: Simple Data Frames
+## 4.2 `tibble`: Simple Data Frames
 
 `tibble` provides an 'enhanced' data frame object of class `tbl_df`, a so-called *tibble*. *Tibbles* can be created in three different ways:
 .pull-left[
@@ -55,7 +55,7 @@ c(x = "a", y = "b") %>% tibble::enframe(name = "x", value = "y")
 
 ---
 
-## `tibble`: Simple Data Frames
+## 4.2 `tibble`: Simple Data Frames
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
@@ -69,7 +69,7 @@ comments
 
 ---
 
-## `tibble`: Simple Data Frames
+## 4.2 `tibble`: Simple Data Frames
 
 There are three important differences between a `tibble` and a `data.frame` object:
 

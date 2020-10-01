@@ -6,7 +6,7 @@ output: html_document
 class: middle, center, inverse
 layout: false
 
-# `palmerpenguins`:<br><br>Palmer Archipelago (Antarctica) Penguin Data
+# 3 `palmerpenguins`:<br><br>Palmer Archipelago (Antarctica) Penguin Data
 
 ---
 
@@ -17,7 +17,7 @@ layout: true
 
 ---
 
-## `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
+## 3 `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 .pull-left[
 From here on, to illustrate the functioanilities for the `tidyverse` core packages we use data from the `palmerpenguins` package by [Allison Horst](https://allisonhorst.github.io/palmerpenguins/).
 
@@ -40,7 +40,7 @@ comments
 
 ---
 
-## `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
+## 3 `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 
 ```{r}
 penguins
@@ -51,7 +51,7 @@ penguins
 class: middle, center, inverse
 layout: false
 
-# `magrittr`:<br><br>A Forward-Pipe Operator for R
+# 4.1 `magrittr`:<br><br>A Forward-Pipe Operator for R
 
 ---
 
@@ -62,7 +62,7 @@ layout: true
 
 ---
 
-## `magrittr`: A Forward-Pipe Operator for R
+## 4.1 `magrittr`: A Forward-Pipe Operator for R
 
 .pull-left[
 `magrittr` comes with a set of operators which improve the readability of your code:
@@ -84,7 +84,7 @@ knitr::include_graphics("https://tenor.com/view/angry-merlin-pipe-mad-smoke-gif-
 **The "Tee" Operator:** `%T>%` (used for the side-effect of a function, e.g., plotting or writing)
 
 .footnote[
-_Note: Find more information about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: *ctrl + shift + M*._
+_Note: Find out more about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: *ctrl + shift + M*._
 ]
 
 ???
@@ -92,7 +92,7 @@ The exposition operator: %$% (explodes out variables in a data frame, no need to
 
 ---
 
-##`magrittr`: A Forward-Pipe Operator for R
+## 4.1 `magrittr`: A Forward-Pipe Operator for R
 
 **Basic Piping:** forward a value or object (LHS) into the next function call (RHS) as **first** argument
 ```{r, eval=F}
@@ -124,7 +124,7 @@ Whenever only one argument is needed, the LHS, then one can omit the empty paren
 
 ---
 
-##`magrittr`: A Forward-Pipe Operator for R
+## 4.1 `magrittr`: A Forward-Pipe Operator for R
 
 **Question:** What is the average body mass index in grams for all penguins observed in the year 2007 (excluding missing values)?
 

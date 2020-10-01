@@ -6,7 +6,7 @@ output: html_document
 class: middle, center, inverse
 layout: false
 
-# `purrr`:<br><br>Functional Programming Tools
+# 4.6 `purrr`:<br><br>Functional Programming Tools
 
 ---
 
@@ -17,7 +17,7 @@ layout: true
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 `purrr` facilitates *functional programming* (FP) with data frame objects (e.g., `tibbles`) in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a data manipulation pipeline.
 
@@ -47,7 +47,7 @@ Comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 **Use Case:** Applying the z-normalization to multiple variables
 
@@ -61,9 +61,9 @@ z_transform <- function(.x) {
 Second, draw samples from the `penguin` data set and store them as double vectors in a list.
 ```{r}
 samples <- list(
-  sample1 = slice_sample(penguins, n = 10)$bill_length_mm,
-  sample2 = slice_sample(penguins, n = 10)$bill_depth_mm,
-  sample3 = slice_sample(penguins, n = 10)$flipper_length_mm)
+  sample1 = slice_sample(penguins, n = 8)$bill_length_mm,
+  sample2 = slice_sample(penguins, n = 8)$bill_depth_mm,
+  sample3 = slice_sample(penguins, n = 8)$flipper_length_mm)
 ```
 ```{r, echo=F}
 samples
@@ -74,7 +74,7 @@ here: different means and sd
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 **Use Case:** Applying the z-normalization to multiple variables
 
@@ -95,7 +95,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 **Use Case:** Applying the z-normalization to multiple variables
 
@@ -120,7 +120,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 ```{r, echo=F, out.width='80%', fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
@@ -133,7 +133,7 @@ src: https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael
 
 ---
 
-##`purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Check the data types of my columns:
 ```{r}
@@ -151,7 +151,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Check the number of distinct values per column:
 ```{r}
@@ -164,7 +164,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Check the highest value in each subset of the data (e.g., largest `flipper_length_mm` per `sex`):
 ```{r}
@@ -179,7 +179,7 @@ drop_na: because otherwise I would also have a subgroup of NA
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 `map()` also comes in handy, if you like to produce a series of identical plots, each depicting a separate subset of the underlying data:
 ```{r, out.height='20%', out.width='20%'}
@@ -204,7 +204,7 @@ comments
 
 ---
 
-##`purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 .pull-left[
 ```{r, out.height='80%', out.width='80%', fig.retina=3}
@@ -222,7 +222,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Finally, `map()` is really powerful in the context of modeling. In the following we fit a linear regression model for each `species`-`island` subset.
 
@@ -246,7 +246,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Second, we fit a linear model to each data subset. In our model `body_mass_g` is regressed (`~`) on all other variables (denoted by a dot in the `lm()` formula).
 
@@ -263,7 +263,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Third, for each linear model, we generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, we use `unnest()` to receive a tidy data frame.
 
@@ -291,7 +291,7 @@ there are packages for automatically doing this with just one line of code, see 
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 .pull-left[
 .center[
@@ -317,7 +317,7 @@ knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 Finally, `purrr` also provides convenient [wrapper functions](https://en.wikipedia.org/wiki/Wrapper_function) for **error handling**. These come in handy if your are iterating over a very large data set and your program would simply stop if an error occurs and you would loose the whole progress.
 
@@ -344,7 +344,7 @@ wrapper functions: wrap a function around another function, i.e. you call a func
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 **`purrr::possibly()`:** returns a list containing the function's result respectively a user-defined value (`otherwise`) if an error occurs
 ```{r}
@@ -363,7 +363,7 @@ comments
 
 ---
 
-## `purrr`: Functional Programming Tools
+## 4.6 `purrr`: Functional Programming Tools
 
 **`purrr::safely()`:** returns a named list containing the function's result (or `otherwise` if an error occurs) as well as an error object that captures the error message
 ```{r, eval=F}
