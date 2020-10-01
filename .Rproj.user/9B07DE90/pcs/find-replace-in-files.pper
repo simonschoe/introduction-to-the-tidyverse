@@ -1,12 +1,12 @@
 {
     "dialog-state": {
-        "query": "note:",
-        "path": "C:/Users/s_scho53/Desktop/L09_Desktop/workshops/04_tidyverse",
+        "query": "slide 27",
+        "path": "C:/Users/s_scho53/Desktop/L09_Desktop/workshops/02_tidyverse",
         "regex": false,
         "caseSensitive": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 17,
+        "resultsCount": 2,
         "errorCount": 0,
         "replaceErrors": ""
     }

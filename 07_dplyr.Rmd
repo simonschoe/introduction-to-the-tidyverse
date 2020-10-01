@@ -585,7 +585,7 @@ Group by all unique `species`-`island` combinations and filter for the penguins 
 
 **Operations on grouped data:** `group_by()` groups rows based on a set of columns and `summarise()` reduces a group into a single row
 
-**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example on [slide 27](#tidyr_nest).
+**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example on [slide 33](#tidyr_nest).
 ```{r, eval=F}
 penguins %>% 
   group_by(species, year) %>% 
