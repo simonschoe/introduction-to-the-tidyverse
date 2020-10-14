@@ -1,4 +1,14 @@
 # Introduction to the Tidyverse
+*The workshop is part of "Machine Learning in R" graduate course held at University of Münster, School of Business and Economics in the winter term 2020/21.*
+### Time: Mo, 2020-11-09 & Mo, 2020-11-16
+### Location: Zoom
+
+<span style="color:grey">Presenter: Simon Schölzel</span>
+
+<a href="https://www.wiwi.uni-muenster.de/"><img src="https://www.wiwi.uni-muenster.de/fakultaet/sites/all/themes/wwucd/assets/images/logos/secondary_wiwi_aacsb_german.jpg" alt="fb4-logo" height="45"></a> 
+
+
+## Contents
 
 This 2 hour workshop encompasses a comprehensive journey through the `tidyverse` ecosystem. It introduces important tools for working with rectangular data sets in `R` by showcasing a suite of packages which eases the prototype data science workflow in terms of data import, data cleaning, data transformation and data visualization.
 
@@ -10,4 +20,21 @@ More specifically, after this workshop the workshop participants will
 - have improved their overall data literacy.
 
 
-*The workshop is part of "Machine Learning in R" graduate course held at University of Münster, School of Business and Economics in the winter term 2020/21.*
+## Agenda
+
+**1 Learning Objectives**
+
+**2 Introduction to the `tidyverse`**  
+> 2.1 What is the `tidyverse`  
+2.2 The Concept of Tidy Data
+  
+**3 `palmerpenguins`: Palmer Archipelago (Antarctica) Penguin Data**
+
+**4 The Core `tidyverse` Packages**  
+> 4.1 `magrittr`: A Forward-Pipe Operator for R  
+4.2 `tibble`: Simple Data Frames  
+4.3 `readr`: Read Rectangular Text Data  
+4.4 `tidyr`: Tidy Messy Data  
+4.5 `dplyr`: A Grammar of Data Manipulation  
+4.6 `purrr`: Functional Programming Tools  
+4.7 `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics

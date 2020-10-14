@@ -110,7 +110,7 @@ knitr::include_graphics("./img/excel.jpg")
 .pull-right[
 `write_rds()` and `read_rds()` provide a nice alternative for [serializing](https://en.wikipedia.org/wiki/Serialization) your `R` objects (e.g., `tibbles`, models) and storing them as `.rds` files. 
 ```{r}
-penguins <- read_rds(path = "./data/penguins.rds")
+penguins <- read_rds(file = "./data/penguins.rds")
 ```
 ```
 > Rows: 344

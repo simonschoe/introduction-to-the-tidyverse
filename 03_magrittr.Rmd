@@ -42,10 +42,17 @@ comments
 
 ## 3 `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 
+.pull-left[
 ```{r}
 penguins
 ```
-
+]
+.pull-right[
+```{r, echo=F, fig.align='center', out.width='65%', out.height='65%'}
+knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/man/figures/lter_penguins.png")
+knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/man/figures/culmen_depth.png")
+```
+]
 ---
 
 class: middle, center, inverse
@@ -133,8 +140,8 @@ Whenever only one argument is needed, the LHS, then one can omit the empty paren
 mean(subset(penguins, year == 2007)$body_mass_g, na.rm = T)
 
 #alternatively:
-peng_bmi_2007 <- subset(penguins, year == 2007)$body_mass_g
-mean(peng_bmi_2007, na.rm = T)
+peng_bm_2007 <- subset(penguins, year == 2007)$body_mass_g
+mean(peng_bm_2007, na.rm = T)
 ```
 .pull-left[
 **In a world full of pipes:**

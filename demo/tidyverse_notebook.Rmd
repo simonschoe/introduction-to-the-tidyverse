@@ -34,8 +34,8 @@ penguins
 mean(subset(penguins, year == 2007)$body_mass_g, na.rm = T)
 
 #alternatively:
-peng_bmi_2007 <- subset(penguins, year == 2007)$body_mass_g
-mean(peng_bmi_2007, na.rm = T)
+peng_bm_2007 <- subset(penguins, year == 2007)$body_mass_g
+mean(peng_bm_2007, na.rm = T)
 ```
 ```{r}
 penguins %>% 
@@ -83,7 +83,7 @@ c(x = "a", y = "b") %>%
 `write_csv()`:
 ```{r}
 penguins %>% 
-  write_csv(path = "./penguins.csv")
+  write_csv(file = "./penguins.csv")
 ```
 `read_csv()`:
 ```{r}
@@ -273,7 +273,7 @@ penguins %>%
 `rename()` to change column names:
 ```{r}
 penguins %>% 
-  rename(bmi = body_mass_g, gender = sex) %>% 
+  rename(bm = body_mass_g, gender = sex) %>% 
   colnames()
 ```
 ```{r}
@@ -453,7 +453,7 @@ map2(
       filter(species == .x, year == .y) %>% 
       ggplot() +
         geom_point(aes(x = bill_length_mm, y = body_mass_g)) +
-        labs(title = glue::glue("Scatter Plot Bill Length vs. BMI ({.x}, {.y})"))
+        labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
     })
 ```
 ```{r}

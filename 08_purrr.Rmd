@@ -195,7 +195,7 @@ penguin_plots <- map2(
       filter(species == .x, year == .y) %>% 
       ggplot() +
         geom_point(aes(x = bill_length_mm, y = body_mass_g)) +
-        labs(title = glue::glue("Scatter Plot Bill Length vs. BMI ({.x}, {.y})"))
+        labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
     })
 ```
 
@@ -312,7 +312,7 @@ knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
 ]]
 
 .footnote[.pull-left[
-*Note: For a great tutorial that helps you master the notion of functional programming with `R` see [[5]](#references).*
+*Note: For a great tutorial that helps you master the notion of functional programming with `R` see [[6]](#references).*
 ]]
 
 ---
@@ -337,7 +337,7 @@ grouped_penguins %>%
 > contrasts can be applied only to factors with 2 or more levels
 ```
 <br><br>
-`r emo::ji("thinking")` **Which group is eventually responsible to the error?**
+`r emo::ji("thinking")` **Which group is eventually responsible for the error?**
 
 ???
 wrapper functions: wrap a function around another function, i.e. you call a function when applying another function

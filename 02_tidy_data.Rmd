@@ -18,7 +18,7 @@ name: tidy data
 ~ [Wickham, H./Grolemund, G. (2017)](#references)
 
 .pull-left[
-**Tidy Data Principles:** The concept of tidy data has been coined by Hadley Wickham in his 2014 paper "Tidy Data"[3]. The concept formulates principles for structuring rectangular, tabular data sets consisting of rows and columns:
+**Tidy Data Principles:** The concept of tidy data has been coined by Hadley Wickham in his 2014 paper "Tidy Data" [5]. The concept formulates principles for structuring rectangular, tabular data sets consisting of rows and columns:
 
 1. Each variable is a column.
 
@@ -36,10 +36,6 @@ df_tidy <- tibble(
 
 knitr::kable(df_tidy, format = "html")
 ```
-]
-
-.footnote[
-[3]: **Wickham, H. (2014):** Tidy data. Journal of Statistical Software, Vol. 59, No. 10, pp. 1-23.
 ]
 
 ???

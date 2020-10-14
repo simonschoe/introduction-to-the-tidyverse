@@ -29,14 +29,12 @@ layout: true
 ```{r, echo=F, out.width='45%', out.height='45%'}
 knitr::include_graphics("https://www.tidyverse.org/images/hex-tidyverse.png")
 ```
-
 Official `tidyverse` [Hex Sticker](https://github.com/rstudio/hex-stickers)
 ]]
 .pull-right[
 ```{r, echo=F, out.width='50%', out.height='50%'}
 knitr::include_graphics("https://pbs.twimg.com/profile_images/905186381995147264/7zKAG5sY.jpg")
 ```
-
 Hadley Wickham - Chief Scientist @ RStudio  
 [Founding father](https://twitter.com/hadleywickham/status/959507805282582528?s=20) of the `tidyverse`
 ]
@@ -122,13 +120,13 @@ knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df
 **Tidy:** `tidyr`  
 **Transform:** `dplyr`, `forcats`, `stringr`  
 **Visualise:** `ggplot2`  
-**Model:** `tidymodels`[1]  
-**Communicate:** `rmarkdown`[2]  
+**Model:** `tidymodels`*  
+**Communicate:** `rmarkdown`** 
 **Program:** `magrittr`, `purrr`, `tibble`
 
 .footnote[
-[1]: For further information refer to our `tidymodels` workshop.  
-[2]: For further information refer to our `rmarkdown` workshop.
+*  For further information refer to our `tidymodels` workshop.  
+** For further information refer to our `rmarkdown` workshop.
 ]
 
 ???

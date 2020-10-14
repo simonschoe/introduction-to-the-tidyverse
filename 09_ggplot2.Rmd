@@ -19,13 +19,13 @@ layout: true
 
 ## 4.7 `ggplot2`: Create Elegant Data<br>Visualisations Using the Grammar of Graphics
 
-`ggplot2` is Hadley Wickham's reimplementation [[6]](#references) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [[7]](#references). It provides a large amount of functions for generating high-quality graphs in layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
+`ggplot2` is Hadley Wickham's reimplementation [[7]](#references) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [[8]](#references-2). It provides a large amount of functions for generating high-quality graphs in layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
 <br><br>
 ```{r, echo=F, out.width='70%', fig.align='center'}
 knitr::include_graphics("./img/grammar-of-graphic-layers.png")
 ```
 <br>
-Source: [[8]](#references-2)
+Source: [[9]](#references-2)
 
 ???
 Where `dplyr` provides a grammar for data manipulation, `ggplot2` does the same for plotting
@@ -46,7 +46,7 @@ comment
 
 ## 4.7 `ggplot2`: Create Elegant Data<br>Visualisations Using the Grammar of Graphics
 
-**Data:** The data set (usually a `tibble`) from which to select the variables that are about to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
+**Data:** The data set (ideally in *tidy data* format) from which to select the variables that are to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
 .pull-left[
 **Univariate example:**
 ```{r p_step_u1, eval=F}
@@ -115,11 +115,18 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
     geom_bar(na.rm = TRUE) 
 ```
+Eventually, you may realize the beauty of the `geom_*()` layers: 
+
+`r emo::ji("idea")` They do all the required calculations for you!
+
+This is due to the frequently overlooked `stat` argument (which defaults to `stat = "count"` for the `geom_bar()` layer).
 ]
 .pull-right[
 ```{r ref.label='p_step_u4', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
 ```
 ]
+
+???
 
 ---
 
@@ -131,10 +138,9 @@ penguins %>%
 ```{r p_step_u5, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_bar(
-      stat = "density", 
-      na.rm = TRUE) 
+    geom_bar(na.rm = TRUE, stat = "density") 
 ```
+Most of the time you will just plot the data as it is piped into the plot (`stat = "identity"`). As soon as you require some form of statistical transformation before plotting, the `stat` argument is the way to go. It goes hand-in-hand with the respective `geom_*()`.
 ]
 .pull-right[
 ```{r ref.label='p_step_u5', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
@@ -153,11 +159,17 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
     geom_density(na.rm = TRUE) 
 ```
+If you have to manually change the default setting of the `stat` argument, it is likely that `ggplot2` has implemented a corresponding `geom_*()`.
 ]
 .pull-right[
 ```{r ref.label='p_step_u6', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
 ```
 ]
+
+.footnote[
+.pull-left[
+*Note: For a great explanation that helps you internalize the inner workings of the `stat` layer, see this [blog post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) by June Choe.*
+]]
 
 ---
 
@@ -650,7 +662,7 @@ The `theme` function allows to customize all elements of your plot which are not
 
 .pull-left[
 **Other examples:** High-quality density plot
-```{r p_step_o11, eval=F}
+```{r p_step_o11, eval=F, out.width='70%', fig.retina=3, fig.align='center'}
 p <- p +
   theme(
     legend.position = "top",
@@ -727,7 +739,7 @@ loess: local regression fits the relationship between y and x locally and allows
 
 ## 4.7 `ggplot2`: Create Elegant Data<br>Visualisations Using the Grammar of Graphics
 
-By now, there is a whole ecosystem (aka the **ggverse** [[9]](#references-2)) of amazing packages around `ggplot2` that further extent its capabilities:
+By now, there is a whole ecosystem (aka the **ggverse** [[10]](#references-2)) of amazing packages around `ggplot2` that further extent its capabilities:
 .pull-left[
 - `scales`: Scale Functions for Visualization
 - `ggtext`: Improved Text Rendering Support for `ggplot2`

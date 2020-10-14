@@ -179,7 +179,7 @@ knitr::include_graphics("https://tenor.com/view/homer-gif-10571731.gif")
 ]
 
 .footnote[
-But not all is great in the `Tidyverse` - be aware of its [downsides](https://github.com/matloff/TidyverseSkeptic/blob/master/READMEFull.md).
+*Note: Eventually, not everything is great in the `tidyverse`. You should always be aware of its [downsides](https://github.com/matloff/TidyverseSkeptic/blob/master/READMEFull.md) and know when to return to using `base R`.*
 ]
 
 ---
@@ -196,11 +196,11 @@ name: references
 
 [4]: **Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html, chapter 12 (Tidy data).
 
-[5]: **Barter, R. (2019):** Learn to purrr. URL: http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map.
+[5]: **Wickham, H. (2014):** Tidy Data. Journal of Statistical Software, Vol. 59, 2014, No. 10, pp. 1-23. URL: https://www.jstatsoft.org/article/view/v059i10.
 
-[6]: **Wickham, H. (2010):** A Layered Grammar of Graphics. Journal of Computational and Graphical Statistics, Vol. 19, 2010, No. 1, pp. 3-28.
+[6]: **Barter, R. (2019):** Learn to purrr. URL: http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map.
 
-[7]: **Wilkinson, L. (2005):** The Grammar of Graphics. Springer: New York 2005.
+[7]: **Wickham, H. (2010):** A Layered Grammar of Graphics. Journal of Computational and Graphical Statistics, Vol. 19, 2010, No. 1, pp. 3-28.
 
 ---
 
@@ -208,9 +208,11 @@ name: references-2
 
 ## References
 
-[8]: **Sarkar, D. (2018):** A Comprehensive Guide to the Grammar of Graphics for Effective Visualization of Multidimensional Data. towardsdatascience 2018-09-12. URL: https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149).
+[8]: **Wilkinson, L. (2005):** The Grammar of Graphics. Springer: New York 2005.
 
-[9]: **Gahner, E. (2020):** Awesome `ggplot2`. GitHub 2020-09-25. URL: https://github.com/erikgahner/awesome-ggplot2.
+[9]: **Sarkar, D. (2018):** A Comprehensive Guide to the Grammar of Graphics for Effective Visualization of Multidimensional Data. towardsdatascience 2018-09-12. URL: https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149).
+
+[10]: **Gahner, E. (2020):** Awesome `ggplot2`. GitHub 2020-09-25. URL: https://github.com/erikgahner/awesome-ggplot2.
 
 ---
 
