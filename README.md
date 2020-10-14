@@ -1,9 +1,9 @@
 # Introduction to the Tidyverse
 *The workshop is part of "Machine Learning in R" graduate course held at University of Münster, School of Business and Economics in the winter term 2020/21.*
-### Time: Mo, 2020-11-09 & Mo, 2020-11-16
-### Location: Zoom
 
-<span style="color:grey">Presenter: Simon Schölzel</span>
+**Time:** Mo, 2020-11-09 (Pt. 1) & Mo, 2020-11-16 (Pt. 2)
+**Location:** Zoom
+**Presenter:** Simon Schölzel, M.Sc.
 
 <a href="https://www.wiwi.uni-muenster.de/"><img src="https://www.wiwi.uni-muenster.de/fakultaet/sites/all/themes/wwucd/assets/images/logos/secondary_wiwi_aacsb_german.jpg" alt="fb4-logo" height="45"></a> 
 
