@@ -18,7 +18,7 @@ name: tidy data
 ~ [Wickham, H./Grolemund, G. (2017)](#references)
 
 .pull-left[
-**Tidy Data Principles:** The concept of tidy data has been coined by Hadley Wickham in his 2014 paper "Tidy Data" [5]. The concept formulates principles for structuring rectangular, tabular data sets consisting of rows and columns:
+**Tidy Data Principles:** The concept of tidy data has been coined by Hadley Wickham in his 2014 paper "Tidy Data" [[5]](references). The concept formulates principles for structuring rectangular, tabular data sets consisting of rows and columns:
 
 1. Each variable is a column.
 
@@ -39,8 +39,8 @@ knitr::kable(df_tidy, format = "html")
 ]
 
 ???
-3: relates to the storage of data set per table (analogy to principles in data base design)
-consequently, the following tools and examples will be geared towards working with tabular data, not with text or image data
+- 3: relates to the storage of one data set per table (analogy to principles in data base design) -> here the type of observational unit might be the citizen, he/she reserves a policy treatment, e.g., tax reduction (hence information about firms might be stored in a different data frame)
+- all the upcoming tools are geared towards bringing data into this tabular shape (inversely we will not work with text or image data)
 
 ---
 
@@ -48,14 +48,10 @@ consequently, the following tools and examples will be geared towards working wi
 
 .pull-left[
 **Violations of the Tidy Data Principles:**
-1. Column headers are values, not variable names.
-
-2. Multiple variables are stored in one column.
-
-3. Variables are stored in both rows and columns.
-
-4. Multiple types of observational units are stored in the same table.
-
+1. Column headers are values, not variable names.  
+2. Multiple variables are stored in one column.  
+3. Variables are stored in both rows and columns.  
+4. Multiple types of observational units are stored in the same table.  
 5. A single observational unit is stored in multiple tables.
 ]
 .pull-right[
@@ -63,12 +59,12 @@ consequently, the following tools and examples will be geared towards working wi
 ```{r, echo=F}
 tibble(
   person = c("John Smith", "Jane Doe"),
-  treatmenta = c(NA, 16),
-  treatmentb = c(2, 11)
+  treatment_a = c(NA, 16),
+  treatment_b = c(2, 11)
 ) %>% 
   knitr::kable(format = "html")
 ```
-<br>
+<br><br>
 ```{r, echo=F}
 tibble(
   person = c("John Smith", "Jane Doe", "John Smith", "Jane Doe"),
@@ -83,4 +79,4 @@ tibble(
 ???
 3: correlation matrix
 4: table that contains sales data of customer and at the same time weather data
-5: data from a 8-hours long randomized control trial scattered across eight different hourly tables
+5: data from a 8-hours long randomized control trial scattered across eight different tables, one per hour

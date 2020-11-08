@@ -19,19 +19,19 @@ layout: true
 
 ## 4.2 `tibble`: Simple Data Frames
 
-`tibble` provides an 'enhanced' data frame object of class `tbl_df`, a so-called *tibble*. *Tibbles* can be created in three different ways:
+`tibble` provides an enhanced data frame object of class `tbl_df`, a so-called `tibble`. A `tibble` can be created in three different ways:
 .pull-left[
-Create a *tibble* from column vectors with `tibble()`:
-```{r, results=F}
-tibble::tibble(
+Create a `tibble` from column vectors with `tibble()`:
+```{r, eval=F}
+tibble(
   x = c("a", "b"),
   y = c(1, 2),
   z = c(T, F)
 )
 ```
-Create a *transposed tibble* row by row with `tribble()`:
-```{r, results=F}
-tibble::tribble(
+Create a *transposed* `tibble` row by row with `tribble()`:
+```{r, eval=F}
+tribble(
   ~x, ~y,  ~z,
   "a", 1,  T,
   "b", 2,  F
@@ -39,19 +39,25 @@ tibble::tribble(
 ```
 ]
 .pull-right[
-Create a *tibble* from existing data frames with `as_tibble()` and from named vectors with `enframe()`:
-```{r}
+Create a `tibble` from an existing data frame with `as_tibble()`:
+```{r, eval=F}
 df <- data.frame(
-  x = c("a", "b"), y = c(1, 2), z = c(T, F)
+  x = c("a", "b"),
+  y = c(1, 2),
+  z = c(T, F)
 )
+
+as_tibble(df)
 ```
-```{r}
-tibble::as_tibble(df)
+Create a `tibble` from named vectors with `enframe()`:
+```{r, eval=F}
+c(x = "a", y = "b", z = 1) %>%
+  enframe(name = "x", value = "y")
 ```
 ]
 
 ???
-c(x = "a", y = "b") %>% tibble::enframe(name = "x", value = "y")
+- named vector: i have key-value pairs
 
 ---
 
@@ -59,13 +65,13 @@ c(x = "a", y = "b") %>% tibble::enframe(name = "x", value = "y")
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
-1) **Printing:** `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
-```{r, echo=T}
-penguins #adjust using print(tibble, n = 5) or options(tibble.print_max = 5)
+**Printing:** By default, `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
+```{r}
+penguins
 ```
 
 ???
-comments
+- you will never again have the problem that `R` takes minutes to print a large data frame entirely to your console (`reached 'max' / getOption("max.print")`)
 
 ---
 
@@ -73,7 +79,19 @@ comments
 
 There are three important differences between a `tibble` and a `data.frame` object:
 
-2) **Subsetting:** Subsetting a `tibble` (`[]`) always returns another `tibble` and never a vector (in contrast to standard `data.frame` objects).
+**Printing:** By default, `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
+```{r}
+penguins %>% 
+  glimpse # transposed version of print()
+```
+
+---
+
+## 4.2 `tibble`: Simple Data Frames
+
+There are three important differences between a `tibble` and a `data.frame` object:
+
+**Subsetting:** Subsetting a `tibble` (`[]`) always returns another `tibble` and never a vector (in contrast to standard `data.frame` objects).
 .pull-left[
 ```{r}
 penguins[,"species"] %>%
@@ -89,15 +107,12 @@ penguins %>%
 ```
 ]
 
-3) **Partial Matching:** Subsetting with `tibbles` does not allow for partial matching, i.e. you must always provide the whole column name.
+<br><br>
+**Partial Matching:** Subsetting a `tibble` does not allow for partial matching, i.e. you must always provide the whole column name.
 
 .footnote[
 *Note: Find more information about `tibbles` by running `vignette("tibble")`.*
 ]
 
 ???
-also an advantage of tibbles: Giving you better warning messages to confront you with problems early on.
-
-
-
-add glimpse example
+- also an advantage of tibbles: Giving you better warning messages to confront you with problems early on.

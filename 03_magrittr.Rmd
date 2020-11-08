@@ -19,7 +19,7 @@ layout: true
 
 ## 3 `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 .pull-left[
-From here on, to illustrate the functioanilities for the `tidyverse` core packages we use data from the `palmerpenguins` package by [Allison Horst](https://allisonhorst.github.io/palmerpenguins/).
+From here on, to illustrate the features of the `tidyverse` core packages we use data from the `palmerpenguins` package by [Allison Horst](https://allisonhorst.github.io/palmerpenguins/).
 
 The package comes with data about penguins observed on islands in the Palmer Archipelago near Palmer Station, Antarctica.
 ]
@@ -35,16 +35,16 @@ The package requires the `devtools` package to be installed in order to download
 library(palmerpenguins)
 ```
 
-???
-comments
-
 ---
 
 ## 3 `palmerpenguins`: Palmer Archipelago<br>(Antarctica) Penguin Data
 
 .pull-left[
-```{r}
+```{r, eval=F}
 penguins
+```
+```{r, echo=F}
+print(penguins, width = 60)
 ```
 ]
 .pull-right[
@@ -58,7 +58,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/palmerpe
 class: middle, center, inverse
 layout: false
 
-# 4.1 `magrittr`:<br><br>A Forward-Pipe Operator for R
+# 4.1 `magrittr`:<br><br>A Forward-Pipe Operator for `R`
 
 ---
 
@@ -69,29 +69,28 @@ layout: true
 
 ---
 
-## 4.1 `magrittr`: A Forward-Pipe Operator for R
+## 4.1 `magrittr`: The Forward-Pipe Operator
 
-.pull-left[
-`magrittr` comes with a set of operators which improve the readability of your code:
-- arrange data operations into an easily readable pipeline of chained commands (left-to-right as opposed to inside-out),
-- avoid nested function calls,
-- minimize the use of local variable assignments and function definitions, and
-- easily add and/or delete steps in your pipeline without breaking the code.
-]
-.pull-right[
-```{r, echo=F, out.height='80%', out.width='80%'}
+```{r, echo=F, out.height='25%', out.width='25%', out.extra='style="float:right; padding:20px"'}
 knitr::include_graphics("https://tenor.com/view/angry-merlin-pipe-mad-smoke-gif-5680777.gif")
 ```
-]
+
+`magrittr` comes with a set of operators:
+- **Pipe Operator:** `%>%`<br><br>
+- **Assignment Operator:** `%<>%` (alternative to `<-`)<br><br>
+- **"Tee" Operator:** `%T>%` (used for the side-effects of a function, e.g., plotting or writing)
 
 --
 
-**The Pipe Operator:** `%>%`  
-**The Assignment Operator:** `%<>%` (alternative to `<-` at the beginning of a code chunk)  
-**The "Tee" Operator:** `%T>%` (used for the side-effect of a function, e.g., plotting or writing)
+<br><br>
+Essentially, these operators aim to improve the readability of your code in multiple ways:
+- arrange operations into an easily readable pipeline of chained commands (left-to-right),
+- avoid nested function calls (inside-out), 
+- minimize the use of local variable assignments (`<-`) and function definitions, and
+- easily add and/or delete steps in your pipeline without breaking the code.
 
 .footnote[
-_Note: Find out more about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: *ctrl + shift + M*._
+*Note: Find out more about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: Ctrl + Shift + M.*
 ]
 
 ???
@@ -99,50 +98,57 @@ The exposition operator: %$% (explodes out variables in a data frame, no need to
 
 ---
 
-## 4.1 `magrittr`: A Forward-Pipe Operator for R
+## 4.1 `magrittr`: The Forward-Pipe Operator
 
 **Basic Piping:** forward a value or object (LHS) into the next function call (RHS) as **first** argument
 ```{r, eval=F}
-x %>% f                           #equivalent to f(x)
-x %>% f(y)                        #equivalent to f(x, y)
-x %>% f %>% g %>% h               #equivalent to h(g(f(x)))
+x %>% f                           # equivalent to f(x)
+x %>% f(y)                        # equivalent to f(x, y)
+x %>% f %>% g %>% h               # equivalent to h(g(f(x)))
 ```
 
 --
 
 **Piping with placeholders:** forward a value or object (LHS) into the next function call (RHS) as **any** argument
 ```{r, eval=F}
-x %>% f(.)                        #equivalent to x %>% f
-x %>% f(y, .)                     #equivalent to f(y, x)
-x %>% f(y, z = .)                 #equivalent to f(y, z = x)
-x %>% f(y = nrow(.), z = ncol(.)) #equivalent to f(x, y = nrow(x), z = ncol(x))
+x %>% f(.)                        # equivalent to x %>% f
+x %>% f(y, .)                     # equivalent to f(y, x)
+x %>% f(y, z = .)                 # equivalent to f(y, z = x)
+x %>% f(y = nrow(.), z = ncol(.)) # equivalent to f(x, y = nrow(x), z = ncol(x))
 ```
 
 --
 
-**Building functions and pipelines:** a sequence of code starting with the placeholder (`.`) returns a function which can be used to later apply the pipeline to concrete values.
+**Building functions and pipelines:** a sequence of code starting with the placeholder (`.`) returns a function which can be used to later apply the pipeline to concrete values
 ```{r, eval=F}
-f <- . %>% cos %>% sin            #equivalent to f <- function(.) sin(cos(.))
-f(20)                             #equivalent to the pipeline 20 %>% cos %>% sin
+f <- . %>% cos %>% sin            # equivalent to f <- function(.) sin(cos(.))
+f(20)                             # equivalent to the pipeline 20 %>% cos %>% sin
 ```
 
 ???
-Whenever only one argument is needed, the LHS, then one can omit the empty parentheses.
+1 slide:
+- in can omit parentheses if x is the only argument i would give to the function
+2 slide:
+- when x is the second argument in the function, i always need to use the placeholder
+- when other arguments built upon the first argument, i always need to use the placeholder
 
 ---
 
-## 4.1 `magrittr`: A Forward-Pipe Operator for R
+## 4.1 `magrittr`: The Forward-Pipe Operator
 
-**Question:** What is the average body mass index in grams for all penguins observed in the year 2007 (excluding missing values)?
+**Question:** What is the average body mass in grams for all penguins observed in the year 2007 (after excluding missing values)?
 
 **In a pipeless world:**
 ```{r, eval=F}
 mean(subset(penguins, year == 2007)$body_mass_g, na.rm = T)
 
-#alternatively:
+# alternatively:
 peng_bm_2007 <- subset(penguins, year == 2007)$body_mass_g
 mean(peng_bm_2007, na.rm = T)
 ```
+
+--
+
 .pull-left[
 **In a world full of pipes:**
 ```{r, eval=F}
@@ -161,5 +167,5 @@ penguins %>%
 ]
 
 ???
-Add or remove individual steps easily in your pipeline
-The `magrittr` pipes are loaded imported by the `tidyverse`, no need to load it separately
+- Add or remove individual steps easily in your pipeline
+- The `magrittr` forward pipe is imported by the `tidyverse`, no need to load it separately

@@ -3,7 +3,7 @@ title: "Machine Learning in R:<br/>Workshop Series"
 subtitle: "Introduction to the<br>Tidyverse"
 author: "Simon Schölzel"
 institute: "*Research Team Berens*"
-date: "2020-08-20 (updated: `r Sys.Date()`)"
+date: "2020-11-09 (updated: `r Sys.Date()`)"
 
 output:
   xaringan::moon_reader:
@@ -44,31 +44,6 @@ style_mono_accent(
 )
 ```
 
-```{r metathis, echo=FALSE}
-library(metathis)
-meta() %>%
-  meta_name("github-repo" = "simonschoe/Introduction-to-the-Tidyverse") %>% 
-  meta_social(
-    title = "Introduction to the Tidyverse",
-    description = paste(
-      "2 hours introductory workshop on the `tidyverse` meta-package as part of the",
-      "*Machine Learning in R* course at University of Münster (winter term 2020/21)."),
-    url = "https://simonschoe.github.io/Introduction-to-the-Tidyverse/#1",
-    image = "https://github.com/simonschoe/Introduction-to-the-Tidyverse/tree/master/custom/social-card.jpg",
-    image_alt = paste(
-      "Title slide of Introduction to the Tidyverse:", 
-      "2 hours introductory workshop on the `tidyverse` meta-package as part of the",
-      "*Machine Learning in R* course at University of Münster (winter term 2020/21)."),
-    og_type = "website",
-    og_author = "Simon Schölzel",
-    twitter_card_type = "summary_large_image"
-  )
-```
-
-```{r xaringanExtra-share-again, echo=FALSE}
-xaringanExtra::use_share_again()
-```
-
 ```{r packages, warning=F, message=F, echo=F}
 #install.packages("pacman")
 if (!require("pacman")) install.packages("pacman")
@@ -89,7 +64,7 @@ name: agenda
 **3 `palmerpenguins`: Palmer Archipelago (Antarctica) Penguin Data**
 
 **4 The Core `tidyverse` Packages**  
-> 4.1 `magrittr`: A Forward-Pipe Operator for R  
+> 4.1 `magrittr`: A Forward-Pipe Operator for `R`  
 4.2 `tibble`: Simple Data Frames  
 4.3 `readr`: Read Rectangular Text Data  
 4.4 `tidyr`: Tidy Messy Data  
@@ -114,36 +89,36 @@ More specifically, after this workshop you will
 - have improved your overall data literacy.
 
 ???
-comments
+especially highlight the last point: how you think about data, how you approach working with data whenever you open a new data set, build a mental model for data transformation operations
 
 ---
 
-```{r child='./01_intro.Rmd', eval=T}
+```{r child='./01_intro.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='./02_tidy_data.Rmd', eval=T}
+```{r child='./02_tidy_data.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='./03_magrittr.Rmd', eval=T}
+```{r child='./03_magrittr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='./04_tibble.Rmd', eval=T}
+```{r child='./04_tibble.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='./05_readr.Rmd', eval=T}
+```{r child='./05_readr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='./06_tidyr.Rmd', eval=T}
+```{r child='./06_tidyr.Rmd', eval=F}
 ```
 
 ---
@@ -153,12 +128,12 @@ comments
 
 ---
 
-```{r child='./08_purrr.Rmd', eval=T}
+```{r child='./08_purrr.Rmd', eval=F}
 ```
 
 ---
 
-```{r child='./09_ggplot2.Rmd', eval=T}
+```{r child='./09_ggplot2.Rmd', eval=F}
 ```
 
 ---

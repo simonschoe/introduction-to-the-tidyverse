@@ -8,6 +8,9 @@ layout: false
 
 # 4.3 `readr`:<br><br>Read Rectangular Text Data
 
+???
+- not data in the form of texts, but as stored in a text file (txt, csv, excel file)
+
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/readr/master/man/figures/logo.png)
@@ -30,25 +33,25 @@ layout: true
 Conveniently, the `write_*()` functions work analog. In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
 
 .footnote[
-*Note: In most European countries MS Excel is using `;` as the common delimiter, which can be accountet for by simply switching to the `read_csv2()` function.*
+*Note: In most European countries MS Excel is using `;` as the common delimiter, which can be accounted for by simply switching to the `read_csv2()` function.*
 ]
 
 ???
-`read_delim()` as a generalization of the other functions
+- `read_delim()` as a generalization of the other functions
 
 ---
 
 ## 4.3 `readr`: Read Rectangular Text Data
 
-Let's try it out by reading in some penguins data (note that the output of any `read_*()` function is a `tibble` object.). For the purpose of illustrating the `readr` package the `penguins` data is written to a csv-file a priori using `write_csv()`.
+Let's try it out by reading in the penguins data (note that the output of any `read_*()` function is a `tibble` object.). For the purpose of illustrating the `readr` package, the `penguins` data is written to a csv-file a priori using `write_csv()`.
 
 ```{r}
 penguins %>% 
-  readr::write_csv("./data/penguins.csv")
+  write_csv(file = "./data/penguins.csv")
 ```
 
 ```{r}
-penguins <- readr::read_csv("./data/penguins.csv")
+penguins <- read_csv(file = "./data/penguins.csv")
 ```
 
 ???
@@ -58,40 +61,27 @@ comment
 
 ## 4.3 `readr`: Read Rectangular Text Data
 
-Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., integer, numeric, character, factor, date, logical) from the first 1000 rows and parses the columns accordingly using the built-in `parse_()` functions.
+Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., `int`, `dbl`, `chr`, `fct`, `date`, `lgl`) from the first 1,000 rows and parses the columns accordingly using the built-in `parse_*()` functions.
 
-- Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly. 
+Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly:
 ```{r, eval=F}
-readr::read_csv(
-  "./data/penguins.csv",
-    col_types = cols(
-      species = col_character(),
-      year = col_datetime(format = "%Y"),
-      island = col_skip()
-    )
+read_csv(
+  file = "./data/penguins.csv",
+  col_types = cols(
+    species = col_character(),
+    year = col_datetime(format = "%Y"),
+    island = col_skip())
   )
 ```
 
-???
-komischer bindestrich
-
----
-
-## 4.3 `readr`: Read Rectangular Text Data
-
-Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., integer, numeric, character, factor, date, logical) from the first 1000 rows and parses the columns accordingly using the built-in `parse_()` functions.
-
-- Parsing only the first 1000 rows is efficient but can lead to erroneous guesses. Make use of the `guess_max` argument!
+Parsing only the first 1,000 rows is efficient but can lead to erroneous guesses:
 ```{r, eval=F}
-readr::read_csv(file = "./data/penguins.csv", guess_max = 1001)
+read_csv(file = "./data/penguins.csv", guess_max = 1001)
 ```
 
 .footnote[
 *Note: Find more information and functions on the `readr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).*
 ]
-
-???
-Hint: sometimes you may have trouble when reading in text data (type character): special signs such as ö, ä or ü may be strangely encoded as cryptic symbols -> in those cases you must control for the encoding of your data in the read_csv function (e.g., UTF-8)
 
 ---
 
@@ -108,23 +98,22 @@ knitr::include_graphics("./img/excel.jpg")
 --
 
 .pull-right[
-`write_rds()` and `read_rds()` provide a nice alternative for [serializing](https://en.wikipedia.org/wiki/Serialization) your `R` objects (e.g., `tibbles`, models) and storing them as `.rds` files. 
+`write_rds()` and `read_rds()` provide a nice alternative for [serializing](https://en.wikipedia.org/wiki/Serialization) your `R` objects (e.g., `tibbles`, models) and storing them as `.rds` files.
+```{r}
+penguins %>% 
+  write_rds(file = "./data/penguins.rds")
+```
+
 ```{r}
 penguins <- read_rds(file = "./data/penguins.rds")
 ```
-```
-> Rows: 344
-> Columns: 8
-> $ species           <chr> "Adelie", "Adelie", ...
-> $ island            <chr> "Torgersen", "Torgersen", ...
-> $ bill_length_mm    <dbl> 39.1, 39.5, ...
-> ...
-```
+
 Note that
 - `write_rds()` can only be used to save one object at a time,
 - a loaded `.rds` file must be stored into a new variable, i.e. given a new name,
-- `read_rds()` preserves data types.
+- `read_rds()` preserves data types!
 ]
 
 ???
-serialization: the process of translating a data structure or object state into a format that can be stored (for example, in a file or memory data buffer) or transmitted (for example, across a computer network) and reconstructed later (possibly in a different computer environment).
+- serialization: the process of translating a data structure or object state into a format that can be stored, transmitted and reconstructed later (possibly in a different computer environment).
+- Hint: sometimes you may have trouble when reading in text data (type character): special signs such as ö, ä or ü may be strangely encoded as cryptic symbols -> in those cases you must control for the encoding of your data in the read_csv function (e.g., UTF-8)

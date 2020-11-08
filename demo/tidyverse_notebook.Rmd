@@ -8,7 +8,7 @@ date: "2020-08-20 (updated: `r Sys.Date()`)"
 output: html_notebook
 ---
 
-This notebook complements the "**Introduction to the Tidyverse**" workshop which is part of the Machine Learning in `R` (winter term 2020/21). For the purpose of reproducibility, it contains all examples and use cases discussed in the workshop.
+This notebook complements the "**Introduction to the Tidyverse**" workshop which is part of the Machine Learning in `R` course (winter term 2020/21). For the purpose of reproducibility, it contains all examples and use cases discussed in the workshop.
 
 
 ## Package Management
