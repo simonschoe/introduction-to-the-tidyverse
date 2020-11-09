@@ -149,7 +149,7 @@ This underlying design philosophy and grammar boils down to a consistent and eas
 The `tidyverse` syntax can be viewed as a "dialect" of `R`. When you have familiarized yourself with it, you will be able to easily transfer your knowledge about one function or package to other components of the `tidyverse`. Just like learning a new language.
 
 .footnote[
-*Note: For further information cf. [[2]](#references) and [[3]](#references).*
+_Note: For further information cf. [[2]](#references) and [[3]](#references)._
 ]
 
 ???

@@ -111,7 +111,7 @@ penguins %>%
 **Partial Matching:** Subsetting a `tibble` does not allow for partial matching, i.e. you must always provide the whole column name.
 
 .footnote[
-*Note: Find more information about `tibbles` by running `vignette("tibble")`.*
+_Note: Find more information about `tibbles` by running `vignette("tibble")`._
 ]
 
 ???

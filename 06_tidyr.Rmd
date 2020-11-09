@@ -64,12 +64,11 @@ knitr::include_graphics("https://raw.githubusercontent.com/apreshill/teachthat/m
 ```
 ]
 
-.footnote[
-Source: [Allison Hill](https://github.com/apreshill/teachthat/blob/master/pivot/pivot_longer_smaller.gif).
+.footnote[.pull-left[
+*Source: [Allison Hill](https://github.com/apreshill/teachthat/blob/master/pivot/pivot_longer_smaller.gif)*
 
-*Note: Find more information about*  
-`pivot_*()` *in the [pivoting vignette](https://tidyr.tidyverse.org/articles/pivot.html).*
-]
+<i>Note: Find more information about `pivot_*()` in the [pivoting vignette](https://tidyr.tidyverse.org/articles/pivot.html).</i>
+]]
 
 ???
 src: https://raw.githubusercontent.com/apreshill/teachthat/master/pivot/pivot_longer_smaller.gif

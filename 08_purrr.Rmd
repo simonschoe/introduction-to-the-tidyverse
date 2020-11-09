@@ -19,37 +19,39 @@ layout: true
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-`purrr` facilitates *functional programming* (FP) with data frame objects (e.g., `tibbles`) in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a data manipulation pipeline.
+`purrr` facilitates *functional programming* (FP) with data frame objects in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a `tidyverse` pipeline.
 
-**Three types of `map_*()` function:**
+**Three types of `map_*()` functions:**
 - `map(.x, .f, ...)` takes the input `.x` and applies `.f` to each element in `.x`.
 - `group_map(.data, .f, ...)` takes a grouped `tibble` and applies `.f` to each subgroup.
 - `map2(.x, .y, .f, ...)` takes the inputs `.x` and `.y` and applies `.f` to `.x` and `.y` in parallel.
 - `pmap(.l, .f, ...)` takes a list `.l` of inputs and applies `.f` to each element in `.l` in parallel.
 
+--
+
 .pull-left[
 By default `map()` returns a list. If you want to be more explicit about the output you may refer to
-- `map_lgl()` to receive an output type logical,
-- `map_chr()` to receive an output type character,
-- `map_int()` to receive an output type integer,
-- `map_dbl()` to receive an output type double,
+- `map_lgl()` to receive a logical output type,
+- `map_chr()` to receive a character output type,
+- `map_int()` to receive an integer output type,
+- `map_dbl()` to receive a double output type ,
 - `map_df()` to receive a data frame output.
 ]
+
+--
+
 .pull-right[
-The input `.x` to any `map()_*` function can be either a vector, list or data frame.
-- **Vector:** Iteration over vector entries
+The input `.x` to any `map()_*` function can be either a vector, a list or a data frame.
+- **Vector:** Iteration over vector elements
 - **List:** Iteration over list elements
 - **Data frame:** Iteration over columns
 ]
-
-???
-Comments
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**Use Case:** Applying the z-normalization to multiple variables
+**Use Case:** Applying the z-Normalization to multiple variables
 
 First, write a *named function* for performing z-normalization that takes a vector `.x` as input.
 ```{r}
@@ -57,6 +59,8 @@ z_transform <- function(.x) {
   mean <- mean(.x); sd <- sd(.x); return( (.x - mean) / sd )
 }
 ```
+
+--
 
 Second, draw samples from the `penguin` data set and store them as double vectors in a list.
 ```{r}
@@ -70,28 +74,25 @@ samples
 ```
 
 ???
-here: different means and sd
+- here: different means and sd
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**Use Case:** Applying the z-normalization to multiple variables
+**Use Case:** Applying the z-Normalization to multiple variables
 
-Third, perform the z-normalization using a `for`-loop.
+Third, perform the z-Normalization using a `for`-loop.
 ```{r, eval=F}
-for (s in samples) {
-  print(z_transform(s))
-}
+for (s in samples) { print(z_transform(.x = s)) }
 ```
 
-Or simply perform the z-normalization using `map()`.
+--
+
+Or simply perform the z-Normalization using `map()`.
 ```{r}
-map(.x = samples, .f = ~z_transform(.x)) #equivalent to map(samples, z_transform)
+map(.x = samples, .f = ~ z_transform(.x)) # equivalent to map(samples, z_transform)
 ```
-
-???
-comments
 
 ---
 
@@ -99,7 +100,7 @@ comments
 
 **Use Case:** Applying the z-normalization to multiple variables
 
-Or perform the z-normalization using `map()` but use an *anonymous function*.
+Or perform the z-Normalization using `map()` but use an *anonymous function*.
 ```{r, eval=F}
 map(
   .x = samples,
@@ -108,28 +109,25 @@ map(
   })
 ```
 
-Or perform the z-normalization using `map()` but use an *`purrr`-style function*.
+--
+
+Or perform the z-Normalization using `map()` but use an *`purrr`-style function*.
 ```{r, eval=F}
 map(
   .x = samples,
-  .f = ~(.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T))
+  .f = ~ (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
+)
 ```
-
-???
-comments
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-```{r, echo=F, out.width='80%', fig.align='center'}
+```{r, echo=F, out.width='70%', fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
 ```
-
-???
-This is great right?!?!
-Now let us look at some other practical use cases!
-src: https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041
+<br><br>
+.center[`r emo::ji("man_dancing")` **Now let us look at some other practical use cases!** `r emo::ji("woman_dancing")`]
 
 ---
 
@@ -140,14 +138,18 @@ Check the data types of my columns:
 penguins %>%
   map_df(class)
 ```
+
+--
+
 Check the number of missing values per column:
 ```{r}
 penguins %>%
-  map_df(~sum(is.na(.)))
+  map_df(~ sum(is.na(.x)))
 ```
 
 ???
-comments
+1: I give `map` a data frame as input (`penguins`), so it iterates over each column. And to each column I apply the `class()` function. I want the output to be returned as a data frame (`map_df`)
+- use swung dash whenever i also specify function arguments
 
 ---
 
@@ -159,9 +161,6 @@ penguins %>%
   map_df(n_distinct)
 ```
 
-???
-comments
-
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
@@ -171,11 +170,11 @@ Check the highest value in each subset of the data (e.g., largest `flipper_lengt
 penguins %>%
   drop_na %>% 
   group_by(sex) %>%
-  group_map(~slice_max(., flipper_length_mm, n = 1), .keep = T)
+  group_map(~ slice_max(.x, flipper_length_mm, n = 1), .keep = T)
 ```
 
 ???
-drop_na: because otherwise I would also have a subgroup of NA
+- drop_na: because otherwise I would also have a subgroup of NA
 
 ---
 
@@ -183,13 +182,18 @@ drop_na: because otherwise I would also have a subgroup of NA
 
 `map()` also comes in handy, if you like to produce a series of identical plots, each depicting a separate subset of the underlying data:
 ```{r, out.height='20%', out.width='20%'}
-species <- penguins %>% distinct(species, year) %>% pull(species) #.x argument for map()
-years <- penguins %>% distinct(species, year) %>% pull(year)      #.y argument for map()
+species <- penguins %>%
+  distinct(species, year) %>%
+  pull(species) # .x argument for map()
+
+years <- penguins %>%
+  distinct(species, year) %>%
+  pull(year) # .y argument for map()
 
 penguin_plots <- map2(
   .x = species,
   .y = years,
-  .f = ~{
+  .f = ~ {
     penguins %>%
       drop_na %>% 
       filter(species == .x, year == .y) %>% 
@@ -198,9 +202,6 @@ penguin_plots <- map2(
         labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
     })
 ```
-
-???
-comments
 
 ---
 
@@ -217,49 +218,59 @@ penguin_plots[[4]]
 ```
 ]
 
-???
-comments
-
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
 Finally, `map()` is really powerful in the context of modeling. In the following we fit a linear regression model for each `species`-`island` subset.
 
-First, we create a nested data frame that contains a `tibble` of data for each `species`-`island` combination.
+First, we create a nested data frame that contains a `tibble` for each `species`-`island` combination.
 ```{r}
 nested_penguins <- penguins %>% 
   drop_na %>% 
   group_by(species, island) %>% 
   nest
-```
-```{r, echo=F}
+
 nested_penguins
 ```
 
 .pull-right[.footnote[
-*Note: For accessing elements in a nested `tibble` you may use the `pluck()`. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)`.*
+*Note: For accessing elements in a nested `tibble` you may use the `pluck()` function. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)`.*
 ]]
-
-???
-comments
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Second, we fit a linear model to each data subset. In our model `body_mass_g` is regressed (`~`) on all other variables (denoted by a dot in the `lm()` formula).
+Second, we fit a linear model to each data subset. In our model, `body_mass_g` is regressed (`~`) on all other variables (denoted by a dot in the `lm()` formula).
 
 ```{r}
 nested_penguins <- nested_penguins %>% 
-  mutate(lin_reg = map(.x = data, .f = ~lm(body_mass_g ~ ., data = .x))) 
+  mutate(lin_reg = map(
+    .x = data,
+    .f = ~lm(body_mass_g ~ ., data = .x)
+  )) 
 ```
 ```{r, echo=F}
 nested_penguins
 ```
 
-???
-comments
+---
+
+## 4.6 `purrr`: Functional Programming Tools
+
+Third, for each linear model, we generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, we use `unnest()` to receive a tidy data frame.
+```{r}
+nested_penguins <- nested_penguins %>% 
+  mutate(coefs = map(lin_reg, ~ { summary(.x) %>% .$coefficients %>% as_tibble })) %>%
+  select(-data, -lin_reg)
+
+nested_penguins
+```
+
+.footnote[.pull-right[.pull-right[
+*Note: Here we eventually dropped the `lin_reg` and `data` columns, otherwise we would have carried around a lot of redundant data which may exceed our memory storage capacity very quickly.*
+]]]
 
 ---
 
@@ -267,27 +278,13 @@ comments
 
 Third, for each linear model, we generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, we use `unnest()` to receive a tidy data frame.
 
-```{r, results=F}
-nested_penguins %>% 
-  mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
-  select(-data, -lin_reg) %>% 
-  unnest(coefs)
-```
-```{r, echo=F}
-print(
-  nested_penguins %>% 
-    mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
-    select(-data, -lin_reg) %>% 
-    unnest(coefs),
-  n = 4)
+```{r}
+unnest(nested_penguins, coefs)
 ```
 
-.footnote[
-*Note: Here we eventually dropped the `lin_reg` and `data` columns, otherwise we would have carried around a lot of redundant data which may exceed our memory storage capacity very quickly.*
-]
-
-???
-there are packages for automatically doing this with just one line of code, see `broom`
+.footnote[.pull-right[.pull-right[
+*Note: There are specific packages (e.g., `broom`) for tidying model outputs. These provide convenient functions that help you achieve the same thing with much less code.*
+]]]
 
 ---
 
@@ -295,7 +292,7 @@ there are packages for automatically doing this with just one line of code, see 
 
 .pull-left[
 .center[
-How you may probably feel right now<br><br>
+`r emo::ji("thinking_face")` How you may probably feel right now<br><br>
 ```{r, echo=F, fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/matg-calculate-confusing-figure-out-gif-6237717.gif")
 ```
@@ -305,23 +302,23 @@ knitr::include_graphics("https://tenor.com/view/matg-calculate-confusing-figure-
 
 .pull-right[
 .center[
-How you do after mastering the intricacies of FP<br><br>
+`r emo::ji("nerd_face")` After having mastered the intricacies of FP<br><br>
 ```{r, echo=F, fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
 ```
 ]]
 
-.footnote[.pull-left[
+.footnote[
 *Note: For a great tutorial that helps you master the notion of functional programming with `R` see [[6]](#references).*
-]]
+]
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Finally, `purrr` also provides convenient [wrapper functions](https://en.wikipedia.org/wiki/Wrapper_function) for **error handling**. These come in handy if your are iterating over a very large data set and your program would simply stop if an error occurs and you would loose the whole progress.
+Finally, `purrr` also provides convenient [wrapper functions](https://en.wikipedia.org/wiki/Wrapper_function) for **error handling**. These come in handy if your are iterating over a very large data set and your program would simply stop if an error occurs. This is particularly frustrating as you would loose the whole progress. `r emo::ji("face_with_steam_from_nose")`
 
-For example, at some point you might want train a separate prediction model (`lm`) for each unique value of `species` (`r penguins$species %>% unique`). Unfortunately, the following code is throwing an error...
+For example, at some point you might want to train a separate prediction model (`lm`) for each unique value of `species` (`r penguins$species %>% unique`). Unfortunately, the following code is throwing an error...
 ```{r}
 grouped_penguins <- penguins %>% 
   mutate(across(c(sex, island), as.factor)) %>% 
@@ -330,7 +327,7 @@ grouped_penguins <- penguins %>%
 ```
 ```{r, eval=F}
 grouped_penguins %>% 
-  group_map(.f = ~lm(flipper_length_mm ~ bill_length_mm + island, data = .))
+  group_map(.f = ~ lm(flipper_length_mm ~ bill_length_mm + island, data = .x))
 ```
 ```
 > Error in `contrasts<-`(`*tmp*`, value = contr.funs[1 + isOF[nn]]) :
@@ -340,7 +337,7 @@ grouped_penguins %>%
 `r emo::ji("thinking")` **Which group is eventually responsible for the error?**
 
 ???
-wrapper functions: wrap a function around another function, i.e. you call a function when applying another function
+- wrapper functions: wrap a function around another function, i.e. you call a function when applying another function
 
 ---
 
@@ -351,15 +348,12 @@ wrapper functions: wrap a function around another function, i.e. you call a func
 possibly_lm <- possibly(.f = lm, otherwise = "Error message")
 
 grouped_penguins %>% 
-  group_map(.f = ~possibly_lm(flipper_length_mm ~ bill_length_mm + island, data = .))
+  group_map(.f = ~possibly_lm(flipper_length_mm ~ bill_length_mm + island, data = .x))
 ```
 
-.footnote[.pull-right[
+.footnote[.pull-right[.pull-right[
 *Note: Use `purrr::discard(. == "Error message")` (`purrr::keep()`) at the end of the pipeline to drop (keep) function calls that yielded an error.<br>These work like `dplyr::select()` and `dplyr::filter()` in the context of `tibbles`.*
-]]
-
-???
-comments
+]]]
 
 ---
 
@@ -370,7 +364,7 @@ comments
 safely_lm <- safely(.f = lm, otherwise = NULL)
 
 grouped_penguins %>% 
-  group_map(.f = ~safely_lm(flipper_length_mm ~ bill_length_mm + island, data = .)) 
+  group_map(.f = ~safely_lm(flipper_length_mm ~ bill_length_mm + island, data = .x)) 
 ``` 
 
 - Use `purrr::map(., "result")` at the end of the pipeline to access the results of each function call stored in the list.
@@ -381,5 +375,5 @@ grouped_penguins %>%
 ]
 
 ???
-quietly: useful to capture warning messages that the code throws, e.g., `summarise()` frequently throws a warning if you do not specify the `.drop` argument 
+- quietly: useful to capture warning messages that the code throws, e.g., `summarise()` frequently throws a warning if you do not specify the `.drop` argument 
  

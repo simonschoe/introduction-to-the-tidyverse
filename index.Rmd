@@ -93,32 +93,32 @@ especially highlight the last point: how you think about data, how you approach 
 
 ---
 
-```{r child='./01_intro.Rmd', eval=F}
+```{r child='./01_intro.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./02_tidy_data.Rmd', eval=F}
+```{r child='./02_tidy_data.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./03_magrittr.Rmd', eval=F}
+```{r child='./03_magrittr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./04_tibble.Rmd', eval=F}
+```{r child='./04_tibble.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./05_readr.Rmd', eval=F}
+```{r child='./05_readr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./06_tidyr.Rmd', eval=F}
+```{r child='./06_tidyr.Rmd', eval=T}
 ```
 
 ---
@@ -128,12 +128,12 @@ especially highlight the last point: how you think about data, how you approach 
 
 ---
 
-```{r child='./08_purrr.Rmd', eval=F}
+```{r child='./08_purrr.Rmd', eval=T}
 ```
 
 ---
 
-```{r child='./09_ggplot2.Rmd', eval=F}
+```{r child='./09_ggplot2.Rmd', eval=T}
 ```
 
 ---
@@ -141,13 +141,13 @@ especially highlight the last point: how you think about data, how you approach 
 ## Thank You!
 
 .pull-left[
-.center[**Right now:**]<br>
+.center[`r emo::ji("thinking_face")` **Right now**]<br>
 ```{r, echo=F, fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/homer-daydreaming-thinking-simpsons-gif-8949118.gif")
 ```
 ]
 .pull-right[
-.center[**After having mastered the Tidyverse:**]<br><br>
+.center[`r emo::ji("nerd_face")` **After having mastered the Tidyverse**]<br><br>
 ```{r, echo=F, fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/homer-gif-10571731.gif")
 ```

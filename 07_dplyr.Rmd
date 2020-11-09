@@ -523,7 +523,7 @@ penguins %>%
 ```
 
 .pull-right[.footnote[
-*Note: Find more information about* `group_by()` *by running* `vignette("grouping")`.
+*Note: Find more information about `group_by()` by running `vignette("grouping")`.*
 ]]
 
 ---
@@ -569,7 +569,7 @@ penguins %>%
 **`dplyr::left_join()`, `dplyr::right_join()`, `dplyr::inner_join()` and `dplyr::full_join()`:** merge different data frames by matching rows based on keys (similar to joins performed in SQL)
 
 .footnote[
-*Note: Find more information about* `dplyr` *by running* `vignette("dplyr")` *and consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf) (note that it may not reflect changes included in* `dplyr v1.0.0`).
+*Note: Find more information about `dplyr` by running `vignette("dplyr")` and consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf) (note that it may not reflect changes included in `dplyr v1.0.0`).*
 ]
 
 ???
