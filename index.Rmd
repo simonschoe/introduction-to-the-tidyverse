@@ -146,7 +146,7 @@ knitr::include_graphics("https://tenor.com/view/homer-daydreaming-thinking-simps
 ```
 ]
 .pull-right[
-.center[`r emo::ji("nerd_face")` **After having mastered the Tidyverse**]<br><br>
+.center[`r emo::ji("nerd_face")` **After having mastered the `tidyverse`**]<br><br>
 ```{r, echo=F, fig.align='center'}
 knitr::include_graphics("https://tenor.com/view/homer-gif-10571731.gif")
 ```
