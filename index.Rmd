@@ -26,8 +26,14 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r packages, warning=F, message=F, echo=F}
+#install.packages("pacman")
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(xaringanthemer, tidyverse, magrittr, glue, showtext, plotly, patchwork, ggforce)
+pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
+```
+
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
-library(xaringanthemer)
 style_mono_accent(
   base_color = "#000000",
   link_color = "#0000EE",
@@ -42,13 +48,6 @@ style_mono_accent(
   code_inline_background_color = "#F4F4F4",
   outfile = "./custom/xaringan-themer.css"
 )
-```
-
-```{r packages, warning=F, message=F, echo=F}
-#install.packages("pacman")
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, magrittr, glue, showtext, plotly, patchwork, ggforce)
-pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
 ```
 
 name: agenda
@@ -208,8 +207,3 @@ Watch live-coding sessions related to the [TidyTuesday](https://github.com/rford
 Educational resources are inspired by [workshop materials](https://github.com/rstudio-education/remaster-the-tidyverse) of Garrett Grolemund and [blog posts](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/) by Mine Çetinkaya-Rundel of the RStudio Education team.
 
 `tidyverse` [artworks and illustration](https://github.com/allisonhorst/stats-illustrations) are provided by Allison Horst.
-
-???
-convert online presentation to pdf:
-
-docker run --rm -t -v %cd%/desktop/l09_desktop/workshops/02_tidyverse/slides:/slides astefanutti/decktape https://simonschoe.github.io/Introduction-to-the-Tidyverse/#1 index.pdf

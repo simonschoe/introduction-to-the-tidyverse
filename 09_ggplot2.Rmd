@@ -20,7 +20,9 @@ layout: true
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
 `ggplot2` is Hadley Wickham's reimplementation [[7]](#references) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [[8]](#references-2). It provides a large amount of functions for generating high-quality graphs in a layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
-<br><br>
+
+<br>
+
 ```{r, echo=F, out.width='70%', fig.align='center'}
 knitr::include_graphics("./img/grammar-of-graphic-layers.png")
 ```
@@ -35,7 +37,7 @@ knitr::include_graphics("./img/grammar-of-graphic-layers.png")
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-```{r, echo=F, out.height='60%', out.width='60%', fig.align='center', dpi=100}
+```{r, echo=F, out.height='60%', out.width='60%', fig.align='center'}
 knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/ggplot2_masterpiece.png")
 ```
 
@@ -43,7 +45,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Data:** The data set (ideally in *tidy data* format) from which to select the variables that are to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
+**Data:** The data set (ideally in *tidy* format) from which to select the variables that are to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
 
 .pull-left[
 **Univariate example:**
@@ -53,20 +55,20 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_u1', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_u1', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
 .footnote[
 .pull-left[
-*Note: Again, a compact go-to-guide for data visualisations with `ggplot2` is the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf).*
+*Note: A compact go-to-guide for data visualisations with `ggplot2` is the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf).*
 ]]
 
 ---
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Aesthetics:** Mappings that describe how variables in my data are mapped to aesthetic attributes of the plot, such as axes, shapes, sizes or colors.
+**Aesthetics:** Mappings that describe how variables in the data are mapped to aesthetic attributes in the plot, such as axes, shapes, sizes or colors.
 
 .pull-left[
 **Univariate example:**
@@ -76,9 +78,12 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_u2', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_u2', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
+
+???
+- You can already see that `ggplot2` extracts the ranges in your variables.
 
 ---
 
@@ -93,12 +98,12 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
     geom_histogram(na.rm = TRUE) 
 ```
-`ggplot2` comes with very decent *default* settings. Each `geom_*()` has its own options for customizing the geom, e.g., 
+`ggplot2` comes with decent *default* settings. Each `geom_*()` has its own options for customizing the geom, e.g., 
 - change the number of bins with the `bins` argument,
-- change the binwidth with `binwidth` argument.
+- change the width of the bins with `binwidth` argument.
 ]
 .pull-right[
-```{r ref.label='p_step_u3', echo=F, out.width='70%', fig.retina=3, fig.align='center', message=F}
+```{r ref.label='p_step_u3', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
 ```
 ]
 
@@ -122,7 +127,7 @@ Eventually, you may realize the beauty of the `geom_*()` layers:
 This is due to the frequently overlooked `stat` argument (which defaults to `stat = "count"` for the `geom_bar()` layer).
 ]
 .pull-right[
-```{r ref.label='p_step_u4', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_u4', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -139,10 +144,10 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
     geom_bar(na.rm = TRUE, stat = "density") 
 ```
-Most of the time you will just plot the data as it is piped into the plot (`stat = "identity"`). As soon as you require some form of statistical transformation before plotting, the `stat` argument is the way to go. It goes hand-in-hand with the respective `geom_*()`.
+Most of the time you will just plot the data as-is (`stat = "identity"`). As soon as you require some form of statistical transformation before plotting, the `stat` argument can handle this for you. It goes hand-in-hand with the respective `geom_*()`.
 ]
 .pull-right[
-```{r ref.label='p_step_u5', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_u5', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -165,13 +170,13 @@ penguins %>%
 If you have to manually change the default setting of the `stat` argument, it is likely that `ggplot2` has implemented a corresponding `geom_*()` already.
 ]
 .pull-right[
-```{r ref.label='p_step_u6', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_u6', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
 .footnote[
 .pull-left[
-*Note: For a great explanation that helps you internalize the inner workings of the `stat` layer, see this [blog post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) by June Choe.*
+*Note: For a great explanation of the inner workings of the `stat` layer, see this [blog post](https://yjunechoe.github.io/posts/2020-09-26-demystifying-stat-layers-ggplot2/) by June Choe.*
 ]]
 
 ---
@@ -188,7 +193,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b1', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b1', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -196,7 +201,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Aesthetics:** Mappings that describe how variables in my data are mapped to aesthetic attributes of the plot, such as axes, shapes, sizes or colors.
+**Aesthetics:** Mappings that describe how variables in the data are mapped to aesthetic attributes in the plot, such as axes, shapes, sizes or colors.
 
 .pull-left[
 **Bivariate example:**
@@ -207,12 +212,9 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b2', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b2', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
-
-???
-You can already see that ggplot2 extract the ranges in your variables.
 
 ---
 
@@ -230,7 +232,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b3', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b3', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -252,7 +254,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b4', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b4', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -274,7 +276,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b5', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b5', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -294,15 +296,17 @@ penguins %>%
       color = "red", 
       na.rm = TRUE) 
 ```
-For truly customized coloring plots you may refer to [HTML color codes](https://www.w3schools.com/colors/colors_picker.asp) (also called *hex codes*, e.g., `#ff0000` for red) instead of specifying colors by their [predefined name](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) in `R`.
+For truly customized colors you may refer to [HTML color codes](https://www.w3schools.com/colors/colors_picker.asp) (also called *hex codes*, e.g., `#ff0000` for red) instead of specifying colors by their [predefined name](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) in `R`.
 ]
 .pull-right[
-```{r ref.label='p_step_b6', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b6', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
 ???
-- Remember: Whenever you specify something outside of `aes()`, it will not be mapped to another variable but assigned rather manually.
+Remember:
+- if something is specified inside of `aes` it is mapped, i.e. the characteristic depends on the data
+- if something is specified outside of `aes`, it is assigned rather manually
 
 ---
 
@@ -321,10 +325,10 @@ penguins %>%
       size = 4, 
       na.rm = TRUE) 
 ```
-`ggplot2` provides 24 available shapes for customizing your plot. When specifying the shape outside of `aes()` you may refer to the shape's index (see [shape overview](https://ggplot2.tidyverse.org/reference/scale_shape-6.png)).
+`ggplot2` provides 24 available shapes for customizing your plot (see [shape overview](https://ggplot2.tidyverse.org/reference/scale_shape-6.png)).
 ]
 .pull-right[
-```{r ref.label='p_step_b7a', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b7a', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -346,7 +350,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b7b', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b7b', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -354,7 +358,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Facets:** Facets allow you to split your plot into multiple subplots based on the levels of one or more factor variables.
+**Facets:** Facets split the plot into multiple subplots based on the levels of one or more factor variables.
 
 .pull-left[
 **Bivariate example:**
@@ -369,7 +373,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b8', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b8', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -377,7 +381,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Facets:** Facets allow you to split your plot into multiple subplots based on the levels of one or more factor variables.
+**Facets:** Facets split the plot into multiple subplots based on the levels of one or more factor variables.
 
 .pull-left[
 **Bivariate example:**
@@ -392,7 +396,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_b9', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b9', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -403,7 +407,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Scales:** Scales control the aesthetic mappings by overriding the *default* settings. For example, they allow to refine the presentation of x- and y-axis, labels or color palettes.
+**Scales:** Scales control the aesthetic mappings by overriding the *default* settings. For example, they allow to refine the presentation of x- and y-axis, labels or color palettes ex post.
 
 .pull-left[
 **Bivariate example:**
@@ -420,15 +424,18 @@ The family of `scale_colour_*()` functions enables you to adjust the values of y
 
 ]
 .pull-right[
-```{r ref.label='p_step_b10', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b10', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
+
+???
+- use scales to change the default mappings of `ggplot2` afterwards
 
 ---
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Scales:** Scales control the aesthetic mappings by overriding the *default* settings. For example, they allow to refine the presentation of x- and y-axis, labels or color palettes.
+**Scales:** Scales control the aesthetic mappings by overriding the *default* settings. For example, they allow to refine the presentation of x- and y-axis, labels or color palettes ex post.
 
 .pull-left[
 **Bivariate example:**
@@ -444,9 +451,12 @@ penguins %>%
 Or use the `scale_*_log10()` functions to improve the readability of your plot in the presence of high-variance variables.
 ]
 .pull-right[
-```{r ref.label='p_step_b11', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_b11', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
+
+???
+- here it doesn't really change a lot due to the absence of outliers (respectively rahter low variations)
 
 ---
 
@@ -454,13 +464,15 @@ Or use the `scale_*_log10()` functions to improve the readability of your plot i
 
 .pull-left[
 **Other examples:** Boxplots for numeric variables
-```{r}
+```{r, results='hide'}
 penguins_long <- penguins %>% 
-  pivot_longer(
+  tidyr::pivot_longer(
     cols = contains("mm"),
-    names_to = "var",
-    values_to = "val") %>% 
-  drop_na 
+    names_to = "var", values_to = "val"
+  ) %>% 
+  tidyr::drop_na()
+
+penguins_long
 ```
 ]
 .pull-right[
@@ -468,9 +480,11 @@ penguins_long <- penguins %>%
 - Use `dplyr::pivot_longer()` to bring data frame into *long* format.
 - Take care of missing values using `dplyr::drop_na()` to avoid error messages.
 ]
-```{r echo=F}
+
+```{r, echo=F}
 print(penguins_long, n = 6)
 ```
+
 
 ---
 
@@ -488,7 +502,7 @@ penguins_long %>%
 - Control transparency of the respective plot element via the `alpha` aesthetic. 
 ]
 .pull-right[
-```{r ref.label='p_step_o1', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o1', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -512,7 +526,7 @@ plot +
 - You can either set `aes()` and `data` in `ggplot()` (*global*) or in `geom_*()` (*local*). In the latter case the data and mappings are only active on the *geom*-level.
 ]
 .pull-right[
-```{r ref.label='p_step_o2', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o2', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -530,15 +544,17 @@ plot +
   geom_col(
     aes(
       x = prop,
-      y = forcats::fct_reorder(species, prop))) +
+      y = forcats::fct_reorder(species, prop))
+    ) +
   scale_x_continuous(
-    labels = scales::label_percent(1.))
+    labels = scales::label_percent(1.)
+  )
 ```
 - Use `fct_reorder()` from the `forcats` package to reorder the levels of `species` by their relative frequency (`prop`).
 - Finally, `scales::label_percent(1.)` formats the axis as percentages, rounded to the first value after the digit.
 ]
 .pull-right[
-```{r ref.label='p_step_o3', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o3', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -552,18 +568,18 @@ plot +
 penguins %>% 
   ggplot(aes(x = species)) +
     geom_bar(
-      aes(
-        fill = island),
-        position = "dodge")
+      aes(fill = island),
+      position = "dodge"
+      )
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_o4', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o4', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
 .footnote[.pull-left[
-*Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes a variable `x` and computes the `y`-quantity internally (e.g., the number of observations using `stat = "count"`).*
+*Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes an `x` argument and computes the `y`-quantity internally (e.g., the number of observations using `stat = "count"`).*
 ]]
 
 ---
@@ -576,13 +592,13 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = species)) +
     geom_bar(
-      aes(
-        fill = island),
-        position = "stack")
+      aes(fill = island),
+      position = "stack"
+    )
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_o5', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o5', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -594,17 +610,17 @@ penguins %>%
 **Other examples:** Stacked bar chart
 ```{r p_step_o6, eval=F}
 penguins %>% 
-  ggplot(aes(
-    x = forcats::fct_lump(species, n = 1))) +
+  ggplot(
+    aes(x = forcats::fct_lump(species, n = 1))) +
     geom_bar(
-      aes(
-        fill = island),
-        position = "stack")
+      aes(fill = island),
+      position = "stack"
+    )
 ```
-In this crude example we use `forcats::fct_lump()` to lump together all factor levels except the `n = 1` level(s) with the highest number of observations.
+In this crude example we lump together all factor levels except the `n = 1` level(s) with the highest number of observations using `forcats::fct_lump()`.
 ]
 .pull-right[
-```{r ref.label='p_step_o6', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o6', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -627,7 +643,7 @@ p
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_o7', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o7', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -639,19 +655,21 @@ p
 **Other examples:** High-quality density plot
 ```{r p_step_o8, eval=F}
 breaks <- seq(from = 3000, to = 6000, by = 500)
+scales <- scales::label_comma(accuracy = 0.0001)
 
 p <- p +
   scale_x_continuous(
     breaks = breaks,
     limits = c(2000, 7000)) +
   scale_y_continuous(
-    labels = scales::label_comma(accuracy = 0.0001))
+    labels = scales
+  )
 
 p
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_o8', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o8', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -675,7 +693,7 @@ p
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_o9', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o9', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -691,10 +709,12 @@ p <- p +
 
 p
 ```
-The `theme` function allows you to customize all elements of your plot which are not immediately related to your data, e.g., titles, labels, fonts, background, or legends. `ggplot2` also comes with a set of predefined themes (`theme_*()`) .
+The `theme` function allows you to customize all elements of your plot which are not immediately related to your data, e.g., titles, labels, fonts, background, or legends.
+
+`ggplot2` also comes with a set of [predefined themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) (`theme_*()`).
 ]
 .pull-right[
-```{r ref.label='p_step_o10', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o10', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -720,7 +740,7 @@ p
 ```
 ]
 .pull-right[
-```{r ref.label='p_step_o11', echo=F, out.width='70%', fig.retina=3, fig.align='center'}
+```{r ref.label='p_step_o11', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]
 
@@ -737,14 +757,16 @@ penguins %>%
     geom_violin(aes(fill = species), na.rm = T) +
     theme_classic()
 
-ggsave("./img/violin-plot.PNG",
-       device = "png", dpi = 300)
+ggsave(
+  "./img/violin-plot.PNG",
+  device = "png", dpi = 300
+)
 ```
 - `geom_violin()` creates a cross-over version of a box-plot and a density plot, particularly suitable for visualizing continuous variables.
 - `ggsave()` writes the most recent plot to disk.
 ]
 .pull-right[
-```{r ref.label='p_step_o12', echo=F, out.width='70%', fig.retina=3, fig.align='center', message=F}
+```{r ref.label='p_step_o12', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
 ```
 ]
 
@@ -756,13 +778,13 @@ ggsave("./img/violin-plot.PNG",
 **Other examples:** Lines of Best Fit
 ```{r p_step_b13, eval=F}
 penguins %>% 
-  drop_na %>% 
+  tidyr::drop_na() %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
     geom_point(aes(color = species)) +
     geom_smooth(method = "lm", se = T)
 ```
-- Use `geom_smooth()` to fit a smooth line to visualise the relationship between `x` and `y`.
+- Use `geom_smooth()` to fit a smooth line to depict the relationship between `x` and `y`.
 - For the `method` argument specify one of:
   - *lm* (linear model),
   - *glm* (generalized linear model),
@@ -771,7 +793,7 @@ penguins %>%
 - Set the `se` argument to `TRUE` to show standard error bands (i.e. uncertainty).
 ]
 .pull-right[
-```{r ref.label='p_step_b13', echo=F, out.width='70%', fig.retina=3, fig.align='center', message=F}
+```{r ref.label='p_step_b13', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
 ```
 ]
 
@@ -785,7 +807,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-By now, there is a whole ecosystem (aka the **ggverse** [[10]](#references-2)) of amazing packages, all created in the spirit `ggplot2`, which further extent its capabilities:
+By now, there is a whole ecosystem (aka the **ggverse** [[10]](#references-2)) of amazing packages, all created in the spirit of `ggplot2`, which further extend its capabilities:
 .pull-left[
 - `scales`: Scale Functions for Visualization<br><br>
 - `ggtext`: Improved Text Rendering Support for `ggplot2`<br><br>
@@ -827,13 +849,13 @@ layout: false
 ## 4.7 `patchwork`: The Composer of Plots
 
 .pull-left[
-```{r, out.width='75%', out.height='75%', fig.retina=3, fig.align='center'}
+```{r, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 library(patchwork)
 p + p + p
 ```
 ]
 .pull-right[
-```{r, out.width='75%', out.height='75%', fig.retina=3, fig.align='center'}
+```{r, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 library(patchwork)
 p + (p / p)
 ```
@@ -849,21 +871,26 @@ layout: false
 ## 4.7 `ggforce`: Accelerating `ggplot2`
 
 .pull-left[
-Plot matrix for EDA with `ggforce`
+**Plot matrix with `ggforce`:**
 ```{r ggforce, eval=F}
 penguins %>% 
   drop_na %>% 
-  ggplot(aes(x = .panel_x, y = .panel_y, col = sex, fill = sex)) +
+  ggplot(aes(x = .panel_x,
+             y = .panel_y,
+             col = sex,
+             fill = sex)) +
     ggforce::geom_autopoint(alpha = 0.5) +
     ggforce::geom_autohistogram(alpha = 0.5) +
     ggforce::facet_matrix(
-      rows = vars(species, island, body_mass_g, flipper_length_mm),
+      rows = vars(species, island,
+                  body_mass_g,
+                  flipper_length_mm),
       switch = "both", layer.diag = 2) +
     theme_bw() +
     theme(axis.text.x = element_text(angle = 90))
 ```
 ]
 .pull-right[
-```{r ref.label='ggforce', echo=F, out.width='75%', out.height='75%', fig.retina=3, fig.align='center'}
+```{r ref.label='ggforce', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
 ```
 ]

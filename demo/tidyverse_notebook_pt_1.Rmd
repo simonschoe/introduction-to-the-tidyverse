@@ -1,0 +1,248 @@
+---
+title: "Machine Learning in R: Workshop Series"
+subtitle: "Introduction to the Tidyverse"
+author: "Simon Schölzel"
+institute: "*Research Team Berens*"
+date: "2020-11-09 (updated: `r Sys.Date()`)"
+output: html_notebook
+---
+
+This notebook complements the "**Introduction to the Tidyverse**" workshop which is part of the "Machine Learning in `R`" graduate course held at University of Münster, School of Business and Economics (winter term 2020/21).
+
+For the purpose of reproducibility, it contains all examples and use cases discussed during the workshop sessions.
+
+
+## Package Management
+
+```{r}
+#check if pacman is installed (install if evaluates to FALSE)
+if (!require(pacman) == T) install.packages("pacman")
+#load (or install if pacman cannot find an existing installation) the relevant packages
+pacman::p_load(tidyverse, plotly, patchwork, ggforce)
+pacman::p_load_gh("allisonhorst/palmerpenguins")
+```
+
+
+## `palmerpenguins` Data Set
+
+```{r}
+penguins
+```
+
+## `magrittr`: A Forward-Pipe Operator for R
+
+```{r}
+mean(subset(penguins, year == 2007)$body_mass_g, na.rm = T)
+
+#alternatively:
+peng_bm_2007 <- subset(penguins, year == 2007)$body_mass_g
+mean(peng_bm_2007, na.rm = T)
+```
+```{r}
+penguins %>% 
+  subset(year == 2007) %>% 
+  .$body_mass_g %>% 
+  mean(na.rm = T)
+```
+
+
+## `tibble`: Simple Data Frames
+
+`tibble()`:
+```{r, results=F}
+tibble::tibble(
+  x = c("a", "b"),
+  y = c(1, 2),
+  z = c(T, F)
+)
+```
+`tribble()`:
+```{r, results=F}
+tibble::tribble(
+  ~x, ~y,  ~z,
+  "a", 1,  T,
+  "b", 2,  F
+)
+```
+`as_tibble()`:
+```{r}
+df <- data.frame(
+  x = c("a", "b"),
+  y = c(1, 2),
+  z = c(T, F)
+)
+
+tibble::as_tibble(df)
+```
+`enframe()`:
+```{r}
+c(x = "a", y = "b", z = 1) %>%
+  tibble::enframe(name = "x", value = "y")
+```
+
+
+## `readr`: Read Rectangular Text Data
+
+`write_csv()`:
+```{r}
+penguins %>% 
+  readr::write_csv(file = "./penguins.csv")
+```
+`read_csv()`:
+```{r}
+penguins <- readr::read_csv("./penguins.csv")
+```
+`read_csv()` with explicit column specifications:
+```{r}
+readr::read_csv(
+  "./penguins.csv",
+    col_types = cols(
+      species = col_character(),
+      year = col_datetime(format = "%Y"),
+      island = col_skip()
+    )
+  )
+```
+`read_csv()` with changing the default for `guess_max`:
+```{r}
+readr::read_csv(file = "./penguins.csv", guess_max = 1001)
+```
+
+
+##`tidyr`: Tidy Messy Data
+
+`pivot_longer()`:
+```{r}
+penguins_long <- penguins %>% 
+  #create id column here to assign each observation a unique key
+  dplyr::mutate(id = dplyr::row_number(), .before = species) %>% 
+  tidyr::pivot_longer(
+    cols = contains("_mm"),
+    names_to = "meas_type", values_to = "measurement"
+  )
+
+penguins_long
+```
+`pivot_wider()`:
+```{r}
+penguins_long %>% 
+  tidyr::pivot_wider(
+    names_from = "meas_type",
+    values_from = "measurement"
+  )
+```
+`nest()`:
+```{r}
+nested_penguins <- penguins %>% 
+  tidyr::nest(
+    nested_data = c(island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex)
+  )
+
+nested_penguins
+```
+`unnest()`:
+```{r}
+nested_penguins %>% 
+  tidyr::unnest(col = nested_data)
+```
+`unnest_wider()` to unpack columns: 
+```{r}
+nested_penguins %>% 
+  tidyr::unnest_wider(col = nested_data)
+```
+`unnest_longer()` to unpack rows (here `island`): 
+```{r}
+nested_penguins %>% 
+  tidyr::unnest_wider(col = nested_data) %>% 
+  tidyr::unnest_longer(col = c(island))
+```
+`unite()`:
+```{r}
+united_penguins <- penguins %>% 
+  tidyr::unite(col = "spec_gender", c(species, sex), sep = "_", remove = T)
+
+united_penguins
+```
+`separate()`:
+```{r}
+united_penguins %>% 
+  tidyr::separate(col = spec_gender, into = c("species", "sex"), sep = "_", remove = T)
+```
+`complete()` to make implicit `NA` explicit:
+```{r}
+incompl_penguins <- tibble::tibble(
+  species = c(rep("Adelie", 2), rep("Gentoo", 1), rep("Chinstrap", 1)),
+  year = c(2007, 2008, 2008, 2007),
+  value = c(rnorm(3, mean = 50, sd = 15), NA)
+)
+
+incompl_penguins
+```
+```{r}
+incompl_penguins %>% 
+  tidyr::complete(
+    species, year, fill = list(value = NA)
+)
+```
+`drop_na()` to make explicit `NA` implicit:
+```{r}
+incompl_penguins %>% 
+  tidyr::drop_na(value)
+```
+`fill()` to replace explicit `NA` with previous value:
+```{r}
+incompl_penguins %>% 
+  tidyr::fill(value, .direction = "down")
+```
+`replace_na()` to replace explicit `NA` with column mean:
+```{r}
+incompl_penguins %>%
+  tidyr::replace_na(replace = list(value = mean(.$value, na.rm = T)))
+```
+
+
+## `dplyr`: A Grammar of Data Manipulation
+
+`filter()` to filter for rows that fulfill condition:
+```{r}
+penguins %>% 
+  dplyr::filter(species == "Adelie")
+```
+```{r}
+penguins %>% 
+  dplyr::filter(is.na(bill_length_mm) == T)
+```
+```{r}
+penguins %>% 
+  dplyr::filter(between(body_mass_g, 3800, 4000) & (year < 2008 | year > 2008))
+```
+`slice()` to pick rows based on location:
+```{r}
+penguins %>% 
+  dplyr::slice(23:26)
+```
+```{r}
+penguins %>% 
+  dplyr::slice_head(n = 5)
+```
+```{r}
+penguins %>% 
+  dplyr::slice_sample(prop = 0.02)
+```
+```{r}
+penguins %>% 
+  dplyr::slice_min(flipper_length_mm, n = 5)
+```
+`arrange()` to change the order of rows:
+```{r}
+penguins %>% 
+  dplyr::arrange(body_mass_g) %>% 
+  dplyr::slice_head(n = 3)
+```
+```{r}
+penguins %>% 
+  dplyr::arrange(desc(body_mass_g)) %>% 
+  dplyr::slice_head(n = 3)
+```
+
+--- End of Pt. 1 ---

@@ -136,9 +136,9 @@ penguins %>%
 ```
 ]
 
--- 
+--
 
-**Frequently used helper functions:**
+**Convenient helper functions:**
 - `everything()`: select all columns
 - `last_col()`: select the last column in the data frame
 - `starts_with()`: select columns which names start with a certain string
@@ -185,6 +185,7 @@ penguins %>%
 ```
 
 ???
+where:
 - feed a function that takes a vector and returns T or F
 - if you want to deselect something put a minus in front
 - when using a function within another function you usually require the formula (~) notation (see `purrr` part), except when only using a function with one argument
@@ -201,7 +202,7 @@ penguins %>%
   rename(bm = body_mass_g, gender = sex) %>% 
   colnames()
 ```
-Convert the name of the columns that include the string "mm" to upper case:
+Convert the name of the columns that include the string `"mm"` to upper case:
 ```{r}
 penguins %>% 
   rename_with(.fn = toupper, .cols = contains("mm")) %>% 
@@ -229,7 +230,7 @@ penguins %>%
 ```
 ]
 .pull-right[
-```{r, echo=F, out.height='70%', out.width='70%', fig.align='center', dpi=100}
+```{r, echo=F, out.height='80%', out.width='80%', fig.align='center', dpi=100}
 knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_relocate.png")
 ```
 ]
@@ -247,7 +248,7 @@ penguins %>%
   mutate(
     bm_kg = body_mass_g / 1000,
     .keep = "all",
-    .after = body_mass_g) %>% 
+    .before = body_mass_g) %>% 
   slice_head(n = 3)
 ```
 ]
@@ -268,14 +269,15 @@ penguins %>%
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
 .pull-left[
-Engineer a *one-hot encoded* dummy variable for `sex`:
+Engineer a *one-hot encoded* variable for `sex`:
 ```{r one_hot, eval=F}
 penguins %>% 
   mutate(
-    sex = case_when( # alternative: if_else()
+    sex_binary = case_when(
       sex == "male" ~ 1,
       sex == "female" ~ 0),
-    .keep = "all"
+    .keep = "all",
+    .after = island
   ) %>% 
   slice_head(n = 3)
 ```
@@ -289,11 +291,13 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 ```
 
 ???
+one-hot encoding: encoding a categorical variable with C factor levels into C dummies (often in modeling you create C-1 dummies otherwise you have a perfect linear combination)
+
 case_when:
 - vectorized version of if_else
 - two-sided formulas: LHS tests the condition, RHS specifies the replacement value
 - for unmatched cases, the function returns NA
-- use LHS True to capture all cases not explicitly specified beforehand
+- use LHS `TRUE` to capture all cases not explicitly specified beforehand
 
 ---
 
@@ -332,7 +336,7 @@ across:
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
 .pull-left[
-Define `species`, `island` and `sex` as a categorical variables, i.e. *factors*:
+Define `species`, `island` and `sex` as a categorical variables, i.e. *factors*, using `across()`:
 ```{r factor_def, eval=F}
 penguins %>% 
   mutate(
@@ -380,6 +384,8 @@ comments
 
 Under the hood `group_by()` changes the representation of the `tibble` and transforms it into a grouped data frame (`grouped_df`). This allows us to operate on the three subgroups individually using `summarise()`.
 
+--
+
 **Operations on grouped data:** `summarise()` reduces a group of data into a single row
 
 .pull-left[
@@ -398,7 +404,7 @@ penguins %>%
 ]
 
 ???
-- use ``.groups = ` to indicate what happens to the groups after summarising them
+- use `.groups = ` to indicate what happens to the groups after summarising them
 
 ---
 
@@ -410,7 +416,7 @@ penguins %>%
 penguins %>% 
   group_by(species) %>%
   summarise(
-    across(contains("mm"), ~mean(., na.rm = T), .names = "{.col}_avg"),
+    across(contains("mm"), ~ mean(., na.rm = T), .names = "{.col}_avg"),
     .groups = "drop"
   )
 ```
@@ -418,7 +424,8 @@ penguins %>%
 Using `group_by()`, followed by `summarise()` and `ungroup()` reflects the **split-apply-combine paradigm** in data analysis: Split the data into partitions, apply some function to the data and then merge the results.
 
 ???
-comment
+- the true potential is unleashed if you combine `group_by` and `summarise`
+- split-apply-combine paradigm particularly useful in parallel processing
 
 ---
 
@@ -435,13 +442,13 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 *But never forget to ungroup your data, otherwise you may run into errors later on in your analysis!*
 
 ???
-comments
+- now lets look at some more advanced use cases
 
 ---
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Stacked `group_by()`:** If `.add = T` is omitted, the second `group_by()`overrides the first.
+**Stacked `group_by()`:** Use `.add = T` to add new grouping variables (otherwise the first is overridden).
 ```{r}
 penguins %>% 
   group_by(species) %>% 
@@ -459,7 +466,7 @@ penguins %>%
   summarise(
     across(
       contains("mm"),
-      list(avg = ~mean(., na.rm = T), sd = ~sd(., na.rm = T)),
+      list(avg = ~ mean(., na.rm = T), sd = ~ sd(., na.rm = T)),
       .names = "{.col}_{.fn}"
     ),
     .groups = "drop"
@@ -470,7 +477,7 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Changed behavior of `mutate()`:** Summary functions, e.g., `mean()` or `sd()` now operate on partitions of the data instead of on the whole data frame.
+**Changed behavior of `mutate()`:** Summary functions, e.g., `mean()` or `sd()` now operate on partitions of the data instead of on the whole data.
 ```{r}
 penguins %>% 
   group_by(species) %>% 
@@ -501,7 +508,7 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Changed behavior of `filter()`:** Filters now operate on partitions of the data instead of on the whole data frame.
+**Changed behavior of `filter()`:** Filters now operate on partitions of the data instead of on the whole data.
 ```{r}
 penguins %>% 
   group_by(species, island) %>% 
@@ -515,11 +522,11 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example on [slide 33](#tidyr_nest).
+**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example in [chapter 4.4](#tidyr_nest).
 ```{r}
 penguins %>% 
   group_by(species, year) %>% 
-  nest
+  nest()
 ```
 
 .pull-right[.footnote[
@@ -530,33 +537,34 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**`dplyr::distinct()`:** selects only unique rows
+**Other selected `dplyr` operations:**
+
+- **`distinct()`:** selects only unique rows
 ```{r, eval=F}
 penguins %>% 
   distinct(species, island)
 ```
 
-**`dplyr::pull()`:** extracts single columns as vectors
+- **`pull()`:** extracts single columns as vectors
 ```{r, eval=F}
 penguins %>% 
   pull(year) # equivalent to penguins$year
 ```
 
-**`dplyr::if_else()`:** applies a vectorized if-else-statement
+- **`if_else()`:** applies a vectorized if-else-statement
 ```{r, eval=F}
 penguins %>% 
   select(species, island, body_mass_g) %>% 
   mutate(penguin_size = if_else(body_mass_g < 3500, "tiny penguin", "big penguin"))
 ```
 
-???
-- Some more selected `dplyr` functions
-
 ---
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**`dplyr::lag()` and `dplyr::lead()`:** shifts column values by an offset `n`
+**Other selected `dplyr` operations:**
+
+- **`lag()` and `lead()`:** shifts column values by an offset `n`
 ```{r, eval=F}
 penguins %>% 
   select(species, body_mass_g) %>% 
@@ -566,11 +574,8 @@ penguins %>%
   )
 ```
 
-**`dplyr::left_join()`, `dplyr::right_join()`, `dplyr::inner_join()` and `dplyr::full_join()`:** merge different data frames by matching rows based on keys (similar to joins performed in SQL)
+- **`dplyr::left_join()`, `dplyr::right_join()`, `dplyr::inner_join()` and `dplyr::full_join()`:** merges different data frames by matching rows based on keys (similar to joins performed in SQL)
 
 .footnote[
 *Note: Find more information about `dplyr` by running `vignette("dplyr")` and consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf) (note that it may not reflect changes included in `dplyr v1.0.0`).*
 ]
-
-???
-comments

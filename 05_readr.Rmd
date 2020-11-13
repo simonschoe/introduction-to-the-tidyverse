@@ -54,9 +54,6 @@ penguins %>%
 penguins <- read_csv(file = "./data/penguins.csv")
 ```
 
-???
-comment
-
 ---
 
 ## 4.3 `readr`: Read Rectangular Text Data
