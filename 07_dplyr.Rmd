@@ -180,14 +180,21 @@ penguins %>%
 ]
 ```{r, eval=F}
 penguins %>% 
-  select(where(is.numeric)) %>%   # equivalent to select(where(~is.numeric(.)))
-  select(where(~ mean(., na.rm = T) > 1000))
+  select(where(~ is.numeric(.))) %>% # 1 
+  select(where(~ mean(., na.rm = T) > 1000)) # 2
+
+# 1: equivalent to:
+#      select(where(is.numeric))
+# 2: equivalent to:
+#      fun <- function(x) { mean(x, na.rm = T) > 1000 }
+#      select(where(fun))
 ```
 
 ???
+deselect:
+- if you want to deselect something put a minus in front
 where:
 - feed a function that takes a vector and returns T or F
-- if you want to deselect something put a minus in front
 - when using a function within another function you usually require the formula (~) notation (see `purrr` part), except when only using a function with one argument
 
 ---
@@ -260,7 +267,6 @@ penguins %>%
 ]
 ```{r, ref.label = 'bm_kg', echo=F}
 ```
-
 
 ---
 
@@ -363,8 +369,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 .pull-left[
 ```{r grouped, eval=F}
 penguins %>% 
-  group_by(species) %>% 
-  slice_sample(n = 8)
+  group_by(species)
 ```
 ]
 .pull-right[
@@ -372,9 +377,6 @@ Use `group_keys()`, `group_indices()` and `group_vars()` to access grouping keys
 ]
 ```{r, ref.label='grouped', echo=F}
 ```
-
-???
-comments
 
 ---
 
@@ -448,7 +450,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Stacked `group_by()`:** Use `.add = T` to add new grouping variables (otherwise the first is overridden).
+**Stacked `group_by()`:** Use `.add = T` to add new grouping variables (otherwise the first is overridden)
 ```{r}
 penguins %>% 
   group_by(species) %>% 
@@ -459,7 +461,7 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Apply multiple summary functions:** Provide a list of `purrr`-style functions to `across()`.
+**Apply multiple summary functions:** Provide a list of `purrr`-style functions to `across()`
 ```{r}
 penguins %>% 
   group_by(species) %>%
@@ -477,7 +479,7 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Changed behavior of `mutate()`:** Summary functions, e.g., `mean()` or `sd()` now operate on partitions of the data instead of on the whole data.
+**Changed behavior of `mutate()`:** Summary functions, e.g., `mean()` or `sd()` now operate on partitions of the data instead of on the whole data
 ```{r}
 penguins %>% 
   group_by(species) %>% 
@@ -491,12 +493,12 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**`group_by()` a transformed column:** Provide a `mutate()`-like expression in your `group_by()` statement.
+**`group_by()` a transformed column:** Provide a `mutate()`-like expression in your `group_by()` statement
 ```{r}
 bm_breaks <- mean(penguins$body_mass_g, na.rm = T) - (-3:3) * sd(penguins$body_mass_g, na.rm = T)
 
 penguins %>% 
-  group_by(species, bm_cat = cut(body_mass_g, breaks = bm_breaks)) %>%
+  group_by(species, bm_bin = cut(body_mass_g, breaks = bm_breaks)) %>%
   summarise(count = n(), .groups = "drop")
 ```
 
@@ -508,7 +510,7 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Changed behavior of `filter()`:** Filters now operate on partitions of the data instead of on the whole data.
+**Changed behavior of `filter()`:** Filters now operate on partitions of the data instead of on the whole data
 ```{r}
 penguins %>% 
   group_by(species, island) %>% 
@@ -522,11 +524,11 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example in [chapter 4.4](#tidyr_nest).
+**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example in [chapter 4.4](#tidyr_nest)
 ```{r}
 penguins %>% 
   group_by(species, year) %>% 
-  nest()
+  tidyr::nest()
 ```
 
 .pull-right[.footnote[
@@ -574,7 +576,7 @@ penguins %>%
   )
 ```
 
-- **`dplyr::left_join()`, `dplyr::right_join()`, `dplyr::inner_join()` and `dplyr::full_join()`:** merges different data frames by matching rows based on keys (similar to joins performed in SQL)
+- **`left_join()`, `right_join()`, `inner_join()` and `full_join()`:** merges different data frames by matching rows based on keys (similar to joins performed in SQL)
 
 .footnote[
 *Note: Find more information about `dplyr` by running `vignette("dplyr")` and consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf) (note that it may not reflect changes included in `dplyr v1.0.0`).*

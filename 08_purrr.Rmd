@@ -63,7 +63,7 @@ z_transform <- function(.x) {
 
 --
 
-Second, we draw samples from the `penguin` data set and store them as double vectors in a list.
+Second, we draw samples from the `penguins` data set and store them as double vectors in a list.
 ```{r}
 samples <- list(
   sample1 = slice_sample(penguins, n = 10)$bill_length_mm,
@@ -155,7 +155,7 @@ penguins %>%
 Check the number of distinct values per column:
 ```{r}
 penguins %>%
-  map_df(n_distinct)
+  map_df(dplyr::n_distinct)
 ```
 
 ---

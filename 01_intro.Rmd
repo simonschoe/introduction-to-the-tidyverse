@@ -124,6 +124,8 @@ knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df
 **Program:** `magrittr`, `purrr`, `tibble`
 
 .footnote[
+*Source: [[4](#references)]*
+
 *Note: For the communication and modeling part of the workflow refer to the `rmarkdown` and `tidymodels` workshop.*
 ]
 

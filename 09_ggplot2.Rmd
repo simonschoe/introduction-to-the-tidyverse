@@ -51,7 +51,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 **Univariate example:**
 ```{r p_step_u1, eval=F}
 penguins %>% 
-  ggplot(data = .) # equivalent to ggplot() 
+  ggplot(data = .) # equivalent to ggplot
 ```
 ]
 .pull-right[
@@ -189,7 +189,7 @@ If you have to manually change the default setting of the `stat` argument, it is
 **Bivariate example:**
 ```{r p_step_b1, eval=F}
 penguins %>% 
-  ggplot() 
+  ggplot
 ```
 ]
 .pull-right[
@@ -547,8 +547,7 @@ plot +
       y = forcats::fct_reorder(species, prop))
     ) +
   scale_x_continuous(
-    labels = scales::label_percent(1.)
-  )
+    labels = scales::label_percent(1.)  )
 ```
 - Use `fct_reorder()` from the `forcats` package to reorder the levels of `species` by their relative frequency (`prop`).
 - Finally, `scales::label_percent(1.)` formats the axis as percentages, rounded to the first value after the digit.
@@ -569,8 +568,7 @@ penguins %>%
   ggplot(aes(x = species)) +
     geom_bar(
       aes(fill = island),
-      position = "dodge"
-      )
+      position = "dodge")
 ```
 ]
 .pull-right[
@@ -593,8 +591,7 @@ penguins %>%
   ggplot(aes(x = species)) +
     geom_bar(
       aes(fill = island),
-      position = "stack"
-    )
+      position = "stack")
 ```
 ]
 .pull-right[
@@ -614,8 +611,7 @@ penguins %>%
     aes(x = forcats::fct_lump(species, n = 1))) +
     geom_bar(
       aes(fill = island),
-      position = "stack"
-    )
+      position = "stack")
 ```
 In this crude example we lump together all factor levels except the `n = 1` level(s) with the highest number of observations using `forcats::fct_lump()`.
 ]
@@ -662,8 +658,7 @@ p <- p +
     breaks = breaks,
     limits = c(2000, 7000)) +
   scale_y_continuous(
-    labels = scales
-  )
+    labels = scales)
 
 p
 ```
@@ -705,7 +700,7 @@ p
 **Other examples:** High-quality density plot
 ```{r p_step_o10, eval=F}
 p <- p +
-  theme_classic() # also nice: theme_minimal()
+  theme_classic() # also pretty: theme_minimal()
 
 p
 ```
@@ -759,8 +754,7 @@ penguins %>%
 
 ggsave(
   "./img/violin-plot.PNG",
-  device = "png", dpi = 300
-)
+  device = "png", dpi = 300)
 ```
 - `geom_violin()` creates a cross-over version of a box-plot and a density plot, particularly suitable for visualizing continuous variables.
 - `ggsave()` writes the most recent plot to disk.
