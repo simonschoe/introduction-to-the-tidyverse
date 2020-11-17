@@ -37,7 +37,7 @@ penguins
 `select()` to pick respectively drop certain columns:
 ```{r}
 penguins %>% 
-  dplyr::select(1:3)
+  select(1:3)
 ```
 ```{r}
 penguins %>% 
@@ -61,8 +61,8 @@ penguins %>%
 ```
 ```{r}
 penguins %>% 
-  select(where(is.numeric)) %>%   #equivalent to select(where(~is.numeric(.)))
-  select(where(~mean(., na.rm=T) > 1000))
+  select(where(~ is.numeric(.))) %>% 
+  select(where(~ mean(., na.rm = T) > 1000))
 ```
 `rename()` to change column names:
 ```{r}
@@ -82,7 +82,7 @@ penguins %>%
   relocate(sex, .before = species) %>%
   relocate(island, .after = last_col())
 ```
-`mutate()` to change the values of columns and/or create new columns:
+`mutate()` to transform the column values and/or creates new columns:
 ```{r}
 penguins %>% 
   mutate(
@@ -104,27 +104,33 @@ penguins %>%
     across(contains("mm"), ~ . / 1000),
     .keep = "all")
 ```
-`group_by()` to group rows based on a set of columns:
+```{r}
+penguins %>% 
+  mutate(
+    across(where(is.character), as.factor),
+    .keep = "all")
+```
+`group_by()` to partition data based on one or several columns:
 ```{r}
 penguins %>% 
   group_by(species)
 ```
-`summarise()` to reduce a group into a single row:
+`summarise()` to reduce a group of data into a single row:
 ```{r}
 penguins %>% 
-  group_by(species) %>% #univariate
+  group_by(species) %>% # univariate
   summarise(count = n(), .groups = "drop")
 ```
 ```{r}
 penguins %>% 
-  group_by(species, year) %>% #bivariate
+  group_by(species, year) %>% # bivariate
   summarise(count = n(), .groups = "drop")
 ```
 ```{r}
 penguins %>% 
   group_by(species) %>%
   summarise(
-    across(contains("mm"), ~mean(., na.rm = T), .names = "{.col}_avg"),
+    across(contains("mm"), ~ mean(., na.rm = T), .names = "{.col}_avg"),
     .groups = "drop")
 ```
 ```{r}
@@ -138,15 +144,14 @@ penguins %>%
   summarise(
     across(
       contains("mm"),
-      list(avg = ~mean(., na.rm = T), sd = ~sd(., na.rm = T)),
+      list(avg = ~ mean(., na.rm = T), sd = ~ sd(., na.rm = T)),
       .names = "{.col}_{.fn}"),
     .groups = "drop")
 ```
 ```{r}
 penguins %>% 
   group_by(species) %>% 
-  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / 
-           sd(body_mass_g, na.rm = TRUE))
+  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / sd(body_mass_g, na.rm = TRUE))
 ```
 ```{r}
 bm_breaks <- mean(penguins$body_mass_g, na.rm = T) -
@@ -164,7 +169,7 @@ penguins %>%
 ```{r}
 penguins %>% 
   group_by(species, year) %>% 
-  nest
+  tidyr::nest()
 ```
 `distinct()` to select only unique rows:
 ```{r}
@@ -174,9 +179,9 @@ penguins %>%
 `pull()` to extract single columns as vectors:
 ```{r}
 penguins %>% 
-  pull(year) #equivalent to penguins$year
+  pull(year) # equivalent to penguins$year
 ```
-`if_else()` to apply a vectorized if-else-statement
+`if_else()` to apply a vectorized if-else-statement:
 ```{r}
 penguins %>% 
   select(species, island, body_mass_g) %>% 
@@ -202,19 +207,28 @@ z_transform <- function(.x) {
   return( (.x - mean) / sd )
 }
 
-penguins %>% 
-  select(contains("mm")) %>% 
-  map(.x = ., .f = ~z_transform(.x))
+samples <- list(
+  sample1 = slice_sample(penguins, n = 10)$bill_length_mm,
+  sample2 = slice_sample(penguins, n = 10)$bill_depth_mm,
+  sample3 = slice_sample(penguins, n = 10)$flipper_length_mm)
+
+for (s in samples) {
+  print(z_transform(.x = s)) 
+}
 ```
 ```{r}
-penguins %>% 
-  select(contains("mm")) %>% 
-  map(.x = ., .f = function(.x) { (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T) })
+map(.x = samples, .f = ~ z_transform(.x)) # equivalent to map(samples, z_transform)
 ```
 ```{r}
-penguins %>% 
-  select(contains("mm")) %>% 
-  map(.x = ., .f = ~(.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T))
+map(
+  .x = samples,
+  .f = function(.x) { (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T) })
+```
+```{r}
+map(
+  .x = samples,
+  .f = ~ (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
+)
 ```
 ```{r}
 penguins %>%
@@ -222,62 +236,69 @@ penguins %>%
 ```
 ```{r}
 penguins %>%
-  map_df(~sum(is.na(.)))
+  map_df(~ sum(is.na(.)))
 ```
 ```{r}
 penguins %>%
-  map_df(n_distinct)
+  map_df(dplyr::n_distinct)
 ```
 ```{r}
 penguins %>%
-  drop_na %>% 
-  group_by(sex) %>%
-  group_map(~slice_max(., flipper_length_mm, n = 1), .keep = T)
+  tidyr::drop_na() %>% 
+  dplyr::group_by(sex) %>%
+  group_map(~ dplyr::slice_max(., flipper_length_mm, n = 1), .keep = T)
 ```
 ```{r}
-species <- penguins %>% distinct(species, year) %>% pull(species) #.x argument for map()
-years <- penguins %>% distinct(species, year) %>% pull(year)      #.y argument for map()
+species <- penguins %>%
+  dplyr::distinct(species, year) %>%
+  dplyr::pull(species) # .x argument for map()
+
+years <- penguins %>%
+  dplyr::distinct(species, year) %>%
+  dplyr::pull(year) # .y argument for map()
 
 map2(
   .x = species,
   .y = years,
-  .f = ~{
+  .f = ~ {
     penguins %>%
-      drop_na %>% 
-      filter(species == .x, year == .y) %>% 
-      ggplot() +
+      tidyr::drop_na() %>% 
+      dplyr::filter(species == .x, year == .y) %>% 
+      ggplot2::ggplot() +
         geom_point(aes(x = bill_length_mm, y = body_mass_g)) +
         labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
     })
 ```
 ```{r}
 penguins %>% 
-  drop_na %>% 
-  group_by(species, island) %>% 
-  nest %>% 
-  mutate(lin_reg = map(.x = data, .f = ~lm(body_mass_g ~ ., data = .x)))  %>% 
-  mutate(coefs = map(lin_reg, ~summary(.x) %>% .$coefficients %>% as_tibble)) %>%
-  select(-data, -lin_reg) %>% 
-  unnest(coefs)
+  tidyr::drop_na() %>% 
+  dplyr::group_by(species, island) %>% 
+  tidyr::nest() %>% 
+  dplyr::mutate(lin_reg = map(.x = data, .f = ~ lm(body_mass_g ~ ., data = .x))) %>% 
+  dplyr::mutate(coefs = map(.x = lin_reg, .f = ~ { 
+    summary(.) %>% .$coefficients %>% as_tibble(rownames = "variable")
+    }
+  )) %>%
+  tidyr::unnest(coefs)
 ```
 `possibly()` and `safely()` to capture error messages
 ```{r}
 possibly_lm <- possibly(.f = lm, otherwise = "Error message")
 
 penguins %>% 
-  mutate(across(c(sex, island), as.factor)) %>% 
-  group_by(species) %>% 
+  dplyr::mutate(across(c(sex, island), as.factor)) %>% 
+  dplyr::group_by(species) %>% 
   group_map(.f = ~possibly_lm(flipper_length_mm ~ bill_length_mm + island, data = .)) 
-  #keep(., . == "Error message") #discard(., . == "Error message")
+  # keep(., . == "Error message") #discard(., . == "Error message")
 ```
 ```{r}
 safely_lm <- safely(.f = lm, otherwise = NULL)
 
 penguins %>% 
-  mutate(across(c(sex, island), as.factor)) %>% 
-  group_by(species) %>% 
+  dplyr::mutate(across(c(sex, island), as.factor)) %>% 
+  dplyr::group_by(species) %>% 
   group_map(.f = ~safely_lm(flipper_length_mm ~ bill_length_mm + island, data = .)) 
-  #map(., "result") #map(., "error")
+  # map(., "result") #map(., "error")
 ```
 
 
@@ -287,9 +308,9 @@ penguins %>%
 1) Add `data`:
 ```{r}
 penguins %>% 
-  ggplot(data = .) #equivalent to ggplot()
+  ggplot(data = .) # equivalent to ggplot
 ```
-2) Add `aes`thetics mapping:
+2) Add `aes`:
 ```{r}
 penguins %>% 
   ggplot(
@@ -322,7 +343,7 @@ penguins %>%
 1) Add `data`:
 ```{r}
 penguins %>% 
-  ggplot()
+  ggplot
 ```
 2) Add `aes`thetics mapping:
 ```{r p_step_b2, eval=F}
@@ -355,18 +376,24 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
     geom_point(aes(shape = species), size = 4, na.rm = TRUE) 
 ```
+```{r}
+penguins %>% 
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+    geom_point(aes(size = bill_depth_mm), na.rm = TRUE) 
+```
+
 5) Add `facets`:
 ```{r}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
     geom_point(aes(shape = species), na.rm = TRUE) +
-    facet_wrap(~year)
+    facet_wrap(~ year)
 ```
 ```{r}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
     geom_point(aes(shape = species), na.rm = TRUE) +
-    facet_wrap(~year + island)
+    facet_wrap(~ year + island)
 ```
 6) `scale` aesthetics mapping:
 ```{r}
@@ -386,7 +413,7 @@ Boxplots for numeric variables
 ```{r}
 penguins %>% 
   pivot_longer(cols = contains("mm"), names_to = "var", values_to = "val") %>% 
-  drop_na  %>% 
+  tidyr::drop_na() %>% 
   ggplot(aes(x = var, y = val)) +
     geom_boxplot(na.rm = TRUE) +
     geom_jitter(alpha = 0.22, width = 0.3) 
@@ -431,7 +458,7 @@ p <- penguins %>%
       x = "Body mass [grams]",
       y = "Statistical density"
     ) +
-    theme_classic() + #also: theme_minimal()
+    theme_classic() + # also pretty: theme_minimal()
     theme(
       legend.position = "top",
       plot.title = element_text(size = 14, face = "bold"),
@@ -463,6 +490,7 @@ penguins %>%
 
 
 ##`plotly`: Interactive Web Graphics
+
 ```{r, out.height='70%', out.width='100%'}
 plotly::ggplotly(p)
 ```
@@ -488,7 +516,9 @@ penguins %>%
   ggplot(aes(x = .panel_x, y = .panel_y, col = sex, fill = sex)) +
     geom_autopoint(alpha = 0.5) +
     geom_autohistogram(alpha = 0.5) +
-    facet_matrix(rows = vars(species, island, body_mass_g, flipper_length_mm), switch = "both", layer.diag = 2) +
+    facet_matrix(
+      rows = vars(species, island, body_mass_g, flipper_length_mm),
+      switch = "both", layer.diag = 2) +
     theme_bw() +
     theme(axis.text.x = element_text(angle = 90))
 ```

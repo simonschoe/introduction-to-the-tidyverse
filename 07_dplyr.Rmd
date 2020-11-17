@@ -36,9 +36,6 @@ layout: true
 - `group_by()` partitions data based on one or several columns
 - `summarise()` reduces a group of data into a single row
 
-???
-comment
-
 ---
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
@@ -145,9 +142,6 @@ penguins %>%
 - `ends_with()`: select columns which names end with a certain string
 - `contains()`: select columns which name contains a certain string  
 - `where()`: select columns for which a function evaluates to `TRUE`
-
-???
-comment
 
 ---
 
@@ -315,7 +309,7 @@ Transform measurement variables to meters:
 ```{r meters, eval=F}
 penguins %>% 
   mutate(
-    across(contains("mm"), ~ . / 1000),
+    across(contains("mm"), ~ . / 1000 ),
     .keep = "all"
   ) %>% 
   slice_head(n = 3)

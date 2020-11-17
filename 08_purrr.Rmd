@@ -57,7 +57,9 @@ The input `.x` to any `map()_*` function can be either a vector, a list or a dat
 **Use Case:** Let's assume we have multiple data samples (e.g., bootstrapped samples) and require each of the samples to be $z$-normalized for further modeling. First, we would probably write a *named function* for performing $z$-normalization which takes our sample `.x` as input.
 ```{r}
 z_transform <- function(.x) {
-  mean <- mean(.x); sd <- sd(.x); return( (.x - mean) / sd )
+  mean <- mean(.x)
+  sd <- sd(.x)
+  return( (.x - mean) / sd )
 }
 ```
 
@@ -82,7 +84,9 @@ samples[1]
 
 Third, perform the $z$-normalization using a `for`-loop.
 ```{r, eval=F}
-for (s in samples) { print(z_transform(.x = s)) }
+for (s in samples) {
+  print(z_transform(.x = s)) 
+}
 ```
 
 --
@@ -107,7 +111,7 @@ map(
 
 --
 
-Or perform the $z$-normalization using `map()` but use an *`purrr`-style function*.
+Or perform the $z$-normalization using `map()` but use a *`purrr`-style function*.
 ```{r, eval=F}
 map(
   .x = samples,
@@ -167,7 +171,7 @@ Check the highest value in each subset of the data (e.g., largest `flipper_lengt
 penguins %>%
   tidyr::drop_na() %>% 
   dplyr::group_by(sex) %>%
-  group_map(~ slice_max(.x, flipper_length_mm, n = 1), .keep = T)
+  group_map(~ dplyr::slice_max(.x, flipper_length_mm, n = 1), .keep = T)
 ```
 
 ???
@@ -199,9 +203,6 @@ penguin_plots <- map2(
         labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
     })
 ```
-
-???
-- point toward `glue` package
 
 ---
 
@@ -238,9 +239,6 @@ nested_penguins
 *Note: For accessing elements in a nested `tibble` you may use the `pluck()` function. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)`.*
 ]]
 
-???
-- pull vector out, and pluck element out
-
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
@@ -265,17 +263,10 @@ Third, for each linear model, we generate a model summary using `summary()` and 
 nested_penguins <- nested_penguins %>% 
   dplyr::mutate(coefs = map(
     .x = lin_reg,
-    .f = ~ { summary(.x) %>% .$coefficients %>% as_tibble }
-  )) %>%
-  dplyr::select(-data, -lin_reg)
-
+    .f = ~ { summary(.) %>% .$coefficients %>% as_tibble(rownames = "variable") }
+  ))
 nested_penguins
 ```
-
-.footnote[.pull-right[.pull-right[
-*Note: Here we dropped the `lin_reg` and `data` columns, otherwise we would have carried around a lot of redundant data which may exceed our memory storage capacity very quickly.*
-]]]
-
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
