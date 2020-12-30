@@ -308,7 +308,7 @@ penguins %>%
 1) Add `data`:
 ```{r}
 penguins %>% 
-  ggplot(data = .) # equivalent to ggplot
+  ggplot(data = .) # equivalent to ggplot()
 ```
 2) Add `aes`:
 ```{r}
@@ -343,7 +343,7 @@ penguins %>%
 1) Add `data`:
 ```{r}
 penguins %>% 
-  ggplot
+  ggplot()
 ```
 2) Add `aes`thetics mapping:
 ```{r p_step_b2, eval=F}

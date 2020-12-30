@@ -11,7 +11,7 @@
 
 ## Contents
 
-This 2 hour workshop encompasses a comprehensive journey through the `tidyverse` ecosystem. It introduces important tools for working with rectangular data sets in `R` by showcasing a suite of packages which eases the prototype data science workflow in terms of data import, data cleaning, data transformation and data visualization.
+This 4 hour workshop encompasses a comprehensive journey through the `tidyverse` ecosystem. It introduces important tools for working with rectangular data sets in `R` by showcasing a suite of packages which eases the prototype data science workflow in terms of data import, data cleaning, data transformation and data visualization.
 
 More specifically, after this workshop the workshop participants will
 - be familiar with the main tools of the Tidyverse and how it differs from base R,

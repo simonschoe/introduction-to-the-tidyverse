@@ -1,12 +1,13 @@
 ---
 title: "Machine Learning in R:<br/>Workshop Series"
-subtitle: "Introduction to the<br>Tidyverse"
+subtitle: "Introduction to the Tidyverse"
 author: "Simon Schölzel"
 institute: "*Research Team Berens*"
-date: "2020-11-09 (updated: `r Sys.Date()`)"
+date: "2020-11-09"
 
 output:
   xaringan::moon_reader:
+    seal: false
     css: [./custom/xaringan-themer.css, ./custom/custom-theme.css]
     lib_dir: libs
     nature:
@@ -17,23 +18,22 @@ output:
       ratio: '16:9'
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include=F}
+# knitr options
 knitr::opts_chunk$set(
-  #set comment formatting
   comment = ">",
-  #collapse code and output
   collapse = F
 )
-```
 
-```{r packages, warning=F, message=F, echo=F}
-#install.packages("pacman")
+# package management
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(xaringanthemer, tidyverse, magrittr, glue, showtext, plotly, patchwork, ggforce)
+pacman::p_load(
+  xaringanthemer, xaringanExtra, metathis,
+  tidyverse, magrittr, glue, showtext, plotly, patchwork, ggforce
+)
 pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
-```
 
-```{r xaringan-themer, include=FALSE, warning=FALSE}
+# xaringan custom setup
 style_mono_accent(
   base_color = "#000000",
   link_color = "#0000EE",
@@ -48,7 +48,46 @@ style_mono_accent(
   code_inline_background_color = "#F4F4F4",
   outfile = "./custom/xaringan-themer.css"
 )
+
+xaringanExtra::use_panelset()
+
+xaringanExtra::use_extra_styles(
+  hover_code_line = T,
+  mute_unhighlighted_code = T
+)
+
+metathis::meta() %>%
+  meta_name("github-repo" = "simonschoe/introduction-to-the-tidyverse") %>% 
+  meta_social(
+    title = "Introduction to the Tidyverse",
+    description = "2 hours introductory workshop on the `tidyverse` meta-package.",
+    url = "https://simonschoe.github.io/introduction-to-the-tidyverse",
+    image = "",
+    image_alt = "Title slide for Introduction to the Tidyverse",
+    og_type = "website",
+    og_author = "Simon Schölzel",
+    twitter_card_type = "summary_large_image"
+  )
 ```
+
+class: center, middle, hide-count
+count: false
+
+# `r rmarkdown::metadata$title`
+### `r rmarkdown::metadata$subtitle`
+
+___
+
+**`r rmarkdown::metadata$author`**
+
+`r rmarkdown::metadata$date`  
+.small[(updated: 2020-11-17)]
+
+<br><br>
+
+<a href="https://www.wiwi.uni-muenster.de/"><img src="https://www.wiwi.uni-muenster.de/fakultaet/sites/all/themes/wwucd/assets/images/logos/secondary_wiwi_aacsb_german.jpg" alt="fb4-logo" height="45"></a> <a href="https://www.wiwi.uni-muenster.de/ctrl/aktuelles"><img src="https://www.wiwi.uni-muenster.de/ctrl/sites/all/themes/wwucd/assets/images/logos/berenslogo5.jpg" alt="ftb-logo" height="45"></a> <a href="https://www.wiwi.uni-muenster.de/iff2/de/news"><img src="https://www.wiwi.uni-muenster.de/iff2/sites/all/themes/wwucd/assets/images/logos/logo_iff2_en2.jpg" alt="ipb-logo" height="45"></a>
+
+---
 
 name: agenda
 
@@ -107,6 +146,13 @@ especially highlight the last point: how you think about data, how you approach 
 
 ---
 
+layout: false
+class: center, middle
+
+# 5-Minute Break<br><br>`r emo::ji("coffee")` `r emo::ji("doughnut")`
+
+---
+
 ```{r child='./04_tibble.Rmd', eval=T}
 ```
 
@@ -122,8 +168,22 @@ especially highlight the last point: how you think about data, how you approach 
 
 ---
 
+layout: false
+class: center, middle
+
+# 5-Minute Break<br><br>`r emo::ji("coffee")` `r emo::ji("doughnut")`
+
+---
+
 ```{r child='./07_dplyr.Rmd', eval=T}
 ```
+
+---
+
+layout: false
+class: center, middle
+
+# 5-Minute Break<br><br>`r emo::ji("coffee")` `r emo::ji("doughnut")`
 
 ---
 
