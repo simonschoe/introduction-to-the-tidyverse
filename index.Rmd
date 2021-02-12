@@ -34,16 +34,13 @@ pacman::p_load(
 pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
 
 # xaringan custom setup
-style_mono_accent(
+xaringanthemer::style_mono_accent(
   base_color = "#000000",
   link_color = "#0000EE",
   header_font_google = google_font("Josefin Sans"),
-  text_font_google   = google_font("Montserrat", "700b", "400"),
-  code_font_google   = google_font("Fira Mono"),
-  colors = c(
-    red = "#f34213",
-    white = "#FFFFFF"
-  ),
+  text_font_google = google_font("Montserrat", "700b", "400"),
+  code_font_google = google_font("Fira Mono"),
+  colors = c(red = "#f34213", white = "#FFFFFF"),
   code_font_size = "smaller",
   code_inline_background_color = "#F4F4F4",
   outfile = "./custom/xaringan-themer.css"
@@ -62,7 +59,7 @@ metathis::meta() %>%
     title = "Introduction to the Tidyverse",
     description = "2 hours introductory workshop on the `tidyverse` meta-package.",
     url = "https://simonschoe.github.io/introduction-to-the-tidyverse",
-    image = "",
+    image = "https://simonschoe.github.io/introduction-to-the-tidyverse/img/share-card.png",
     image_alt = "Title slide for Introduction to the Tidyverse",
     og_type = "website",
     og_author = "Simon Schölzel",
