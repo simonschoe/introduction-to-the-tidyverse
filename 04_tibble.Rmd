@@ -11,7 +11,7 @@ layout: false
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/tibble/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: true
 
@@ -56,6 +56,10 @@ c(x = "a", y = "b", z = 1) %>%
 ```
 ]
 
+--
+
+There are three important differences between a `tibble` and a `data.frame` object.
+
 ???
 - named vector: i have key-value pairs
 
@@ -63,9 +67,7 @@ c(x = "a", y = "b", z = 1) %>%
 
 ## 4.2 `tibble`: Simple Data Frames
 
-There are three important differences between a `tibble` and a `data.frame` object:
-
-**Printing:** By default, `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
+**Printing:** By default, `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type. This gives you a much more concise view of your data.
 ```{r}
 penguins
 ```
@@ -77,41 +79,82 @@ penguins
 
 ## 4.2 `tibble`: Simple Data Frames
 
-There are three important differences between a `tibble` and a `data.frame` object:
-
 **Printing:** By default, `tibble()` prints only the first ten rows and all the columns that fit on the screen as well as a description of the data type.
-```{r}
-penguins %>% 
-  glimpse # transposed version of print()
+
+.panelset[
+.panel[.panel-name[data.frame()]
+```{r, echo=F}
+options(max.print=40)
 ```
+
+```{r}
+data.frame(penguins)
+```
+
+```{r, echo=F}
+options(max.print=1000)
+```
+]
+.panel[.panel-name[tibble() (alt. 1)]
+```{r}
+penguins
+```
+]
+.panel[.panel-name[tibble() (alt. 2)]
+```{r}
+penguins %>% glimpse
+```
+]
+]
+
+???
+- in contrast to `data.frame()` which prints an extensive number of rows (wh)
+`glimpse` transposed version of `print()`
+ 
+---
+
+## 4.2 `tibble`: Simple Data Frames
+
+**Subsetting:** Subsetting a `tibble` (`[]`) always returns another `tibble` and never a vector (in contrast to standard `data.frame` objects).
+
+.panelset[
+.panel[.panel-name[data.frame()]
+```{r}
+data.frame(penguins) %>% .[,"species"] %>% class
+```
+]
+.panel[.panel-name[tibble()]
+```{r}
+penguins[,"species"] %>% class
+```
+]
+]
 
 ---
 
 ## 4.2 `tibble`: Simple Data Frames
 
-There are three important differences between a `tibble` and a `data.frame` object:
-
-**Subsetting:** Subsetting a `tibble` (`[]`) always returns another `tibble` and never a vector (in contrast to standard `data.frame` objects).
-.pull-left[
-```{r}
-penguins[,"species"] %>%
-  class
-```
-]
-.pull-right[
-```{r}
-penguins %>% 
-  as.data.frame() %>% 
-  .[,"species"] %>% 
-  class
-```
-]
-
-<br><br>
 **Partial Matching:** Subsetting a `tibble` does not allow for partial matching, i.e. you must always provide the whole column name.
 
-.footnote[
-_Note: Find more information about `tibbles` by running `vignette("tibble")`._
+.panelset[
+.panel[.panel-name[data.frame()]
+```{r, echo=F}
+options(max.print=40)
+```
+
+```{r}
+data.frame(penguins)$spec
+```
+
+```{r, echo=F}
+options(max.print=1000)
+```
+]
+.panel[.panel-name[tibble()]
+```{r}
+penguins$spec
+```
+]
 ]
 
 ???

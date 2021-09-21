@@ -11,7 +11,7 @@ layout: false
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: true
 
@@ -19,19 +19,19 @@ layout: true
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-`ggplot2` is Hadley Wickham's reimplementation [[7]](#references) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson [[8]](#references-2). It provides a large amount of functions for generating high-quality graphs in a layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
+`ggplot2` is Hadley Wickham's [reimplementation](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson. It provides a large amount of functions for generating high-quality graphs in a layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
 
 <br>
 
-```{r, echo=F, out.width='70%', fig.align='center'}
+```{r, echo=F, out.width='75%', fig.align='center'}
 knitr::include_graphics("./img/grammar-of-graphic-layers.png")
 ```
-
-.footnote[*Source: [[9]](#references-2)*]
 
 ???
 - Where `dplyr` provides a grammar for data manipulation, `ggplot2` does the same for plotting
 - Up to now, most likely the `graphics` package included in base `R` was your go-to address for crafting visualisations (`plot()`, `hist()`, `boxplot()`).
+
+src: https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149
 
 ---
 
@@ -45,13 +45,13 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Data:** The data set (ideally in *tidy* format) from which to select the variables that are to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
+**Data:** The data set (ideally in *tidy data* format) from which to select the variables that are to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
 
 .pull-left[
 **Univariate example:**
 ```{r p_step_u1, eval=F}
 penguins %>% 
-  ggplot(data = .) # equivalent to ggplot
+  ggplot(data = .)  # equivalent to: ggplot
 ```
 ]
 .pull-right[
@@ -60,9 +60,8 @@ penguins %>%
 ]
 
 .footnote[
-.pull-left[
-*Note: A compact go-to-guide for data visualisations with `ggplot2` is the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf).*
-]]
+*Note: A compact go-to-guide for data visualisations with `ggplot2` is the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization.pdf).*
+]
 
 ---
 
@@ -96,7 +95,7 @@ penguins %>%
 ```{r p_step_u3, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_histogram(na.rm = TRUE) 
+  geom_histogram(na.rm = TRUE) 
 ```
 `ggplot2` comes with decent *default* settings. Each `geom_*()` has its own options for customizing the geom, e.g., 
 - change the number of bins with the `bins` argument,
@@ -118,11 +117,9 @@ penguins %>%
 ```{r p_step_u4, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_bar(na.rm = TRUE) 
+  geom_bar(na.rm = TRUE) 
 ```
-Eventually, you may realize the beauty of the `geom_*()` layers: 
-
-`r emo::ji("idea")` They do all the required calculations for you!
+Eventually, you may realize the beauty of the `geom_*()` layers. They do all the required calculations for you!
 
 This is due to the frequently overlooked `stat` argument (which defaults to `stat = "count"` for the `geom_bar()` layer).
 ]
@@ -142,7 +139,7 @@ This is due to the frequently overlooked `stat` argument (which defaults to `sta
 ```{r p_step_u5, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_bar(na.rm = TRUE, stat = "density") 
+  geom_bar(na.rm = TRUE, stat = "density") 
 ```
 Most of the time you will just plot the data as-is (`stat = "identity"`). As soon as you require some form of statistical transformation before plotting, the `stat` argument can handle this for you. It goes hand-in-hand with the respective `geom_*()`.
 ]
@@ -165,7 +162,7 @@ Most of the time you will just plot the data as-is (`stat = "identity"`). As soo
 ```{r p_step_u6, eval=F}
 penguins %>% 
   ggplot(aes(x = flipper_length_mm)) +
-    geom_density(na.rm = TRUE) 
+  geom_density(na.rm = TRUE) 
 ```
 If you have to manually change the default setting of the `stat` argument, it is likely that `ggplot2` has implemented a corresponding `geom_*()` already.
 ]
@@ -228,7 +225,7 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(na.rm = TRUE) 
+  geom_point(na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -248,9 +245,7 @@ There are multiple ways of changing the color, shape or size aesthetics. Remembe
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(color = species), 
-      na.rm = TRUE) 
+  geom_point(aes(color = species), na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -270,9 +265,8 @@ There are multiple ways of changing the color, shape or size aesthetics. Remembe
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(color = bill_depth_mm), 
-      na.rm = TRUE) 
+  geom_point(aes(color = bill_depth_mm),
+             na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -292,9 +286,8 @@ By specifying the `color` argument outside of the `aes()` argument, we **set** t
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      color = "red", 
-      na.rm = TRUE) 
+  geom_point(color = "red",
+             na.rm = TRUE) 
 ```
 For truly customized colors you may refer to [HTML color codes](https://www.w3schools.com/colors/colors_picker.asp) (also called *hex codes*, e.g., `#ff0000` for red) instead of specifying colors by their [predefined name](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) in `R`.
 ]
@@ -307,6 +300,7 @@ For truly customized colors you may refer to [HTML color codes](https://www.w3sc
 Remember:
 - if something is specified inside of `aes` it is mapped, i.e. the characteristic depends on the data
 - if something is specified outside of `aes`, it is assigned rather manually
+- hexcodes: codes specifying the level of red (first two), green (second two) and blue (last two digits) color intensity
 
 ---
 
@@ -320,10 +314,8 @@ We can do the same in order to change the `shape` and `size` of our data points.
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(shape = species),
-      size = 4, 
-      na.rm = TRUE) 
+  geom_point(aes(shape = species),
+             size = 4, na.rm = TRUE) 
 ```
 `ggplot2` provides 24 available shapes for customizing your plot (see [shape overview](https://ggplot2.tidyverse.org/reference/scale_shape-6.png)).
 ]
@@ -344,9 +336,9 @@ We can do the same in order to change the `shape` and `size` of our data points.
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(size = bill_depth_mm),
-      na.rm = TRUE) 
+  geom_point(aes(shape = species,
+                 size = bill_depth_mm),
+             na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -366,10 +358,9 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(shape = species), 
-      na.rm = TRUE) +
-    facet_wrap(~ year) 
+  geom_point(aes(shape = species),
+             na.rm = TRUE) +
+  facet_wrap(~ year) 
 ```
 ]
 .pull-right[
@@ -389,10 +380,9 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(shape = species),
-      na.rm = TRUE) +
-    facet_wrap(~ year + island) 
+  geom_point(aes(shape = species),
+             na.rm = TRUE) +
+  facet_wrap(~ year + island) 
 ```
 ]
 .pull-right[
@@ -415,10 +405,9 @@ penguins %>%
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(color = species), 
-      size = 3, na.rm = TRUE) +
-    scale_colour_brewer(palette = "Set3") 
+  geom_point(aes(color = species),
+             size = 3, na.rm = TRUE) +
+  scale_colour_brewer(palette = "Set3") 
 ```
 The family of `scale_colour_*()` functions enables you to adjust the values of your `color` aesthetic (e.g., `scale_colour_brewer()` to select a palette from the famous [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) project). 
 
@@ -443,10 +432,9 @@ The family of `scale_colour_*()` functions enables you to adjust the values of y
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(
-      aes(color = species),
-      na.rm = TRUE) +
-    scale_y_log10()  
+  geom_point(aes(color = species),
+             na.rm = TRUE) +
+  scale_y_log10()  
 ```
 Or use the `scale_*_log10()` functions to improve the readability of your plot in the presence of high-variance variables.
 ]
@@ -495,8 +483,8 @@ print(penguins_long, n = 6)
 ```{r p_step_o1, eval=F}
 penguins_long %>% 
   ggplot(aes(x = var, y = val)) +
-    geom_boxplot(na.rm = TRUE) +
-    geom_jitter(alpha = 0.22, width = 0.3) 
+  geom_boxplot(na.rm = TRUE) +
+  geom_jitter(alpha = 0.2, width = 0.3) 
 ```
 - Use `geom_jitter()` to induce some random noise to the data points to prevent overlapping (alternative to `geom_point()`).
 - Control transparency of the respective plot element via the `alpha` aesthetic. 
@@ -531,7 +519,8 @@ plot +
 ]
 
 ???
-global vs. local: if you want to use different data sets for each layer.
+- global vs. local: if you want to use different data sets for each layer.
+- see that you can easily add new layers to an preexisting `ggplot` object
 
 ---
 
@@ -542,12 +531,10 @@ global vs. local: if you want to use different data sets for each layer.
 ```{r p_step_o3, eval=F}
 plot +
   geom_col(
-    aes(
-      x = prop,
-      y = forcats::fct_reorder(species, prop))
-    ) +
+    aes(x = prop,
+        y = forcats::fct_reorder(species, prop))) +
   scale_x_continuous(
-    labels = scales::label_percent(1.)  )
+    labels = scales::label_percent(1.))
 ```
 - Use `fct_reorder()` from the `forcats` package to reorder the levels of `species` by their relative frequency (`prop`).
 - Finally, `scales::label_percent(1.)` formats the axis as percentages, rounded to the first value after the digit.
@@ -566,9 +553,8 @@ plot +
 ```{r p_step_o4, eval=F}
 penguins %>% 
   ggplot(aes(x = species)) +
-    geom_bar(
-      aes(fill = island),
-      position = "dodge")
+  geom_bar(aes(fill = island),
+           position = "dodge")
 ```
 ]
 .pull-right[
@@ -577,7 +563,7 @@ penguins %>%
 ]
 
 .footnote[.pull-left[
-*Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes an `x` argument and computes the `y`-quantity internally (e.g., the number of observations using `stat = "count"`).*
+*Note: `geom_col()` takes a `x` and `y` argument, whereas `geom_bar()` only takes an `x` argument and computes the `y`-quantity internally (e.g., the frequency using `stat = "count"`).*
 ]]
 
 ---
@@ -589,9 +575,8 @@ penguins %>%
 ```{r p_step_o5, eval=F}
 penguins %>% 
   ggplot(aes(x = species)) +
-    geom_bar(
-      aes(fill = island),
-      position = "stack")
+  geom_bar(aes(fill = island),
+           position = "stack")
 ```
 ]
 .pull-right[
@@ -609,9 +594,9 @@ penguins %>%
 penguins %>% 
   ggplot(
     aes(x = forcats::fct_lump(species, n = 1))) +
-    geom_bar(
-      aes(fill = island),
-      position = "stack")
+  geom_bar(
+    aes(fill = island),
+    position = "stack")
 ```
 In this crude example we lump together all factor levels except the `n = 1` level(s) with the highest number of observations using `forcats::fct_lump()`.
 ]
@@ -628,12 +613,9 @@ In this crude example we lump together all factor levels except the `n = 1` leve
 **Other examples:** High-quality density plot
 ```{r p_step_o7, eval=F}
 p <- penguins %>% 
-  ggplot(
-    aes(x = body_mass_g)) +
-    geom_density(
-      aes(fill = species),
-      na.rm = T,
-      alpha = 0.4)
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(aes(fill = species),
+               na.rm = T, alpha = 0.4)
 
 p
 ```
@@ -654,11 +636,9 @@ breaks <- seq(from = 3000, to = 6000, by = 500)
 scales <- scales::label_comma(accuracy = 0.0001)
 
 p <- p +
-  scale_x_continuous(
-    breaks = breaks,
-    limits = c(2000, 7000)) +
-  scale_y_continuous(
-    labels = scales)
+  scale_x_continuous(breaks = breaks,
+                     limits = c(2000, 7000)) +
+  scale_y_continuous(labels = scales)
 
 p
 ```
@@ -677,9 +657,12 @@ p
 ```{r p_step_o9, eval=F}
 p <- p +
   labs(
-    title = "Density Function for Three Penguin Species of Palmer Penguins",
-    subtitle = "Palmer Archipelago (2007-2009)",
-    caption = "Data: https://github.com/allisonhorst/palmerpenguins",
+    title =
+      "Density Function for Three Penguin Species of Palmer Penguins",
+    subtitle =
+      "Palmer Archipelago (2007-2009)",
+    caption =
+      "Data: https://github.com/allisonhorst/palmerpenguins",
     x = "Body mass [grams]",
     y = "Statistical density"
   )
@@ -723,12 +706,18 @@ The `theme` function allows you to customize all elements of your plot which are
 p <- p +
   theme(
     legend.position = "top",
-    plot.title = element_text(size = 14, face = "bold"),
-    plot.subtitle = element_text(size = 12),
-    plot.caption = element_text(size = 10, face = "italic"),
-    axis.text.x = element_text(size = 10),
-    axis.text.y = element_blank(),
-    axis.title = element_text(size = 10),
+    plot.title =
+      element_text(size = 14, face = "bold"),
+    plot.subtitle =
+      element_text(size = 12),
+    plot.caption =
+      element_text(size = 10, face = "italic"),
+    axis.text.x =
+      element_text(size = 10),
+    axis.text.y =
+      element_blank(),
+    axis.title =
+      element_text(size = 10),
   )
 
 p
@@ -749,12 +738,11 @@ p
 penguins %>% 
   ggplot(
     aes(x = species, y = body_mass_g)) +
-    geom_violin(aes(fill = species), na.rm = T) +
-    theme_classic()
+  geom_violin(aes(fill = species), na.rm = T) +
+  theme_classic()
 
-ggsave(
-  "./img/violin-plot.PNG",
-  device = "png", dpi = 300)
+ggsave("./img/violin-plot.PNG",
+       device = "png", dpi = 300)
 ```
 - `geom_violin()` creates a cross-over version of a box-plot and a density plot, particularly suitable for visualizing continuous variables.
 - `ggsave()` writes the most recent plot to disk.
@@ -775,8 +763,8 @@ penguins %>%
   tidyr::drop_na() %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-    geom_point(aes(color = species)) +
-    geom_smooth(method = "lm", se = T)
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "lm", se = T)
 ```
 - Use `geom_smooth()` to fit a smooth line to depict the relationship between `x` and `y`.
 - For the `method` argument specify one of:
@@ -784,11 +772,51 @@ penguins %>%
   - *glm* (generalized linear model),
   - *gam* (generalized additive model),
   - *loess* (local regression).
-- Set the `se` argument to `TRUE` to show standard error bands (i.e. uncertainty).
+- Set the `se` argument to `TRUE` to obtain standard error bands (i.e. confidence intervals).
 ]
 .pull-right[
-```{r ref.label='p_step_b13', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
+.panelset[
+.panel[.panel-name[lm]
+```{r, echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
+penguins %>% 
+  tidyr::drop_na() %>% 
+  ggplot(aes(x = flipper_length_mm,
+             y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "lm", se = T)
 ```
+]
+.panel[.panel-name[glm]
+```{r, echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
+penguins %>% 
+  tidyr::drop_na() %>% 
+  ggplot(aes(x = flipper_length_mm,
+             y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "glm", se = T)
+```
+]
+.panel[.panel-name[gam]
+```{r, echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
+penguins %>% 
+  tidyr::drop_na() %>% 
+  ggplot(aes(x = flipper_length_mm,
+             y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "gam", se = T)
+```
+]
+.panel[.panel-name[loess]
+```{r, echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
+penguins %>% 
+  tidyr::drop_na() %>% 
+  ggplot(aes(x = flipper_length_mm,
+             y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "loess", se = T)
+```
+]
+]
 ]
 
 ???
@@ -801,29 +829,30 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-By now, there is a whole ecosystem (aka the **ggverse** [[10]](#references-2)) of amazing packages, all created in the spirit of `ggplot2`, which further extend its capabilities:
-.pull-left[
-- `scales`: Scale Functions for Visualization<br><br>
-- `ggtext`: Improved Text Rendering Support for `ggplot2`<br><br>
-- `ggraph`: An Implementation of Grammar of Graphics for Graphs and Networks<br><br>
-- `plotly`: Create Interactive Web Graphics via `plotly.js`<br><br>
-- `patchwork`: The Composer of Plots<br><br>
-- `ggforce`: Accelerating `ggplot2`<br><br>
-- many, many more
-]
-.pull-right[
-```{r, echo=F, fig.align='center'}
-knitr::include_graphics("https://tenor.com/view/shocked-po-kung-fu-panda-gif-4255877.gif")
+By now, there is a whole ecosystem (aka the [ggverse](https://github.com/erikgahner/awesome-ggplot2)) of amazing packages, all created in the spirit of `ggplot2`, which further extend its capabilities:
+
+```{r, echo=F, out.height='40%', out.width='40%', dpi=100, out.extra='style="float:right; padding:10px"'}
+knitr::include_graphics(
+  "https://tenor.com/view/shocked-po-kung-fu-panda-gif-4255877.gif"
+)
 ```
-]
+
+- `scales`: Scale Functions for Visualization
+- `ggtext`: Improved Text Rendering Support for `ggplot2`
+- `ggraph`: An Implementation of Grammar of Graphics for Graphs and Networks
+- `ggstatsplot`: Enhanced plots with embedded statistical details
+- `plotly`: Create Interactive Web Graphics via `plotly.js`
+- `patchwork`: The Composer of Plots
+- `ggforce`: Accelerating `ggplot2`
+- etc.
 
 ???
-g- gforce: extension off ggplot2 functionality to allows for more customizations
+- ggforce: extension off ggplot2 functionality to allows for more customizations
 
 ---
 
 background-image: url(https://raw.githubusercontent.com/ropensci/plotly/master/man/figures/plotly.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 15%
 layout: false
 
@@ -836,7 +865,7 @@ plotly::ggplotly(p)
 ---
 
 background-image: url(https://raw.githubusercontent.com/thomasp85/patchwork/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: false
 
@@ -858,14 +887,13 @@ p + (p / p)
 ---
 
 background-image: url(https://raw.githubusercontent.com/thomasp85/ggforce/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: false
 
 ## 4.7 `ggforce`: Accelerating `ggplot2`
 
 .pull-left[
-**Plot matrix with `ggforce`:**
 ```{r ggforce, eval=F}
 penguins %>% 
   drop_na %>% 
@@ -873,15 +901,15 @@ penguins %>%
              y = .panel_y,
              col = sex,
              fill = sex)) +
-    ggforce::geom_autopoint(alpha = 0.5) +
-    ggforce::geom_autohistogram(alpha = 0.5) +
-    ggforce::facet_matrix(
-      rows = vars(species, island,
-                  body_mass_g,
-                  flipper_length_mm),
-      switch = "both", layer.diag = 2) +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 90))
+  ggforce::geom_autopoint(alpha = 0.5) +
+  ggforce::geom_autohistogram(alpha = 0.5) +
+  ggforce::facet_matrix(
+    rows = vars(species, island,
+                body_mass_g,
+                flipper_length_mm),
+    switch = "both", layer.diag = 2) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
 ```
 ]
 .pull-right[

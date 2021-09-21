@@ -11,7 +11,7 @@ layout: false
 ---
 
 background-image: url(https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: true
 
@@ -28,12 +28,6 @@ The package comes with data about penguins observed on islands in the Palmer Arc
 knitr::include_graphics("https://tenor.com/view/penguin-fat-the-struggle-is-real-lazy-gif-4242854.gif")
 ```
 ]
-<br><br>
-The package requires the `devtools` package to be installed in order to download packages from *GitHub*.
-```{r}
-#devtools::install_github("allisonhorst/palmerpenguins")
-library(palmerpenguins)
-```
 
 ---
 
@@ -41,10 +35,12 @@ library(palmerpenguins)
 
 .pull-left[
 ```{r, eval=F}
+library(palmerpenguins)
+
 penguins
 ```
 ```{r, echo=F}
-print(penguins, width = 60)
+print(penguins, width = 50)
 ```
 ]
 .pull-right[
@@ -71,18 +67,15 @@ layout: true
 
 ## 4.1 `magrittr`: The Forward-Pipe Operator
 
-```{r, echo=F, out.height='25%', out.width='25%', out.extra='style="float:right; padding:20px"'}
-knitr::include_graphics("https://tenor.com/view/angry-merlin-pipe-mad-smoke-gif-5680777.gif")
-```
-
 `magrittr` comes with a set of operators:
 - **Pipe Operator:** `%>%`<br><br>
-- **Assignment Operator:** `%<>%` (alternative to `<-`)<br><br>
-- **"Tee" Operator:** `%T>%` (used for the side-effects of a function, e.g., plotting or writing)
+- **Assignment Operator:** `%<>%`<br><br>
+- **"Tee" Operator:** `%T>%`<br><br>
+- **Exposition Operator:** `%$%`
 
 --
 
-<br><br>
+<br>
 Essentially, these operators aim to improve the readability of your code in multiple ways:
 - arrange operations into an easily readable pipeline of chained commands (left-to-right),
 - avoid nested function calls (inside-out), 
@@ -102,27 +95,27 @@ The exposition operator: %$% (explodes out variables in a data frame, no need to
 
 **Basic Piping:** forward a value or object (LHS) into the next function call (RHS) as **first** argument
 ```{r, eval=F}
-x %>% f                           # equivalent to f(x)
-x %>% f(y)                        # equivalent to f(x, y)
-x %>% f %>% g %>% h               # equivalent to h(g(f(x)))
+x %>% f                           # equivalent to: f(x)
+x %>% f(y)                        # equivalent to: f(x, y)
+x %>% f %>% g %>% h               # equivalent to: h(g(f(x)))
 ```
 
 --
 
 **Piping with placeholders:** forward a value or object (LHS) into the next function call (RHS) as **any** argument
 ```{r, eval=F}
-x %>% f(.)                        # equivalent to x %>% f
-x %>% f(y, .)                     # equivalent to f(y, x)
-x %>% f(y, z = .)                 # equivalent to f(y, z = x)
-x %>% f(y = nrow(.), z = ncol(.)) # equivalent to f(x, y = nrow(x), z = ncol(x))
+x %>% f(.)                        # equivalent to: x %>% f
+x %>% f(y, .)                     # equivalent to: f(y, x)
+x %>% f(y, z = .)                 # equivalent to: f(y, z = x)
+x %>% f(y = nrow(.), z = ncol(.)) # equivalent to: f(x, y = nrow(x), z = ncol(x))
 ```
 
 --
 
 **Building functions and pipelines:** a sequence of code starting with the placeholder (`.`) returns a function which can be used to later apply the pipeline to concrete values
 ```{r, eval=F}
-f <- . %>% cos %>% sin            # equivalent to f <- function(.) sin(cos(.))
-f(20)                             # equivalent to the pipeline 20 %>% cos %>% sin
+f <- . %>% cos %>% sin            # equivalent to: f <- function(.) sin(cos(.))
+f(20)                             # equivalent to: the pipeline 20 %>% cos %>% sin
 ```
 
 ???
@@ -166,6 +159,44 @@ penguins %>%
 - Modular modification of pipeline steps!
 ]
 
+.footnote[
+*Note: As of version `4.1.0`, base `R` comes with a native pipe operator as well (`|>`).*
+]
+
 ???
 - Add or remove individual steps easily in your pipeline
 - The `magrittr` forward pipe is imported by the `tidyverse`, no need to load it separately
+
+---
+
+## 4.1 `magrittr`: The Forward-Pipe Operator
+
+**Advanced piping:** Use the more advanced pipe operators to further streamline your workflow.
+
+.panelset[
+.panel[.panel-name[Tee Pipe]
+`%T>%` can be used to trigger the side-effect of a function, e.g., for plotting or printing results, and let the original data bypass the respective step.
+```{r}
+penguins[1:5,c("island", "bill_length_mm")] %T>% print %>% .$bill_length_mm %>% mean(na.rm=T)
+```
+]
+.panel[.panel-name[Exposition Pipe]
+`%$%` expose the names in LHS to the RHS expression. This is useful if the RHS expression does not allow for a separate `data` argument.
+```{r, fig.width=6, fig.asp=0.618, fig.retina=3}
+penguins %$% plot(species, bill_length_mm)  # equivalent to: plot(penguins$species, penguins$bill_length_mm)
+```
+]
+.panel[.panel-name[Assignment Pipe]
+`%<>%` can be used equivalently to the base `R` assignment operator (`<-`). It reassign the result of the of the pipeline to the starting variable.
+```{r}
+var <- penguins$bill_length_mm
+
+var %<>% mean(na.rm=T)
+
+var
+```
+]
+]
+
+???
+Mostly niche use cases

@@ -14,7 +14,7 @@ layout: false
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/readr/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: true
 
@@ -25,42 +25,66 @@ layout: true
 `readr` provides read and write functions for multiple different file formats:
 - `read_delim()`: general delimited files
 - `read_csv()`: comma separated files
+- `read_csv2()`: semicolon separated files
 - `read_tsv()`: tab separated files
 - `read_fwf()`: fixed width files
 - `read_table()`: white-space separated files
 - `read_log()`: web log files
 
-Conveniently, the `write_*()` functions work analog. In addition, use the `readxl` package for Excel files or the `haven` package for Stata files.
+Conveniently, the `write_*()` functions work analog. In addition, use the `readxl` package for Excel files, the `haven` package for Stata files, the `googlesheets4` package for Google Sheets or the `rvest` package for HTML files.
 
 .footnote[
-*Note: In most European countries MS Excel is using `;` as the common delimiter, which can be accounted for by simply switching to the `read_csv2()` function.*
+*Note: In most European countries Microsoft Excel is using `;` as the common delimiter, which can be accounted for by leveraging the `read_csv2()` function.*
 ]
 
 ???
 - `read_delim()` as a generalization of the other functions
+- `rvest` as the go-to package in the context of web scraping with `R`
 
 ---
 
 ## 4.3 `readr`: Read Rectangular Text Data
 
-Let's try it out by reading in the penguins data (note that the output of any `read_*()` function is a `tibble` object.). For the purpose of illustrating the `readr` package, the `penguins` data is written to a csv-file a priori using `write_csv()`.
+Let's try it out by reading in the penguins data. For the purpose of illustrating the `readr` package, the `penguins` data is written to a csv-file a priori using `write_csv(penguins, file = "./data/penguins.csv")`.
 
+.panelset[
+.panel[.panel-name[Base Case]
 ```{r}
-penguins %>% 
-  write_csv(file = "./data/penguins.csv")
+data <- read_csv(file = "./data/penguins.csv")
 ```
+]
+.panel[.panel-name[Select Columns]
+```{r}
+data <- read_csv(file = "./data/penguins.csv", col_select = c(species, island))
+```
+]
+.panel[.panel-name[Name Columns]
+```{r}
+data <- read_csv(file = "./data/penguins.csv", col_names = paste("Var", 1:8, sep = "_"))
+```
+]
+.panel[.panel-name[Skip Rows]
+```{r}
+data <- read_csv(file = "./data/penguins.csv", skip = 5)
+```
+]
+]
 
-```{r}
-penguins <- read_csv(file = "./data/penguins.csv")
-```
+.pull-right[.pull-right[
+.footnote[
+<i>Note: The output of any `read_*()` function is a `tibble` object.</i>
+]]]
 
 ---
 
 ## 4.3 `readr`: Read Rectangular Text Data
 
-Note that `readr` prints the column specifications after importing. By default, `readr` tries to infer the column type (e.g., `int`, `dbl`, `chr`, `fct`, `date`, `lgl`) from the first 1,000 rows and parses the columns accordingly using the built-in `parse_*()` functions.
+`readr` prints the column specifications after importing. By default, it tries to infer the column type (e.g., `int`, `dbl`, `chr`, `fct`, `date`, `lgl`) from the first 1,000 rows and parses the columns accordingly using the built-in `parse_*()` functions.
 
-Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly:
+Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly.
+
+.panelset[
+.panel[.panel-name[Option 1]
 ```{r, eval=F}
 read_csv(
   file = "./data/penguins.csv",
@@ -70,15 +94,28 @@ read_csv(
     island = col_skip())
   )
 ```
+]
+.panel[.panel-name[Option 2]
+```{r, eval=F}
+read_csv(
+  file = "./data/penguins.csv",
+  col_types =  "_f?di"  # skip, factor, guess, double, integer, ...
+  )
+```
+]
+]
 
 Parsing only the first 1,000 rows is efficient but can lead to erroneous guesses:
 ```{r, eval=F}
-read_csv(file = "./data/penguins.csv", guess_max = 1001)
+read_csv(file = "./data/penguins.csv", guess_max = 2000)
 ```
 
 .footnote[
 *Note: Find more information and functions on the `readr` [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).*
 ]
+
+???
+- Hint: sometimes you may have trouble when reading in text data (type character): special signs such as ö, ä or ü may be strangely encoded as cryptic symbols -> in those cases you must control for the encoding of your data in the read_csv function (e.g., UTF-8)
 
 ---
 
@@ -105,6 +142,8 @@ penguins %>%
 penguins <- read_rds(file = "./data/penguins.rds")
 ```
 
+<br>
+
 Note that
 - `write_rds()` can only be used to save one object at a time,
 - a loaded `.rds` file must be stored into a new variable, i.e. given a new name,
@@ -113,4 +152,3 @@ Note that
 
 ???
 - serialization: the process of translating a data structure or object state into a format that can be stored, transmitted and reconstructed later (possibly in a different computer environment).
-- Hint: sometimes you may have trouble when reading in text data (type character): special signs such as ö, ä or ü may be strangely encoded as cryptic symbols -> in those cases you must control for the encoding of your data in the read_csv function (e.g., UTF-8)

@@ -1,9 +1,9 @@
 ---
-title: "Machine Learning in R:<br/>Workshop Series"
+title: "Machine Learning in R"
 subtitle: "Introduction to the Tidyverse"
 author: "Simon Schölzel"
 institute: "*Research Team Berens*"
-date: "2020-11-09"
+date: "Winter Term 2021/2022"
 
 output:
   xaringan::moon_reader:
@@ -28,10 +28,10 @@ knitr::opts_chunk$set(
 # package management
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(
-  xaringanthemer, xaringanExtra, metathis,
+  xaringanthemer, metathis, palmerpenguins, 
   tidyverse, magrittr, glue, showtext, plotly, patchwork, ggforce
 )
-pacman::p_load_gh("allisonhorst/palmerpenguins", "hadley/emo", "gadenbuie/countdown")
+pacman::p_load_gh("hadley/emo", "gadenbuie/countdown", "gadenbuie/xaringanExtra")
 
 # xaringan custom setup
 xaringanthemer::style_mono_accent(
@@ -47,6 +47,7 @@ xaringanthemer::style_mono_accent(
 )
 
 xaringanExtra::use_panelset()
+xaringanExtra::use_webcam()
 
 xaringanExtra::use_extra_styles(
   hover_code_line = T,
@@ -67,6 +68,16 @@ metathis::meta() %>%
   )
 ```
 
+```{r, include=F}
+countdown::countdown(
+  minutes = 2, seconds = 0, 
+  left = 0, right = 0, top = 0.5, bottom = 0.5,
+  padding = "50px",
+  margin = "7.5%",
+  font_size = "5em"
+)
+```
+
 class: center, middle, hide-count
 count: false
 
@@ -78,15 +89,13 @@ ___
 **`r rmarkdown::metadata$author`**
 
 `r rmarkdown::metadata$date`  
-.small[(updated: 2020-11-17)]
+.small[(updated: `r Sys.Date()`)]
 
 <br><br>
 
 <a href="https://www.wiwi.uni-muenster.de/"><img src="https://www.wiwi.uni-muenster.de/fakultaet/sites/all/themes/wwucd/assets/images/logos/secondary_wiwi_aacsb_german.jpg" alt="fb4-logo" height="45"></a> <a href="https://www.wiwi.uni-muenster.de/ctrl/aktuelles"><img src="https://www.wiwi.uni-muenster.de/ctrl/sites/all/themes/wwucd/assets/images/logos/berenslogo5.jpg" alt="ftb-logo" height="45"></a> <a href="https://www.wiwi.uni-muenster.de/iff2/de/news"><img src="https://www.wiwi.uni-muenster.de/iff2/sites/all/themes/wwucd/assets/images/logos/logo_iff2_en2.jpg" alt="ipb-logo" height="45"></a>
 
 ---
-
-name: agenda
 
 ## Agenda
 
@@ -107,14 +116,15 @@ name: agenda
 4.6 `purrr`: Functional Programming Tools  
 4.7 `ggplot2`: Create Elegant Data Visualisations Using the Grammar of Graphics
 
-???
-comment
+```{r, echo=F}
+xaringanExtra::use_progress_bar(color = "#000066", location = "bottom")
+```
 
 ---
 
 ## 1 Learning Objectives `r emo::ji("idea")`
 
-This workshop teaches you important tools for working with rectangular data sets in `R`. It introduces and showcases a suite of packages which eases your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
+This workshop teaches you important tools for working with tabular data sets in `R`. It introduces and showcases a suite of packages which ease your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
 
 More specifically, after this workshop you will
 - be familiar with the main tools of the `tidyverse` and how it differs from `base R`,<br><br>
@@ -215,45 +225,11 @@ knitr::include_graphics("https://tenor.com/view/homer-gif-10571731.gif")
 
 ---
 
-name: references
-
-## References
-
-[1]: **Wickham, H., et al. (2019):** Welcome to the Tidyverse. Journal of Open Source Software, Vol. 4, 2019 No. 43, p. 1686. URL: https://joss.theoj.org/papers/10.21105/joss.01686.pdf.
-
-[2]: **Tidyverse team (2020):** Tidyverse Design Guide. URL: https://design.tidyverse.org/.
-
-[3]: **Wickham, H. (2019):** The Tidy Tools Manifesto. URL: https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html.
-
-[4]: **Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html, chapter 12 (Tidy data).
-
-[5]: **Wickham, H. (2014):** Tidy Data. Journal of Statistical Software, Vol. 59, 2014, No. 10, pp. 1-23. URL: https://www.jstatsoft.org/article/view/v059i10.
-
-[6]: **Barter, R. (2019):** Learn to purrr. URL: http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map.
-
-[7]: **Wickham, H. (2010):** A Layered Grammar of Graphics. Journal of Computational and Graphical Statistics, Vol. 19, 2010, No. 1, pp. 3-28.
-
----
-
-name: references-2
-
-## References
-
-[8]: **Wilkinson, L. (2005):** The Grammar of Graphics. Springer: New York 2005.
-
-[9]: **Sarkar, D. (2018):** A Comprehensive Guide to the Grammar of Graphics for Effective Visualization of Multidimensional Data. towardsdatascience 2018-09-12. URL: https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149).
-
-[10]: **Gahner, E. (2020):** Awesome `ggplot2`. GitHub 2020-09-25. URL: https://github.com/erikgahner/awesome-ggplot2.
-
----
-
 ## Further Resources
 
-Best read for starting in the `tidyverse`:  
-**Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html.
+**Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html. (*Best read for starting in the `tidyverse`*)
 
-Additional resource for diving deeper into the world of `ggplot2`:  
-**Wickham, H/Navarro, D./Lin Pedersen, T. (2020):** ggplot2: Elegant Graphics for Data Analysis. 3rd. edition, Online Publication 2020. URL: https://ggplot2-book.org/. 
+**Wickham, H/Navarro, D./Lin Pedersen, T. (2020):** ggplot2: Elegant Graphics for Data Analysis. 3rd. edition, Online Publication 2020. URL: https://ggplot2-book.org/.  (*Additional resource for diving deeper into the world of `ggplot2`*)
 
 Stay up-to-date with recent developments in the `tidyverse`: https://www.tidyverse.org/blog/
 

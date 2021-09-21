@@ -11,7 +11,7 @@ layout: false
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: true
 
@@ -40,9 +40,14 @@ layout: true
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
+```{r, echo=F, out.height='40%', out.width='40%', dpi=100, out.extra='style="float:right; padding:10px"'}
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_filter.jpg"
+)
+```
+
 **Operations on rows:** `filter()` picks rows that meet one or several logical criteria
 
-.pull-left[
 Filter for all penguins of `species` "Adelie":
 ```{r, eval=F}
 penguins %>% 
@@ -55,12 +60,6 @@ penguins %>%
   filter(is.na(bill_length_mm) == T)
   # filter(!is.na(bill_length_mm) == F)
 ```
-]
-.pull-right[
-```{r, echo=F, out.height='90%', out.width='90%', fig.align='center', dpi=100}
-knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_filter.jpg")
-```
-]
 
 Filter for all penguins observed prior to `year` 2008 or subsequent to `year` 2008 and where the body mass (`body_mass_g`) lies between 3,800 and 4,000 grams:
 ```{r, eval=F}
@@ -77,14 +76,36 @@ penguins %>%
 
 **Operations on rows:** `slice()` picks rows based on their location in the data
 
+.panelset[
+.panel[.panel-name[slide()]
+Pick rows based on their index:
 ```{r}
 penguins %>% 
-  slice(23:26)
+  slice(23:27)
 ```
-**Other `slice_*()` functions:**
-- `slice_head()` (`slice_tail()`) lets you pick the `n` first (last) observations in the data frame.
-- `slice_sample()` lets you pick a random sample of `n` observations (with or without replacement).
-- `slice_min()` (`slice_max()`) lets you pick the `n` largest (smallest) observations in the data frame.
+]
+.panel[.panel-name[slice_head()]
+Pick the first `n` rows in a data frame (vice versa for `slice_tail()`):
+```{r}
+penguins %>% 
+  slice_head(n = 5)  # alternatively: slice_head(frac = 0.05)
+```
+]
+.panel[.panel-name[slice_sample()]
+Pick a random sample of `n` rows (with or without replacement):
+```{r}
+penguins %>% 
+  slice_sample(n = 5)
+```
+]
+.panel[.panel-name[slice_min()]
+Pick the `n` rows with the largest value in a data frame (vice versa for `slice_min()`):
+```{r}
+penguins %>% 
+  slice_max(bill_length_mm, n = 5)
+```
+]
+]
 
 ???
 - slice_sample to generate bootstrapped samples
@@ -99,14 +120,14 @@ Return the three penguins with the smallest body mass:
 ```{r}
 penguins %>% 
   arrange(body_mass_g) %>% 
-  slice_head(n = 3)  # equivalent to using slice_min(order_by = body_mass_g, n = 3)
+  slice_head(n = 3)  # equivalent to: slice_min(body_mass_g, n = 3)
 ```
 
 Return the three penguins with the highest body mass: 
 ```{r, eval=F}
 penguins %>% 
   arrange(desc(body_mass_g)) %>% 
-  slice_head(n = 3)  # equivalent to using slice_max(order_by = body_mass_g, n = 3)
+  slice_head(n = 3)  # equivalent to: slice_max(body_mass_g, n = 3)
 ```
 
 ???
@@ -118,30 +139,87 @@ penguins %>%
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
-.pull-left[
-Select the first three columns (by index):
-```{r, eval=F}
+.panelset[
+.panel[.panel-name[select() by index]
+```{r}
 penguins %>% 
-  select(1:3)
+  select(1:3) %>% 
+  glimpse
 ```
 ]
-.pull-right[
-Select the first three columns (by name):
-```{r, eval=F}
+.panel[.panel-name[select() by name]
+```{r}
 penguins %>% 
-  select(species, island, bill_length_mm)
+  select(species, island, bill_length_mm) %>% 
+  glimpse
 ```
 ]
+]
 
---
+---
 
-**Convenient helper functions:**
-- `everything()`: select all columns
-- `last_col()`: select the last column in the data frame
-- `starts_with()`: select columns which names start with a certain string
-- `ends_with()`: select columns which names end with a certain string
-- `contains()`: select columns which name contains a certain string  
-- `where()`: select columns for which a function evaluates to `TRUE`
+## 4.5 `dplyr`: A Grammar of Data Manipulation
+
+**Operations on columns:** `select()` picks respectively drops certain columns (using `tidyselect` helpers)
+
+.panelset[
+.panel[.panel-name[everything()]
+Select all columns:
+```{r}
+penguins %>% 
+  select(everything()) %>% 
+  glimpse
+```
+]
+.panel[.panel-name[last_col()]
+Select the last column in the data frame:
+```{r}
+penguins %>% 
+  select(last_col()) %>% 
+  glimpse
+```
+]
+.panel[.panel-name[starts_with()]
+Select columns which names start with a certain string:
+```{r}
+penguins %>% 
+  select(starts_with("bill")) %>% 
+  glimpse
+```
+]
+.panel[.panel-name[ends_with()()]
+Select columns which names end with a certain string:
+```{r}
+penguins %>% 
+  select(ends_with("mm")) %>% 
+  glimpse
+```
+]
+.panel[.panel-name[contains()]
+Select columns which name contains a certain string:
+```{r}
+penguins %>% 
+  select(contains("e") & contains("a")) %>% 
+  glimpse
+```
+]
+.panel[.panel-name[machtes()]
+Select columns based on a regular expression ([regex](https://www.rexegg.com/regex-quickstart.html)):
+```{r}
+penguins %>% 
+  select(matches("_\\w*_mm$")) %>% 
+  glimpse
+```
+]
+.panel[.panel-name[where()]
+Select columns for which a function evaluates to `TRUE`:
+```{r}
+penguins %>% 
+  select(where(is.numeric)) %>% 
+  glimpse
+```
+]
+]
 
 ---
 
@@ -149,8 +227,8 @@ penguins %>%
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
-Which columns are returned by the following queries? Try it out at home :)
-.pull-left[
+Which columns are returned by the following queries? Try it out at home `r emo::ji("smiling_face")`
+
 ```{r, eval=F}
 penguins %>% 
   select(starts_with("s"))
@@ -160,8 +238,7 @@ penguins %>%
 penguins %>% 
   select(ends_with("mm"))
 ```
-]
-.pull-right[
+
 ```{r, eval=F}
 penguins %>% 
   select(contains("mm"))
@@ -171,17 +248,11 @@ penguins %>%
 penguins %>% 
   select(-contains("mm"))
 ```
-]
+
 ```{r, eval=F}
 penguins %>% 
-  select(where(~ is.numeric(.))) %>% # 1 
-  select(where(~ mean(., na.rm = T) > 1000)) # 2
-
-# 1: equivalent to:
-#      select(where(is.numeric))
-# 2: equivalent to:
-#      fun <- function(x) { mean(x, na.rm = T) > 1000 }
-#      select(where(fun))
+  select(where(~ is.numeric(.))) %>%  # equivalent to: select(where(is.numeric))
+  select(where(~ mean(., na.rm = T) > 1000))
 ```
 
 ???
@@ -214,9 +285,14 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
+```{r, echo=F, out.height='40%', out.width='40%', dpi=100, out.extra='style="float:right; padding:10px"'}
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_relocate.png"
+)
+```
+
 **Operations on columns:** `relocate()` changes the order of columns
 
-.pull-left[
 Change the order of columns in the `tibble` according to the following scheme:
 1. place `species` after `body_mass_g`
 2. place `sex` before `species`
@@ -229,12 +305,7 @@ penguins %>%
   relocate(island, .after = last_col()) %>%
   colnames()
 ```
-]
-.pull-right[
-```{r, echo=F, out.height='80%', out.width='80%', fig.align='center', dpi=100}
-knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_relocate.png")
-```
-]
+
 
 ---
 
@@ -242,57 +313,47 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-.pull-left[
-Engineer a new `bm_kg` variable which reflects `body_mass_g` measured in kilo grams:
-```{r bm_kg, eval=F}
+Create a new `bm_kg` variable which reflects `body_mass_g` measured in kilo grams:
+```{r}
 penguins %>% 
-  mutate(
-    bm_kg = body_mass_g / 1000,
-    .keep = "all",
-    .before = body_mass_g) %>% 
-  slice_head(n = 3)
+  mutate(bm_kg = body_mass_g / 1000, .keep = "all", .before = body_mass_g) %>% 
+  slice_head(n = 5)
 ```
-]
-.pull-right[
+
 - Use the `.keep` argument to specify which columns to keep after manipulation.
 - Use the `.before`/`.after` arguments to specify the position of the new column.
 - For overriding a given column simply use the same column name.
 - For keeping only the new column use `dplyr::transmute()`.
-]
-```{r, ref.label = 'bm_kg', echo=F}
-```
 
 ---
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
+```{r, echo=F, out.height='40%', out.width='40%', dpi=100, out.extra='style="float:right; padding:10px"'}
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_case_when.png"
+)
+```
+
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-.pull-left[
-Engineer a *one-hot encoded* variable for `sex`:
-```{r one_hot, eval=F}
+Create a *one-hot encoded* variable for `sex`:
+```{r}
 penguins %>% 
   mutate(
     sex_binary = case_when(
       sex == "male" ~ 1,
       sex == "female" ~ 0),
-    .keep = "all",
-    .after = island
+    .keep = "all", .after = island
   ) %>% 
   slice_head(n = 3)
 ```
+
+.footnote[
+_**One-hot Encoding:** Encoding a categorical variable with `C` factor levels into `C` dummies (often in modeling you create `C-1` dummies otherwise you have a perfect linear combination of the variables)._
 ]
-.pull-right[
-```{r, echo=F, out.height='80%', out.width='80%', fig.align='center', dpi=100}
-knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_case_when.png")
-```
-]
-```{r, ref.label='one_hot', echo=F}
-```
 
 ???
-one-hot encoding: encoding a categorical variable with C factor levels into C dummies (often in modeling you create C-1 dummies otherwise you have a perfect linear combination)
-
 case_when:
 - vectorized version of if_else
 - two-sided formulas: LHS tests the condition, RHS specifies the replacement value
@@ -303,24 +364,22 @@ case_when:
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
+```{r, echo=F, out.height='40%', out.width='40%', out.extra='style="float:right; padding:10px"'}
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_across.png"
+)
+```
+
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
-.pull-left[
+
 Transform measurement variables to meters:
-```{r meters, eval=F}
+```{r}
 penguins %>% 
   mutate(
     across(contains("mm"), ~ . / 1000 ),
     .keep = "all"
   ) %>% 
   slice_head(n = 3)
-```
-]
-.pull-right[
-```{r, echo=F, out.height='75%', out.width='75%', fig.align='center', dpi=100}
-knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_across.png")
-```
-]
-```{r, ref.label='meters', echo=F}
 ```
 
 ???
@@ -333,25 +392,22 @@ across:
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
+```{r, echo=F, out.height='40%', out.width='40%', dpi=100, out.extra='style="float:right; padding:10px"'}
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_across.png"
+)
+```
+
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-.pull-left[
 Define `species`, `island` and `sex` as a categorical variables, i.e. *factors*, using `across()`:
-```{r factor_def, eval=F}
+```{r}
 penguins %>% 
   mutate(
     across(where(is.character), as.factor),
     .keep = "all"
   ) %>% 
   slice_head(n = 3)
-```
-]
-.pull-right[
-```{r, echo=F, out.height='75%', out.width='75%', fig.align='center', dpi=100}
-knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_across.png")
-```
-]
-```{r, ref.label='factor_def', echo=F}
 ```
 
 ---
@@ -360,17 +416,11 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 
 **Operations on grouped data:** `group_by()` partitions data based on one or several columns
 
-.pull-left[
-```{r grouped, eval=F}
-penguins %>% 
-  group_by(species)
+```{r}
+penguins %>% group_by(species)
 ```
-]
-.pull-right[
+
 Use `group_keys()`, `group_indices()` and `group_vars()` to access grouping keys, group indices per row and grouping variables.
-]
-```{r, ref.label='grouped', echo=F}
-```
 
 ---
 
@@ -384,19 +434,18 @@ Under the hood `group_by()` changes the representation of the `tibble` and trans
 
 **Operations on grouped data:** `summarise()` reduces a group of data into a single row
 
-.pull-left[
+
+.panelset[
+.panel[.panel-name[univariate]
 ```{r}
-penguins %>% 
-  group_by(species) %>% # univariate
-  summarise(count = n(), .groups = "drop")
+penguins %>% group_by(species) %>% summarise(count = n(), .groups = "drop")
 ```
 ]
-.pull-right[
+.panel[.panel-name[bivariate]
 ```{r}
-penguins %>% 
-  group_by(species, year) %>% # bivariate
-  summarise(count = n(), .groups = "drop")
+penguins %>% group_by(species, sex) %>% summarise(count = n(), .groups = "drop")
 ```
+]
 ]
 
 ???
@@ -445,6 +494,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Stacked `group_by()`:** Use `.add = T` to add new grouping variables (otherwise the first is overridden)
+
 ```{r}
 penguins %>% 
   group_by(species) %>% 
@@ -456,6 +506,7 @@ penguins %>%
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Apply multiple summary functions:** Provide a list of `purrr`-style functions to `across()`
+
 ```{r}
 penguins %>% 
   group_by(species) %>%
@@ -474,10 +525,11 @@ penguins %>%
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Changed behavior of `mutate()`:** Summary functions, e.g., `mean()` or `sd()` now operate on partitions of the data instead of on the whole data
+
 ```{r}
 penguins %>% 
   group_by(species) %>% 
-  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / sd(body_mass_g, na.rm = TRUE))
+  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = T)) / sd(body_mass_g, na.rm = T))
 ```
 
 ???
@@ -488,6 +540,7 @@ penguins %>%
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **`group_by()` a transformed column:** Provide a `mutate()`-like expression in your `group_by()` statement
+
 ```{r}
 bm_breaks <- mean(penguins$body_mass_g, na.rm = T) - (-3:3) * sd(penguins$body_mass_g, na.rm = T)
 
@@ -505,6 +558,7 @@ penguins %>%
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
 **Changed behavior of `filter()`:** Filters now operate on partitions of the data instead of on the whole data
+
 ```{r}
 penguins %>% 
   group_by(species, island) %>% 
@@ -518,16 +572,17 @@ penguins %>%
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example in [chapter 4.4](#tidyr_nest)
+**Nesting of grouped data:** Usually, you will find it more intuitive to use `group_by()` followed by `nest()` to produce a nested data frame compared to the example in [section 4.4](#tidyr_nest).
+
 ```{r}
 penguins %>% 
   group_by(species, year) %>% 
   tidyr::nest()
 ```
 
-.pull-right[.footnote[
+.footnote[
 *Note: Find more information about `group_by()` by running `vignette("grouping")`.*
-]]
+]
 
 ---
 
@@ -535,43 +590,67 @@ penguins %>%
 
 **Other selected `dplyr` operations:**
 
-- **`distinct()`:** selects only unique rows
-```{r, eval=F}
+.panelset[
+.panel[.panel-name[distinct()]
+**`distinct()`** selects only unique rows
+```{r}
 penguins %>% 
   distinct(species, island)
 ```
-
-- **`pull()`:** extracts single columns as vectors
-```{r, eval=F}
+]
+.panel[.panel-name[pull()]
+**`pull()`** extracts single columns as vectors
+```{r, echo=F}
+options(max.print=100)
+```
+```{r}
 penguins %>% 
-  pull(year) # equivalent to penguins$year
+  pull(year) # equivalent to: penguins$year
+```
+```{r, echo=F}
+options(max.print=1000)
 ```
 
-- **`if_else()`:** applies a vectorized if-else-statement
-```{r, eval=F}
-penguins %>% 
-  select(species, island, body_mass_g) %>% 
+]
+.panel[.panel-name[if_else()]
+**`if_else()`** applies a vectorized if-else-statement
+```{r}
+penguins %>% select(species, island, body_mass_g) %>% 
   mutate(penguin_size = if_else(body_mass_g < 3500, "tiny penguin", "big penguin"))
 ```
+]
+.panel[.panel-name[lag()]
+**`lag()`** shifts column values by an offset `n` forward
+```{r}
+penguins %>% select(species, body_mass_g) %>% 
+  mutate(lagged_bm = lag(body_mass_g, n = 1))
+```
+]
+.panel[.panel-name[lead()]
+**`lead()`** shifts column values by an offset `n` backward
+```{r}
+penguins %>% select(species, body_mass_g) %>% 
+  mutate(lead_bm = lead(body_mass_g, n = 2))
+```
+]
+.panel[.panel-name[*_join()]
+**`left_join()`, `right_join()`, `inner_join()`** and **`full_join()`** enable to merge different data frames by matching rows based on keys (similar to joins performed in SQL).
+]
+]
+
+.pull-right[.pull-right[.footnote[
+*Note: Find more information about `dplyr` by running `vignette("dplyr")` and consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf).*
+]]]
 
 ---
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-**Other selected `dplyr` operations:**
+.center[**Similarities between `dplyr` and `SQL` statements:**]
 
-- **`lag()` and `lead()`:** shifts column values by an offset `n`
-```{r, eval=F}
-penguins %>% 
-  select(species, body_mass_g) %>% 
-  mutate(
-    lagged_bm = lag(body_mass_g, n = 1),
-    lead_bm = lead(body_mass_g, n = 2)
-  )
+```{r, echo=F, out.width='70%', out.height='70%', fig.align='center'}
+knitr::include_graphics("./img/sql-tidyverse.png")
 ```
 
-- **`left_join()`, `right_join()`, `inner_join()` and `full_join()`:** merges different data frames by matching rows based on keys (similar to joins performed in SQL)
-
-.footnote[
-*Note: Find more information about `dplyr` by running `vignette("dplyr")` and consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf) (note that it may not reflect changes included in `dplyr v1.0.0`).*
-]
+???
+src: https://www.rstudio.com/resources/rstudioglobal-2021/the-dynamic-duo-sql-and-r/

@@ -11,7 +11,7 @@ layout: false
 ---
 
 background-image: url(https://raw.githubusercontent.com/tidyverse/purrr/master/man/figures/logo.png)
-background-position: 95% 5%
+background-position: 97.5% 2.5%
 background-size: 7.5%
 layout: true
 
@@ -57,8 +57,8 @@ The input `.x` to any `map()_*` function can be either a vector, a list or a dat
 **Use Case:** Let's assume we have multiple data samples (e.g., bootstrapped samples) and require each of the samples to be $z$-normalized for further modeling. First, we would probably write a *named function* for performing $z$-normalization which takes our sample `.x` as input.
 ```{r}
 z_transform <- function(.x) {
-  mean <- mean(.x)
-  sd <- sd(.x)
+  mean <- mean(.x, na.rm = T)
+  sd <- sd(.x , na.rm = T)
   return( (.x - mean) / sd )
 }
 ```
@@ -70,7 +70,8 @@ Second, we draw samples from the `penguins` data set and store them as double ve
 samples <- list(
   sample1 = slice_sample(penguins, n = 10)$bill_length_mm,
   sample2 = slice_sample(penguins, n = 10)$bill_depth_mm,
-  sample3 = slice_sample(penguins, n = 10)$flipper_length_mm)
+  sample3 = slice_sample(penguins, n = 10)$flipper_length_mm
+)
 
 samples[1]
 ```
@@ -82,49 +83,76 @@ samples[1]
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Third, perform the $z$-normalization using a `for`-loop.
-```{r, eval=F}
-for (s in samples) {
-  print(z_transform(.x = s)) 
+Third, perform the $z$-normalization.
+
+.panelset[
+.panel[.panel-name[for-loop]
+```{r}
+for (sample in samples) {
+  print(z_transform(.x = sample)) 
 }
 ```
-
---
-
-Or simply perform the $z$-normalization using `map()`.
+]
+.panel[.panel-name[map()]
 ```{r}
-map(.x = samples, .f = ~ z_transform(.x)) # equivalent to map(samples, z_transform)
+map(.x = samples, .f = ~ z_transform(.x))
 ```
+]
+]
 
 ---
 
-## 4.6 `purrr`: Functional Programming Tools
+## Excursus: Tilde-Shorthand
 
-Or perform the $z$-normalization using `map()` but use an *anonymous function*.
+Within the `tidyverse`, the tilde-shorthand regularly occurs whenever an external function is required as an argument to one of the `tidyverse` functions. In general, you as a user have different ways of including the second function call, one of which is the tilde shorthand notation.
+
+.panelset[
+.panel[.panel-name[Option 1]
+Referring to the external function using its name.
+```{r, eval=F}
+map(.x = samples, .f = z_transform)
+```
+<br> Note that other function arguments can be passed on to the function as additional positional arguments beyond `.f`, e.g., `map(.x = samples, .f = mean, na.rm = T)` 
+]
+.panel[.panel-name[Option 2]
+Defining an anonymous function inline.
 ```{r, eval=F}
 map(
   .x = samples,
-  .f = function(.x) {
-    (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
-  })
+  .f = function(.x) { (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T) }
+)
 ```
-
---
-
-Or perform the $z$-normalization using `map()` but use a *`purrr`-style function*.
+<br> Note that here you could also omit `{ }`, since there is only a single expression involved in the function.
+```{r, eval=F}
+map(
+  .x = samples,
+  .f = function(.x) (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
+)
+```
+]
+.panel[.panel-name[Option 3]
+Defining an anonymous function inline using the tilde-shorthand.
 ```{r, eval=F}
 map(
   .x = samples,
   .f = ~ (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
 )
 ```
+<br> Note that whenever we use the tilde-shorthand, we refer to the argument of the anonymous function by `.x` or simply by `.` (if it only requires one input).
+]
+]
+
+???
+Most of the time, explicitly defining named functions and then choosing option 1 only makes sense if you require them at least more than once. Otherwise, I would strongly recommend using anonymous function, i.e. option 2. or 3.
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
 ```{r, echo=F, out.width='70%', fig.align='center'}
-knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif")
+knitr::include_graphics(
+  "https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif"
+)
 ```
 <br><br>
 .center[`r emo::ji("man_dancing")` Now let us look at some other practical use cases! `r emo::ji("woman_dancing")`]
@@ -133,7 +161,7 @@ knitr::include_graphics("https://tenor.com/view/the-office-finger-guns-right-on-
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Check the columns' data types:
+Check the columns' data types.
 ```{r}
 penguins %>%
   map_df(class)
@@ -141,7 +169,7 @@ penguins %>%
 
 --
 
-Check the number of missing values per column:
+Check the number of missing values per column.
 ```{r}
 penguins %>%
   map_df(~ sum(is.na(.x)))
@@ -150,13 +178,11 @@ penguins %>%
 ???
 1: I give `map` a data frame as input (`penguins`), so it iterates over each column. And to each column I apply the `class()` function. I want the output to be returned as a data frame (`map_df`)
 
-2: use swung dash whenever i also specify function arguments
-
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Check the number of distinct values per column:
+Check the number of distinct values per column.
 ```{r}
 penguins %>%
   map_df(dplyr::n_distinct)
@@ -166,7 +192,7 @@ penguins %>%
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Check the highest value in each subset of the data (e.g., largest `flipper_length_mm` per `sex`):
+Check the highest value in each subset of the data (e.g., largest `flipper_length_mm` per `sex`).
 ```{r}
 penguins %>%
   tidyr::drop_na() %>% 
@@ -181,15 +207,15 @@ penguins %>%
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Produce a series of identical plots, each depicting a separate subset of the underlying data:
+Produce a series of identical plots, each depicting a separate subset of the underlying data.
 ```{r, out.height='20%', out.width='20%'}
 species <- penguins %>%
   dplyr::distinct(species, year) %>%
-  dplyr::pull(species) # .x argument for map()
+  dplyr::pull(species)  # .x argument for map()
 
 years <- penguins %>%
   dplyr::distinct(species, year) %>%
-  dplyr::pull(year) # .y argument for map()
+  dplyr::pull(year)  # .y argument for map()
 
 penguin_plots <- map2(
   .x = species,
@@ -199,9 +225,10 @@ penguin_plots <- map2(
       tidyr::drop_na() %>% 
       dplyr::filter(species == .x, year == .y) %>% 
       ggplot2::ggplot() +
-        geom_point(aes(x = bill_length_mm, y = body_mass_g)) +
-        labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
-    })
+      geom_point(aes(x = bill_length_mm, y = body_mass_g)) +
+      labs(title = glue::glue("Scatter Plot Bill Length vs. Body Mass ({.x}, {.y})"))
+  }
+)
 ```
 
 ---
@@ -272,7 +299,6 @@ nested_penguins
 ## 4.6 `purrr`: Functional Programming Tools
 
 Third, for each linear model, we generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, we use `unnest()` to receive a tidy data frame.
-
 ```{r}
 tidyr::unnest(nested_penguins, coefs)
 ```
@@ -304,7 +330,7 @@ knitr::include_graphics("https://tenor.com/view/cat-computer-gif-5368357.gif")
 ]]
 
 .footnote[
-*Note: For a great tutorial that helps you master the notion of functional programming with `R` see [[6]](#references).*
+*Note: Find more information about `purrr` by consulting the official [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/purrr.pdf). For a great tutorial that helps you master the notion of functional programming with `R` see [this blogpost](http://www.rebeccabarter.com/blog/2019-08-19_purrr/#simplest-usage-repeated-looping-with-map) by Rebecca Barter.*
 ]
 
 ---
@@ -363,7 +389,7 @@ safely_lm <- safely(.f = lm, otherwise = NULL)
 grouped_penguins %>% 
   group_map(.f = ~ safely_lm(flipper_length_mm ~ bill_length_mm + island, data = .x)) 
 ``` 
-
+<br><br>
 - Use `purrr::map(., "result")` at the end of the pipeline to access the results of each function call stored in the list.<br><br>
 - Use `purrr::map(., "error")` at the end of the pipeline to access the errors of each function call stored in the list.
 
