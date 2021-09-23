@@ -19,7 +19,7 @@ layout: true
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-`ggplot2` is Hadley Wickham's [reimplementation](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson. It provides a large amount of functions for generating high-quality graphs in a layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages (*ggverse*).
+`ggplot2` is Hadley Wickham's [reimplementation](https://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098) of the 2005 published *The Grammar of Graphics* by Leland Wilkinson. It provides a large amount of functions for generating high-quality graphs in a layer-based fashion and has even sparked a whole ecosystem of 'gg'-style visualization packages.
 
 <br>
 
@@ -45,7 +45,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Data:** The data set (ideally in *tidy data* format) from which to select the variables that are to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
+**Data:** The data set (usually a `tibble`) from which to select the variables that are about to be plotted. It is specified by the first argument in `ggplot()` and thus predestined to be piped into our plot pipeline. 
 
 .pull-left[
 **Univariate example:**
@@ -88,7 +88,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points, boxplots. They specify the graphical representation of your data.
+**Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points or boxplots. They specify the graphical representation of your data.
 
 .pull-left[
 **Univariate example:**
@@ -110,7 +110,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points, boxplots. They specify the graphical representation of your data.
+**Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points or boxplots. They specify the graphical representation of your data.
 
 .pull-left[
 **Univariate example:**
@@ -141,7 +141,7 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
   geom_bar(na.rm = TRUE, stat = "density") 
 ```
-Most of the time you will just plot the data as-is (`stat = "identity"`). As soon as you require some form of statistical transformation before plotting, the `stat` argument can handle this for you. It goes hand-in-hand with the respective `geom_*()`.
+Most of the time you will just plot the data as-is (`stat = "identity"`). As soon as you require some form of statistical transformation (e.g., count, density or unique) before plotting, the `stat` argument can handle this for you. It goes hand-in-hand with the respective `geom_*()`.
 ]
 .pull-right[
 ```{r ref.label='p_step_u5', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
@@ -217,7 +217,7 @@ penguins %>%
 
 ## 4.7 `ggplot2`: Elegant Data Visualisations
 
-**Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points, boxplots. They specify the graphical representation of your data.
+**Geoms:** Geometric objects that determine your overall plot type, e.g., bar, lines, points or boxplots. They specify the graphical representation of your data.
 
 .pull-left[
 **Bivariate example:**
@@ -245,7 +245,8 @@ There are multiple ways of changing the color, shape or size aesthetics. Remembe
 penguins %>% 
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
-  geom_point(aes(color = species), na.rm = TRUE) 
+  geom_point(aes(color = species),
+             na.rm = TRUE) 
 ```
 ]
 .pull-right[
@@ -409,7 +410,7 @@ penguins %>%
              size = 3, na.rm = TRUE) +
   scale_colour_brewer(palette = "Set3") 
 ```
-The family of `scale_colour_*()` functions enables you to adjust the values of your `color` aesthetic (e.g., `scale_colour_brewer()` to select a palette from the famous [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) project). 
+The family of `scale_colour_*()` functions enables you to adjust the values of your `color` aesthetic (e.g., `scale_colour_brewer()` selects a palette from the famous [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) project). 
 
 ]
 .pull-right[
@@ -433,7 +434,7 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
   geom_point(aes(color = species),
-             na.rm = TRUE) +
+             size = 3, na.rm = TRUE) +
   scale_y_log10()  
 ```
 Or use the `scale_*_log10()` functions to improve the readability of your plot in the presence of high-variance variables.
@@ -537,7 +538,7 @@ plot +
     labels = scales::label_percent(1.))
 ```
 - Use `fct_reorder()` from the `forcats` package to reorder the levels of `species` by their relative frequency (`prop`).
-- Finally, `scales::label_percent(1.)` formats the axis as percentages, rounded to the first value after the digit.
+- Finally, `scales::label_percent(1.)` formats the axis as percentages, rounded to percentage points.
 ]
 .pull-right[
 ```{r ref.label='p_step_o3', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
@@ -736,8 +737,7 @@ p
 **Other examples:** Violin Plot
 ```{r p_step_o12, eval=F}
 penguins %>% 
-  ggplot(
-    aes(x = species, y = body_mass_g)) +
+  ggplot(aes(x = species, y = body_mass_g)) +
   geom_violin(aes(fill = species), na.rm = T) +
   theme_classic()
 
@@ -840,7 +840,7 @@ knitr::include_graphics(
 - `scales`: Scale Functions for Visualization
 - `ggtext`: Improved Text Rendering Support for `ggplot2`
 - `ggraph`: An Implementation of Grammar of Graphics for Graphs and Networks
-- `ggstatsplot`: Enhanced plots with embedded statistical details
+- `ggstatsplot`: `ggplot2` Based Plots with Statistical Details
 - `plotly`: Create Interactive Web Graphics via `plotly.js`
 - `patchwork`: The Composer of Plots
 - `ggforce`: Accelerating `ggplot2`

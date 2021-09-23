@@ -21,7 +21,7 @@ layout: true
 
 `purrr` facilitates [*functional programming*](https://en.wikipedia.org/wiki/Functional_programming) (FP) with data frame objects in `R`. Whenever you would normally refer to a `for`-loop for solving an iterative problem, the family of `map_*()` functions allows you to rephrase your problem as a `tidyverse` pipeline.
 
-**Four types of `map_*()` functions:**
+**Four main types of `map_*()` functions:**
 - `map(.x, .f, ...)` takes the input `.x` and applies `.f` to each element in `.x`.
 - `map2(.x, .y, .f, ...)` takes the inputs `.x` and `.y` and applies `.f` to `.x` and `.y` in parallel.
 - `pmap(.l, .f, ...)` takes a list `.l` of inputs and applies `.f` to each element in `.l` in parallel.
@@ -104,7 +104,7 @@ map(.x = samples, .f = ~ z_transform(.x))
 
 ## Excursus: Tilde-Shorthand
 
-Within the `tidyverse`, the tilde-shorthand regularly occurs whenever an external function is required as an argument to one of the `tidyverse` functions. In general, you as a user have different ways of including the second function call, one of which is the tilde shorthand notation.
+Within the `tidyverse`, the tilde-shorthand regularly occurs whenever an external function is required as an argument to one of the `tidyverse` functions. In general, you have different ways of including the second function call, one of which is the tilde shorthand notation.
 
 .panelset[
 .panel[.panel-name[Option 1]
@@ -149,9 +149,9 @@ Most of the time, explicitly defining named functions and then choosing option 1
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-```{r, echo=F, out.width='70%', fig.align='center'}
+```{r, echo=F, out.width='50%', fig.align='center'}
 knitr::include_graphics(
-  "https://tenor.com/view/the-office-finger-guns-right-on-steve-carell-michael-scott-gif-4724041.gif"
+  "https://media1.tenor.com/images/f72cb542d6b3e3c3421889e0a3d9628d/tenor.gif"
 )
 ```
 <br><br>
@@ -161,19 +161,22 @@ knitr::include_graphics(
 
 ## 4.6 `purrr`: Functional Programming Tools
 
+.pull-left[
 Check the columns' data types.
 ```{r}
 penguins %>%
-  map_df(class)
+  map_df(class) %>% 
+  glimpse
 ```
-
---
-
+]
+.pull-right[
 Check the number of missing values per column.
 ```{r}
 penguins %>%
-  map_df(~ sum(is.na(.x)))
+  map_df(~ .x %>% is.na %>% sum) %>% 
+  glimpse
 ```
+]
 
 ???
 1: I give `map` a data frame as input (`penguins`), so it iterates over each column. And to each column I apply the `class()` function. I want the output to be returned as a data frame (`map_df`)
@@ -263,7 +266,7 @@ nested_penguins
 ```
 
 .pull-right[.footnote[
-*Note: For accessing elements in a nested `tibble` you may use the `pluck()` function. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)`.*
+*Note: For accessing elements in a nested `tibble` you may use the `pluck()` function. For example, for accessing the first `tibble` in the column `data`, you may run `nested_penguins %>% pluck("data", 1)` (also see [section 4.4](#nested-data)).*
 ]]
 
 ---
@@ -292,6 +295,7 @@ nested_penguins <- nested_penguins %>%
     .x = lin_reg,
     .f = ~ { summary(.) %>% .$coefficients %>% as_tibble(rownames = "variable") }
   ))
+
 nested_penguins
 ```
 ---
@@ -303,9 +307,9 @@ Third, for each linear model, we generate a model summary using `summary()` and 
 tidyr::unnest(nested_penguins, coefs)
 ```
 
-.footnote[.pull-right[.pull-right[
+.footnote[.pull-right[
 *Note: There are specific packages (e.g., `broom`) for tidying model outputs. These provide convenient functions that help you achieve the same thing with much less code.*
-]]]
+]]
 
 ---
 
@@ -366,7 +370,7 @@ grouped_penguins %>%
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**`purrr::possibly()`:** returns a list containing the function's result respectively a user-defined value (`otherwise`) if an error occurs
+**`purrr::possibly()`** returns a list containing the function's result respectively a user-defined value (`otherwise`) if an error occurs.
 ```{r}
 possibly_lm <- possibly(.f = lm, otherwise = "Error message")
 
@@ -374,15 +378,15 @@ grouped_penguins %>%
   group_map(.f = ~ possibly_lm(flipper_length_mm ~ bill_length_mm + island, data = .x))
 ```
 
-.footnote[.pull-right[.pull-right[
+.footnote[.pull-right[
 *Note: Use `purrr::discard(. == "Error message")` (`purrr::keep()`) at the end of the pipeline to drop (keep) function calls that yielded an error.<br>These work like `dplyr::select()` and `dplyr::filter()` in the context of `tibbles`.*
-]]]
+]]
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**`purrr::safely()`:** returns a named list containing the function's result (or `otherwise` if an error occurs) as well as an error object that captures the error message
+**`purrr::safely()`** returns a named list containing the function's result (or `otherwise` if an error occurs) as well as an error object that captures the error message.
 ```{r, eval=F}
 safely_lm <- safely(.f = lm, otherwise = NULL)
 

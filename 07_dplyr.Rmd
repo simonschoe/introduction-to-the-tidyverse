@@ -19,7 +19,7 @@ layout: true
 
 ## 4.5 `dplyr`: A Grammar of Data Manipulation
 
-`dplyr` provides a set of functions for manipulating data frame objects (e.g., `tibbles`) while relying on a consistent grammar. Functions are intuitively represented by "verbs" that reflect the underlying operations and always output a new or modified `tibbles`.
+`dplyr` provides a set of functions for manipulating data frame objects (e.g., `tibbles`) while relying on a consistent grammar. Functions are intuitively represented by "verbs" that reflect the underlying operations and always output a new or modified `tibble`.
 
 **Operations on rows:**
 - `filter()` picks rows that meet one or several logical criteria
@@ -48,20 +48,20 @@ knitr::include_graphics(
 
 **Operations on rows:** `filter()` picks rows that meet one or several logical criteria
 
-Filter for all penguins of `species` "Adelie":
+Filter for all penguins of `species` "Adelie".
 ```{r, eval=F}
 penguins %>% 
   filter(species == "Adelie")
 ```
 
-Filter for all penguins where the is a missing value in the `bill_length_mm` measurement:
+Filter for all penguins with a missing value in the `bill_length_mm` measurement.
 ```{r, eval=F}
 penguins %>% 
   filter(is.na(bill_length_mm) == T)
   # filter(!is.na(bill_length_mm) == F)
 ```
 
-Filter for all penguins observed prior to `year` 2008 or subsequent to `year` 2008 and where the body mass (`body_mass_g`) lies between 3,800 and 4,000 grams:
+Filter for all penguins observed prior to `year` 2008 or subsequent to `year` 2008 and where the body mass (`body_mass_g`) lies between 3,800 and 4,000 grams.
 ```{r, eval=F}
 penguins %>% 
   filter(between(body_mass_g, 3800, 4000) & (year < 2008 | year > 2008))
@@ -78,28 +78,28 @@ penguins %>%
 
 .panelset[
 .panel[.panel-name[slide()]
-Pick rows based on their index:
+Pick rows based on their index.
 ```{r}
 penguins %>% 
   slice(23:27)
 ```
 ]
 .panel[.panel-name[slice_head()]
-Pick the first `n` rows in a data frame (vice versa for `slice_tail()`):
+Pick the first `n` rows (vice versa for `slice_tail()`).
 ```{r}
 penguins %>% 
   slice_head(n = 5)  # alternatively: slice_head(frac = 0.05)
 ```
 ]
 .panel[.panel-name[slice_sample()]
-Pick a random sample of `n` rows (with or without replacement):
+Pick a random sample of `n` rows (with or without replacement).
 ```{r}
 penguins %>% 
   slice_sample(n = 5)
 ```
 ]
 .panel[.panel-name[slice_min()]
-Pick the `n` rows with the largest value in a data frame (vice versa for `slice_min()`):
+Pick the `n` rows with the largest value (vice versa for `slice_min()`).
 ```{r}
 penguins %>% 
   slice_max(bill_length_mm, n = 5)
@@ -116,19 +116,24 @@ penguins %>%
 
 **Operations on rows:** `arrange()` changes the order of rows
 
-Return the three penguins with the smallest body mass: 
+.panelset[
+.panel[.panel-name[Ascending]
+Return the five penguins with the smallest body mass.
 ```{r}
 penguins %>% 
   arrange(body_mass_g) %>% 
-  slice_head(n = 3)  # equivalent to: slice_min(body_mass_g, n = 3)
+  slice_head(n = 5)  # equivalent to: slice_min(body_mass_g, n = 3)
 ```
-
-Return the three penguins with the highest body mass: 
-```{r, eval=F}
+]
+.panel[.panel-name[Descending]
+Return the five penguins with the highest body mass.
+```{r}
 penguins %>% 
   arrange(desc(body_mass_g)) %>% 
-  slice_head(n = 3)  # equivalent to: slice_max(body_mass_g, n = 3)
+  slice_head(n = 5)  # equivalent to: slice_max(body_mass_g, n = 3)
 ```
+]
+]
 
 ???
 - arrange by default always sorts from smallest to largest
@@ -164,7 +169,7 @@ penguins %>%
 
 .panelset[
 .panel[.panel-name[everything()]
-Select all columns:
+Select all columns.
 ```{r}
 penguins %>% 
   select(everything()) %>% 
@@ -172,7 +177,7 @@ penguins %>%
 ```
 ]
 .panel[.panel-name[last_col()]
-Select the last column in the data frame:
+Select the last column in the data frame.
 ```{r}
 penguins %>% 
   select(last_col()) %>% 
@@ -180,7 +185,7 @@ penguins %>%
 ```
 ]
 .panel[.panel-name[starts_with()]
-Select columns which names start with a certain string:
+Select columns which names start with a certain string.
 ```{r}
 penguins %>% 
   select(starts_with("bill")) %>% 
@@ -188,7 +193,7 @@ penguins %>%
 ```
 ]
 .panel[.panel-name[ends_with()()]
-Select columns which names end with a certain string:
+Select columns which names end with a certain string.
 ```{r}
 penguins %>% 
   select(ends_with("mm")) %>% 
@@ -196,7 +201,7 @@ penguins %>%
 ```
 ]
 .panel[.panel-name[contains()]
-Select columns which name contains a certain string:
+Select columns which name contains a certain string.
 ```{r}
 penguins %>% 
   select(contains("e") & contains("a")) %>% 
@@ -204,7 +209,7 @@ penguins %>%
 ```
 ]
 .panel[.panel-name[machtes()]
-Select columns based on a regular expression ([regex](https://www.rexegg.com/regex-quickstart.html)):
+Select columns based on a regular expression ([regex](https://www.rexegg.com/regex-quickstart.html)).
 ```{r}
 penguins %>% 
   select(matches("_\\w*_mm$")) %>% 
@@ -212,7 +217,7 @@ penguins %>%
 ```
 ]
 .panel[.panel-name[where()]
-Select columns for which a function evaluates to `TRUE`:
+Select columns for which a function evaluates to `TRUE`.
 ```{r}
 penguins %>% 
   select(where(is.numeric)) %>% 
@@ -227,7 +232,7 @@ penguins %>%
 
 **Operations on columns:** `select()` picks respectively drops certain columns
 
-Which columns are returned by the following queries? Try it out at home `r emo::ji("smiling_face")`
+Which columns are returned by the following queries?
 
 ```{r, eval=F}
 penguins %>% 
@@ -268,16 +273,14 @@ where:
 
 **Operations on columns:** `rename()` changes the column names
 
-Change the name of the column `body_mass_g` (`sex`) to `bm` (`gender`):
+Change the name of the column `body_mass_g` (`sex`) to `bm` (`gender`).
 ```{r}
-penguins %>% 
-  rename(bm = body_mass_g, gender = sex) %>% 
+penguins %>% rename(bm = body_mass_g, gender = sex) %>% 
   colnames()
 ```
-Convert the name of the columns that include the string `"mm"` to upper case:
+Convert the name of the columns that include the string `"mm"` to upper case.
 ```{r}
-penguins %>% 
-  rename_with(.fn = toupper, .cols = contains("mm")) %>% 
+penguins %>% rename_with(.fn = toupper, .cols = contains("mm")) %>% 
   colnames()
 ```
 
@@ -313,10 +316,10 @@ penguins %>%
 
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-Create a new `bm_kg` variable which reflects `body_mass_g` measured in kilo grams:
+Create a new `bm_kg` variable which reflects `body_mass_g` measured in kilo grams.
 ```{r}
 penguins %>% 
-  mutate(bm_kg = body_mass_g / 1000, .keep = "all", .before = body_mass_g) %>% 
+  mutate(bm_kg = body_mass_g / 1000, .keep = "all", after = island) %>% 
   slice_head(n = 5)
 ```
 
@@ -337,7 +340,7 @@ knitr::include_graphics(
 
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-Create a *one-hot encoded* variable for `sex`:
+Create a *one-hot encoded* variable for `sex`.
 ```{r}
 penguins %>% 
   mutate(
@@ -349,9 +352,9 @@ penguins %>%
   slice_head(n = 3)
 ```
 
-.footnote[
+.pull-right[.pull-right[.footnote[
 _**One-hot Encoding:** Encoding a categorical variable with `C` factor levels into `C` dummies (often in modeling you create `C-1` dummies otherwise you have a perfect linear combination of the variables)._
-]
+]]]
 
 ???
 case_when:
@@ -372,11 +375,11 @@ knitr::include_graphics(
 
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-Transform measurement variables to meters:
+Transform measurement variables to meters.
 ```{r}
 penguins %>% 
   mutate(
-    across(contains("mm"), ~ . / 1000 ),
+    across(contains("mm"), ~ . / 1000),
     .keep = "all"
   ) %>% 
   slice_head(n = 3)
@@ -400,7 +403,7 @@ knitr::include_graphics(
 
 **Operations on columns:** `mutate()` transforms the column values and/or creates new columns
 
-Define `species`, `island` and `sex` as a categorical variables, i.e. *factors*, using `across()`:
+Define `species`, `island` and `sex` as a categorical variable, i.e. *factors*, using `across()`.
 ```{r}
 penguins %>% 
   mutate(
@@ -428,7 +431,7 @@ Use `group_keys()`, `group_indices()` and `group_vars()` to access grouping keys
 
 **Operations on grouped data:** `group_by()` partitions data based on one or several columns
 
-Under the hood `group_by()` changes the representation of the `tibble` and transforms it into a grouped data frame (`grouped_df`). This allows us to operate on the three subgroups individually using `summarise()`.
+Under the hood `group_by()` changes the representation of the `tibble` and transforms it into a grouped data frame (`grouped_df`). This allows us to operate on the subgroups individually using `summarise()`.
 
 --
 
@@ -458,7 +461,7 @@ penguins %>% group_by(species, sex) %>% summarise(count = n(), .groups = "drop")
 **Operations on grouped data:** `group_by()` partitions data based on one or several columns and `summarise()` reduces a group of data into a single row
 
 ```{r}
-penguins %>% 
+penguins %>%
   group_by(species) %>%
   summarise(
     across(contains("mm"), ~ mean(., na.rm = T), .names = "{.col}_avg"),
@@ -508,7 +511,7 @@ penguins %>%
 **Apply multiple summary functions:** Provide a list of `purrr`-style functions to `across()`
 
 ```{r}
-penguins %>% 
+penguins %>%
   group_by(species) %>%
   summarise(
     across(
@@ -527,9 +530,10 @@ penguins %>%
 **Changed behavior of `mutate()`:** Summary functions, e.g., `mean()` or `sd()` now operate on partitions of the data instead of on the whole data
 
 ```{r}
-penguins %>% 
+penguins %>%
   group_by(species) %>% 
-  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = T)) / sd(body_mass_g, na.rm = T))
+  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = T)) / sd(body_mass_g, na.rm = T)) %>% 
+  glimpse
 ```
 
 ???
@@ -605,7 +609,7 @@ options(max.print=100)
 ```
 ```{r}
 penguins %>% 
-  pull(year) # equivalent to: penguins$year
+  pull(year)  # equivalent to: penguins$year
 ```
 ```{r, echo=F}
 options(max.print=1000)
@@ -620,21 +624,21 @@ penguins %>% select(species, island, body_mass_g) %>%
 ```
 ]
 .panel[.panel-name[lag()]
-**`lag()`** shifts column values by an offset `n` forward
+**`lag()`** shifts column values by an offset of `n` forward
 ```{r}
 penguins %>% select(species, body_mass_g) %>% 
   mutate(lagged_bm = lag(body_mass_g, n = 1))
 ```
 ]
 .panel[.panel-name[lead()]
-**`lead()`** shifts column values by an offset `n` backward
+**`lead()`** shifts column values by an offset of `n` backward
 ```{r}
 penguins %>% select(species, body_mass_g) %>% 
   mutate(lead_bm = lead(body_mass_g, n = 2))
 ```
 ]
-.panel[.panel-name[*_join()]
-**`left_join()`, `right_join()`, `inner_join()`** and **`full_join()`** enable to merge different data frames by matching rows based on keys (similar to joins performed in SQL).
+.panel[.panel-name[join()]
+**`left_join()`, `right_join()`, `inner_join()`** and __`full_join()`__ enable to merge different data frames by matching rows based on keys (similar to joins performed in SQL).
 ]
 ]
 
@@ -652,5 +656,6 @@ penguins %>% select(species, body_mass_g) %>%
 knitr::include_graphics("./img/sql-tidyverse.png")
 ```
 
-???
-src: https://www.rstudio.com/resources/rstudioglobal-2021/the-dynamic-duo-sql-and-r/
+.center[
+*Src: [Steves (2021)](https://www.rstudio.com/resources/rstudioglobal-2021/the-dynamic-duo-sql-and-r/)*
+]

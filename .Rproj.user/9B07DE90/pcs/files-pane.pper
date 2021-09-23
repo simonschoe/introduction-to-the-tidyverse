@@ -7,7 +7,11 @@
         {
             "columnIndex": 2,
             "ascending": true
+        },
+        {
+            "columnIndex": 3,
+            "ascending": false
         }
     ],
-    "path": "C:/Users/s_scho53/Desktop/L09_Desktop/workshops/02_introduction-to-the-tidyverse"
+    "path": "C:/Users/s_scho53/Desktop/L09_Desktop/workshops/introduction-to-the-tidyverse"
 }

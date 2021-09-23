@@ -153,13 +153,6 @@ especially highlight the last point: how you think about data, how you approach 
 
 ---
 
-layout: false
-class: center, middle
-
-# 5-Minute Break<br><br>`r emo::ji("coffee")` `r emo::ji("doughnut")`
-
----
-
 ```{r child='./04_tibble.Rmd', eval=T}
 ```
 
@@ -175,22 +168,8 @@ class: center, middle
 
 ---
 
-layout: false
-class: center, middle
-
-# 5-Minute Break<br><br>`r emo::ji("coffee")` `r emo::ji("doughnut")`
-
----
-
 ```{r child='./07_dplyr.Rmd', eval=T}
 ```
-
----
-
-layout: false
-class: center, middle
-
-# 5-Minute Break<br><br>`r emo::ji("coffee")` `r emo::ji("doughnut")`
 
 ---
 

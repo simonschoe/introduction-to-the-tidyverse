@@ -19,7 +19,7 @@ layout: true
 
 ## 4.4 `tidyr`: Tidy Messy Data
 
-`tidyr` provides several functions that help you to bring your data into the *tidy data* format (e.g., reshaping data, splitting columns, handling missing values, nesting data).
+`tidyr` provides several functions that help you bring your data into the *tidy data* format (e.g., reshaping data, splitting columns, handling missing values or nesting data).
 
 ```{r}
 penguins
@@ -40,19 +40,19 @@ penguins
 .panelset[
 .panel[.panel-name[pivot_longer()]
 ```{r}
-non_tidy_penguins <- penguins %>% 
+long_penguins <- penguins %>% 
   pivot_longer(
     cols = c(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g),
     names_to = "variable", values_to = "measurement"
   )
 
-non_tidy_penguins %>% head(5)
+long_penguins %>% head(5)
 ```
-**Dimensionality:** [`r dim(non_tidy_penguins)`]
+**Dimensionality:** [`r dim(long_penguins)`]
 ]
 .panel[.panel-name[pivot_wider()]
 ```{r}
-non_tidy_penguins %>% 
+long_penguins %>% 
   pivot_wider(
     names_from = "variable", values_from = "measurement", values_fn = list
   ) %>%
@@ -110,6 +110,8 @@ nested_penguins
 
 ---
 
+name: nested-data
+
 ## 4.4 `tidyr`: Tidy Messy Data
 
 **Rectangling:** Disentangles nested data structures (e.g., JSON, HTML) and brings it into *tidy data* format.
@@ -122,7 +124,7 @@ nested_penguins %>% purrr::pluck("nested_data", 1)
 ```
 ]
 .panel[.panel-name[unnest()]
-Flatten nested data structure via `tidyr::unnest()`.
+Flatten nested data structures via `tidyr::unnest()`.
 ```{r}
 nested_penguins %>% unnest(cols = c(nested_data)) 
 ```
