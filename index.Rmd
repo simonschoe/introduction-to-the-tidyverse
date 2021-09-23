@@ -124,9 +124,9 @@ xaringanExtra::use_progress_bar(color = "#000066", location = "bottom")
 
 ## 1 Learning Objectives `r emo::ji("idea")`
 
-This workshop teaches you important tools for working with tabular data sets in `R`. It introduces and showcases a suite of packages which ease your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
+This lecture teaches you important tools for working with tabular data sets in `R`. It introduces and showcases a suite of packages which ease your data science workflow in terms of data import, data cleaning, data transformation and data visualization.
 
-More specifically, after this workshop you will
+More specifically, after this lecture you will
 - be familiar with the main tools of the `tidyverse` and how it differs from `base R`,<br><br>
 - know your way around in working with the core packages of the `tidyverse` for importing, tidying, transforming and visualizing data,<br><br>
 - be proficient in processing (*non-tidy*) data of any shape and quality,<br><br>
