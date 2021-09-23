@@ -79,7 +79,7 @@ data <- read_csv(file = "./data/penguins.csv", skip = 5)
 
 ## 4.3 `readr`: Read Rectangular Text Data
 
-`readr` prints the column specifications after importing. By default, it tries to infer the column type (e.g., `int`, `dbl`, `chr`, `fct`, `date`, `lgl`) from the first 1,000 rows and parses the columns accordingly using the built-in `parse_*()` functions.
+`readr` prints the column specifications after importing. By default, it tries to infer the column type (e.g., `int`, `dbl`, `chr`, `fct`, `date`, `lgl`) from the first 1,000 rows and parses the columns accordingly.
 
 Try to make column specifications explicit! You likely get more familiar with your data and see warnings if something changes unexpectedly.
 

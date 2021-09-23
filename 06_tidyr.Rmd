@@ -25,11 +25,11 @@ layout: true
 penguins
 ```
 
-**Dimensionality:** [`r dim(penguins)`]
-
 ???
 - Let's again start with our `penguins` data set which already is in *tidy data* format
 - in the following i highlight the dimensionality of the data to show you what happens
+
+DIM: 344 x 8
 
 ---
 
@@ -42,32 +42,32 @@ penguins
 ```{r}
 long_penguins <- penguins %>% 
   pivot_longer(
-    cols = c(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g),
-    names_to = "variable", values_to = "measurement"
+    cols = c(species, island),
+    names_to = "variable", values_to = "value"
   )
 
-long_penguins %>% head(5)
+long_penguins %>% glimpse
 ```
-**Dimensionality:** [`r dim(long_penguins)`]
 ]
 .panel[.panel-name[pivot_wider()]
 ```{r}
 long_penguins %>% 
   pivot_wider(
-    names_from = "variable", values_from = "measurement", values_fn = list
+    names_from = "variable", values_from = "value"
   ) %>%
-  head(5)
+  glimpse
 ```
-**Dimensionality:** [`r dim(penguins)`]
 ]
 ]
 
 ???
 `pivot_longer()`:
-- now for each observation we have three rows, one row per measurement of each of the varibales which are measured in millimeters -> no tidy format any longer
+- now for each observation we have two rows, one row per variable that are pivotted -> no tidy format any longer
+- DIM: 688 x 8
+
 `pivot_wider()`
 - invert `pivot_longer()`
-- problem here: we have penguins with the same `species`, `island`, `sex`, `body_mass_g`, etc, hence `pivot_wider` produces a nested `tibble`
+- DIM: 344 x 8
 
 ---
 
@@ -101,8 +101,6 @@ nested_penguins <-
 nested_penguins
 ```
 
-**Dimensionality:** [`r dim(nested_penguins)`]
-
 ???
 - note that `nest()` produces a nested data frame with one row per species and year
 - note that the `nested_data` column contains `tibbles` with six columns each and a varying amount of observations
@@ -128,17 +126,17 @@ Flatten nested data structures via `tidyr::unnest()`.
 ```{r}
 nested_penguins %>% unnest(cols = c(nested_data)) 
 ```
-.pull-right[.pull-right[.footnote[
-*Note: Alternatively use `unnest_wider()` or `unnest_longer()` for more control over the rectangling operation.*
-]]]
 ]
 .panel[.panel-name[hoist()]
 Selectively extract individual components from an object in a nested data structure via `tidyr::hoist()`.
 ```{r}
-nested_penguins %>% hoist(nested_data, bill_length_mm = "bill_length_mm")
+nested_penguins %>% hoist(nested_data, hoisted_col = "bill_length_mm")
 ```
 ]
 ]
+
+???
+Alternatively use `unnest_wider()` or `unnest_longer()` for more control over the rectangling operation.
 
 ---
 
@@ -158,9 +156,6 @@ Separate a single column, containing multiple values, into multiple columns.
 ```{r}
 penguins %>% separate(bill_length_mm, sep = 2, into = c("cm", "mm"))
 ```
-.pull-right[.pull-right[.footnote[
-*Note: You may either split cell values on a specific character or a character index.*
-]]]
 ]
 .panel[.panel-name[separate_rows()]
 Separate a single column, containing multiple values, into multiple rows.
@@ -169,6 +164,9 @@ penguins %>% separate_rows(island, sep = "s", convert = T)
 ```
 ]
 ]
+
+???
+can also `separate` based on character match
 
 ---
 

@@ -19,18 +19,22 @@ layout: true
 
 ## 4.2 `tibble`: Simple Data Frames
 
-`tibble` provides an enhanced data frame object of class `tbl_df`, a so-called `tibble`. A `tibble` can be created in three different ways:
-.pull-left[
-Create a `tibble` from column vectors with `tibble()`:
-```{r, eval=F}
+`tibble` provides an enhanced data frame object of class `tbl_df`, a so-called `tibble`. A `tibble` can be created in four different ways.
+
+.panelset[
+.panel[.panel-name[tibble()]
+Create a `tibble` from column vectors with `tibble()`.
+```{r}
 tibble(
   x = c("a", "b"),
   y = c(1, 2),
   z = c(T, F)
 )
 ```
-Create a *transposed* `tibble` row by row with `tribble()`:
-```{r, eval=F}
+]
+.panel[.panel-name[tribble()]
+Create a *transposed* `tibble` row by row with `tribble()`.
+```{r}
 tribble(
   ~x, ~y,  ~z,
   "a", 1,  T,
@@ -38,22 +42,24 @@ tribble(
 )
 ```
 ]
-.pull-right[
-Create a `tibble` from an existing data frame with `as_tibble()`:
-```{r, eval=F}
-df <- data.frame(
+.panel[.panel-name[as_tibble()]
+Create a `tibble` from an existing data frame with `as_tibble()`.
+```{r}
+data.frame(
   x = c("a", "b"),
   y = c(1, 2),
   z = c(T, F)
-)
-
-as_tibble(df)
+) %>% 
+as_tibble
 ```
-Create a `tibble` from named vectors with `enframe()`:
-```{r, eval=F}
+]
+.panel[.panel-name[enframe()]
+Create a `tibble` from named vectors with `enframe()`.
+```{r}
 c(x = "a", y = "b", z = 1) %>%
   enframe(name = "x", value = "y")
 ```
+]
 ]
 
 --
@@ -95,12 +101,12 @@ data.frame(penguins)
 options(max.print=1000)
 ```
 ]
-.panel[.panel-name[tibble() (alt. 1)]
+.panel[.panel-name[tibble() (Option 1)]
 ```{r}
 penguins
 ```
 ]
-.panel[.panel-name[tibble() (alt. 2)]
+.panel[.panel-name[tibble() (Option 2)]
 ```{r}
 penguins %>% glimpse
 ```

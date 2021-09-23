@@ -49,6 +49,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/palmerpe
 knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/man/figures/culmen_depth.png")
 ```
 ]
+
 ---
 
 class: middle, center, inverse
@@ -82,10 +83,6 @@ Essentially, these operators aim to improve the readability of your code in mult
 - minimize the use of local variable assignments (`<-`) and function definitions, and
 - easily add and/or delete steps in your pipeline without breaking the code.
 
-.footnote[
-*Note: Find out more about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: Ctrl + Shift + M.*
-]
-
 ???
 The exposition operator: %$% (explodes out variables in a data frame, no need to use pull())
 
@@ -95,35 +92,32 @@ The exposition operator: %$% (explodes out variables in a data frame, no need to
 
 **Basic Piping:** forward a value or object (LHS) into the next function call (RHS) as **first** argument
 ```{r, eval=F}
-x %>% f                           # equivalent to: f(x)
-x %>% f(y)                        # equivalent to: f(x, y)
-x %>% f %>% g %>% h               # equivalent to: h(g(f(x)))
+x %>% f                            # equivalent to: f(x)
+x %>% f(y)                         # equivalent to: f(x, y)
+x %>% f %>% g %>% h                # equivalent to: h(g(f(x)))
 ```
 
 --
 
 **Piping with placeholders:** forward a value or object (LHS) into the next function call (RHS) as **any** argument
 ```{r, eval=F}
-x %>% f(.)                        # equivalent to: x %>% f
-x %>% f(y, .)                     # equivalent to: f(y, x)
-x %>% f(y, z = .)                 # equivalent to: f(y, z = x)
-x %>% f(y = nrow(.), z = ncol(.)) # equivalent to: f(x, y = nrow(x), z = ncol(x))
+x %>% f(.)                         # equivalent to: x %>% f
+x %>% f(y, .)                      # equivalent to: f(y, x)
+x %>% f(y, z = .)                  # equivalent to: f(y, z = x)
+x %>% f(y = nrow(.), z = ncol(.))  # equivalent to: f(x, y = nrow(x), z = ncol(x))
 ```
 
 --
 
 **Building functions and pipelines:** a sequence of code starting with the placeholder (`.`) returns a function which can be used to later apply the pipeline to concrete values
 ```{r, eval=F}
-f <- . %>% cos %>% sin            # equivalent to: f <- function(.) sin(cos(.))
-f(20)                             # equivalent to: the pipeline 20 %>% cos %>% sin
+f <- . %>% cos %>% sin             # equivalent to: f <- function(.) sin(cos(.))
+f(20)                              # equivalent to: the pipeline 20 %>% cos %>% sin
 ```
 
-???
-1 slide:
-- in can omit parentheses if x is the only argument i would give to the function
-2 slide:
-- when x is the second argument in the function, i always need to use the placeholder
-- when other arguments built upon the first argument, i always need to use the placeholder
+.footnote[
+*Note: Find out more about `%>%` by running `vignette("magrittr")`. Type `%>%` using the shortcut: Ctrl + Shift + M.*
+]
 
 ---
 
@@ -177,11 +171,11 @@ penguins %>%
 .panel[.panel-name[Tee Pipe]
 `%T>%` can be used to trigger the side-effect of a function, e.g., for plotting or printing results, and let the original data bypass the respective step.
 ```{r}
-penguins[1:5,c("island", "bill_length_mm")] %T>% print %>% .$bill_length_mm %>% mean(na.rm=T)
+penguins[1:5, c("island", "bill_length_mm")] %T>% print %>% .$bill_length_mm %>% mean(na.rm=T)
 ```
 ]
 .panel[.panel-name[Exposition Pipe]
-`%$%` expose the names in LHS to the RHS expression. This is useful if the RHS expression does not allow for a separate `data` argument.
+`%$%` exposes the names in LHS object to the RHS expression. This is useful if the RHS expression does not allow for a separate `data` argument.
 ```{r, fig.width=6, fig.asp=0.618, fig.retina=3}
 penguins %$% plot(species, bill_length_mm)  # equivalent to: plot(penguins$species, penguins$bill_length_mm)
 ```
@@ -197,6 +191,3 @@ var
 ```
 ]
 ]
-
-???
-Mostly niche use cases
