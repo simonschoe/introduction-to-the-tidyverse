@@ -208,7 +208,7 @@ knitr::include_graphics("https://tenor.com/view/homer-gif-10571731.gif")
 
 **Wickham, H./Grolemund, G. (2017):** R for Data Science: Visualize, Model, Transform, Tidy, and Import Data. URL: https://r4ds.had.co.nz/tidy-data.html. (*Best read for starting in the `tidyverse`*)
 
-**Wickham, H/Navarro, D./Lin Pedersen, T. (2020):** ggplot2: Elegant Graphics for Data Analysis. 3rd. edition, Online Publication 2020. URL: https://ggplot2-book.org/.  (*Additional resource for diving deeper into the world of `ggplot2`*)
+**Wickham, H./Navarro, D./Lin Pedersen, T. (2020):** ggplot2: Elegant Graphics for Data Analysis. 3rd. edition, Online Publication 2020. URL: https://ggplot2-book.org/.  (*Additional resource for diving deeper into the world of `ggplot2`*)
 
 Stay up-to-date with recent developments in the `tidyverse`: https://www.tidyverse.org/blog/
 
