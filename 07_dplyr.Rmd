@@ -98,7 +98,7 @@ penguins %>%
   slice_sample(n = 5)
 ```
 ]
-.panel[.panel-name[slice_min()]
+.panel[.panel-name[slice_max()]
 Pick the `n` rows with the largest value (vice versa for `slice_min()`).
 ```{r}
 penguins %>% 
@@ -192,7 +192,7 @@ penguins %>%
   glimpse
 ```
 ]
-.panel[.panel-name[ends_with()()]
+.panel[.panel-name[ends_with()]
 Select columns which names end with a certain string.
 ```{r}
 penguins %>% 
@@ -319,7 +319,7 @@ penguins %>%
 Create a new `bm_kg` variable which reflects `body_mass_g` measured in kilo grams.
 ```{r}
 penguins %>% 
-  mutate(bm_kg = body_mass_g / 1000, .keep = "all", after = island) %>% 
+  mutate(bm_kg = body_mass_g / 1000, .keep = "all", .after = island) %>% 
   slice_head(n = 5)
 ```
 
@@ -352,9 +352,9 @@ penguins %>%
   slice_head(n = 3)
 ```
 
-.pull-right[.pull-right[.footnote[
+.footnote[
 _**One-hot Encoding:** Encoding a categorical variable with `C` factor levels into `C` dummies (often in modeling you create `C-1` dummies otherwise you have a perfect linear combination of the variables)._
-]]]
+]
 
 ???
 case_when:
@@ -501,7 +501,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/allisonhorst/stats-il
 ```{r}
 penguins %>% 
   group_by(species) %>% 
-  group_by(year, .add = T)   # equivalent to group_by(species, year)
+  group_by(year, .add = T)   # equivalent to: group_by(species, year)
 ```
 
 ---
@@ -596,14 +596,14 @@ penguins %>%
 
 .panelset[
 .panel[.panel-name[distinct()]
-**`distinct()`** selects only unique rows
+**`distinct()`** selects only unique rows.
 ```{r}
 penguins %>% 
   distinct(species, island)
 ```
 ]
 .panel[.panel-name[pull()]
-**`pull()`** extracts single columns as vectors
+**`pull()`** extracts single columns as vectors.
 ```{r, echo=F}
 options(max.print=100)
 ```
@@ -617,21 +617,21 @@ options(max.print=1000)
 
 ]
 .panel[.panel-name[if_else()]
-**`if_else()`** applies a vectorized if-else-statement
+**`if_else()`** applies a vectorized if-else-statement.
 ```{r}
 penguins %>% select(species, island, body_mass_g) %>% 
   mutate(penguin_size = if_else(body_mass_g < 3500, "tiny penguin", "big penguin"))
 ```
 ]
 .panel[.panel-name[lag()]
-**`lag()`** shifts column values by an offset of `n` forward
+**`lag()`** shifts column values by an offset of `n` forward.
 ```{r}
 penguins %>% select(species, body_mass_g) %>% 
   mutate(lagged_bm = lag(body_mass_g, n = 1))
 ```
 ]
 .panel[.panel-name[lead()]
-**`lead()`** shifts column values by an offset of `n` backward
+**`lead()`** shifts column values by an offset of `n` backward.
 ```{r}
 penguins %>% select(species, body_mass_g) %>% 
   mutate(lead_bm = lead(body_mass_g, n = 2))

@@ -7,6 +7,7 @@
 
 # User-specific files
 .Ruserdata
+.Rproj.user/
 
 # RStudio files
 .Rproj.user/

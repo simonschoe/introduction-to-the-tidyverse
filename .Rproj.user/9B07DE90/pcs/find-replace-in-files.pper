@@ -1,12 +1,13 @@
 {
     "dialog-state": {
-        "query": "slide 27",
+        "query": "base R",
         "path": "C:/Users/s_scho53/Desktop/L09_Desktop/workshops/02_tidyverse",
         "regex": false,
         "caseSensitive": false,
+        "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 2,
+        "resultsCount": 0,
         "errorCount": 0,
         "replaceErrors": ""
     }
