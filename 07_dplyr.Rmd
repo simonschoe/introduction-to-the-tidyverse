@@ -596,14 +596,14 @@ penguins %>%
 
 .panelset[
 .panel[.panel-name[distinct()]
-**`distinct()`** selects only unique rows.
+`distinct()` selects only unique rows.
 ```{r}
 penguins %>% 
   distinct(species, island)
 ```
 ]
 .panel[.panel-name[pull()]
-**`pull()`** extracts single columns as vectors.
+`pull()` extracts single columns as vectors.
 ```{r, echo=F}
 options(max.print=100)
 ```
@@ -617,28 +617,28 @@ options(max.print=1000)
 
 ]
 .panel[.panel-name[if_else()]
-**`if_else()`** applies a vectorized if-else-statement.
+`if_else()` applies a vectorized if-else-statement.
 ```{r}
 penguins %>% select(species, island, body_mass_g) %>% 
   mutate(penguin_size = if_else(body_mass_g < 3500, "tiny penguin", "big penguin"))
 ```
 ]
 .panel[.panel-name[lag()]
-**`lag()`** shifts column values by an offset of `n` forward.
+`lag()` shifts column values by an offset of `n` forward.
 ```{r}
 penguins %>% select(species, body_mass_g) %>% 
   mutate(lagged_bm = lag(body_mass_g, n = 1))
 ```
 ]
 .panel[.panel-name[lead()]
-**`lead()`** shifts column values by an offset of `n` backward.
+`lead()` shifts column values by an offset of `n` backward.
 ```{r}
 penguins %>% select(species, body_mass_g) %>% 
   mutate(lead_bm = lead(body_mass_g, n = 2))
 ```
 ]
 .panel[.panel-name[join()]
-**`left_join()`, `right_join()`, `inner_join()`** and __`full_join()`__ enable to merge different data frames by matching rows based on keys (similar to joins performed in SQL).
+`left_join()`, `right_join()`, `inner_join()` and `full_join()` enable to merge different data frames by matching rows based on keys (similar to joins performed in SQL).
 ]
 ]
 

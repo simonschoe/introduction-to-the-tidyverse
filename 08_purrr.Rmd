@@ -48,13 +48,27 @@ The input `.x` to any `map()_*` function can be either a vector, a list or a dat
 ]
 
 ???
-- functional programming: apply functions/series of functions which return a value instead of changing an object (e.g., data frame as with `dplyr`)
+In functional programming, your code is organised into functions that perform the operations you need.
+
+Your scripts will only be a sequence of calls to these functions, making them easier to understand.
 
 ---
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**Use Case:** Let's assume we have multiple data samples (e.g., bootstrapped samples) and require each of the samples to be $z$-normalized for further modeling. First, we would probably write a *named function* for performing $z$-normalization which takes our sample `.x` as input.
+```{r, echo=F, out.width='60%', fig.align='center'}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/0/06/Mapping-steps-loillibe-new.gif")
+```
+
+.center[
+_Src: [Rodrigues (2010)](https://b-rodrigues.github.io/modern_R/functional-programming.html)_
+]
+
+---
+
+## 4.6 `purrr`: Functional Programming Tools
+
+**Use Case:** Let's assume we have multiple data samples and require each of the samples to be $z$-normalized for further modeling. First, we would probably write a *named function* for performing $z$-normalization which takes our sample `.x` as input.
 ```{r}
 z_transform <- function(.x) {
   mean <- mean(.x, na.rm = T)
@@ -100,11 +114,14 @@ map(.x = samples, .f = ~ z_transform(.x))
 ]
 ]
 
+???
+often times, `map` statements are more efficient than for for-loops
+
 ---
 
 ## Excursus: Tilde-Shorthand
 
-Within the `tidyverse`, the tilde-shorthand regularly occurs whenever an external function is required as an argument to one of the `tidyverse` functions. In general, you have different ways of including the second function call, one of which is the tilde shorthand notation.
+Within the `tidyverse`, the tilde-shorthand regularly occurs whenever an external function is required as an argument to one of the `tidyverse` functions. In general, you have different ways of including the second function call, one of which is the tilde-shorthand notation.
 
 .panelset[
 .panel[.panel-name[Option 1]
@@ -123,12 +140,6 @@ map(
 )
 ```
 <br> Note that here you could also omit `{ }`, since there is only a single expression involved in the function.
-```{r, eval=F}
-map(
-  .x = samples,
-  .f = function(.x) (.x - mean(.x, na.rm = T)) / sd(.x, na.rm = T)
-)
-```
 ]
 .panel[.panel-name[Option 3]
 Defining an anonymous function inline using the tilde-shorthand.
@@ -143,6 +154,8 @@ map(
 ]
 
 ???
+The tilde indicates: what comes next should be considered as a function
+
 Most of the time, explicitly defining named functions and then choosing option 1 only makes sense if you require them at least more than once. Otherwise, I would strongly recommend using anonymous function, i.e. option 2. or 3.
 
 ---
@@ -188,7 +201,8 @@ penguins %>%
 Check the number of distinct values per column.
 ```{r}
 penguins %>%
-  map_df(dplyr::n_distinct)
+  map_df(dplyr::n_distinct) %>% 
+  glimpse
 ```
 
 ---
@@ -255,7 +269,7 @@ penguin_plots[[4]]
 
 Finally, `map()` is really powerful in the context of modeling. In the following we fit a linear regression model for each `species`-`island` subset.
 
-First, we create a nested data frame that contains a `tibble` for each `species`-`island` combination.
+First, we create a nested data frame that contains a `tibble` to each `species`-`island` combination.
 ```{r}
 nested_penguins <- penguins %>% 
   tidyr::drop_na() %>% 
@@ -293,7 +307,7 @@ Third, for each linear model, we generate a model summary using `summary()` and 
 nested_penguins <- nested_penguins %>% 
   dplyr::mutate(coefs = map(
     .x = lin_reg,
-    .f = ~ { summary(.) %>% .$coefficients %>% as_tibble(rownames = "variable") }
+    .f = ~ summary(.) %>% .$coefficients %>% as_tibble(rownames = "variable")
   ))
 
 nested_penguins
@@ -304,7 +318,7 @@ nested_penguins
 
 Third, for each linear model, we generate a model summary using `summary()` and extract the model coefficients as a `tibble`. Finally, we use `unnest()` to receive a tidy data frame.
 ```{r}
-tidyr::unnest(nested_penguins, coefs)
+nested_penguins %>% tidyr::unnest(coefs)
 ```
 
 .footnote[.pull-right[
@@ -370,7 +384,7 @@ grouped_penguins %>%
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**`purrr::possibly()`** returns a list containing the function's result respectively a user-defined value (`otherwise`) if an error occurs.
+`purrr::possibly()` returns a list containing the function's result respectively a user-defined value (`otherwise`) if an error occurs.
 ```{r}
 possibly_lm <- possibly(.f = lm, otherwise = "Error message")
 
@@ -386,7 +400,7 @@ grouped_penguins %>%
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-**`purrr::safely()`** returns a named list containing the function's result (or `otherwise` if an error occurs) as well as an error object that captures the error message.
+`purrr::safely()` returns a named list containing the function's result (or `otherwise` if an error occurs) as well as an error object that captures the error message.
 ```{r, eval=F}
 safely_lm <- safely(.f = lm, otherwise = NULL)
 
@@ -398,7 +412,7 @@ grouped_penguins %>%
 - Use `purrr::map(., "error")` at the end of the pipeline to access the errors of each function call stored in the list.
 
 .footnote[
-*Note: Similarly, use __`purrr::quietly()`__  to return a named list containing not only the function's results and error but also other kinds of output, such as warnings or messages.*
+*Note: Similarly, use `purrr::quietly()`  to return a named list containing not only the function's results and error but also other kinds of output, such as warnings or messages.*
 ]
 
 ???
