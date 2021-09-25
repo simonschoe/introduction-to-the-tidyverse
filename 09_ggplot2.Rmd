@@ -27,11 +27,13 @@ layout: true
 knitr::include_graphics("./img/grammar-of-graphic-layers.png")
 ```
 
+.center[
+*Src: [towardsdatascience](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149)*
+]
+
 ???
 - Where `dplyr` provides a grammar for data manipulation, `ggplot2` does the same for plotting
 - Up to now, most likely the `graphics` package included in base `R` was your go-to address for crafting visualisations (`plot()`, `hist()`, `boxplot()`).
-
-src: https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149
 
 ---
 
@@ -97,7 +99,7 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
   geom_histogram(na.rm = TRUE) 
 ```
-`ggplot2` comes with decent *default* settings. Each `geom_*()` has its own options for customizing the geom, e.g., 
+`ggplot2` comes with decent default settings. Each `geom_*()` has its own options for customizing the geom, e.g., 
 - change the number of bins with the `bins` argument,
 - change the width of the bins with `binwidth` argument.
 ]
@@ -105,6 +107,9 @@ penguins %>%
 ```{r ref.label='p_step_u3', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center', message=F}
 ```
 ]
+
+???
+Note that ggplots are constructed by adding layers with `+` instead of ` %>% `
 
 ---
 
@@ -141,7 +146,7 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm)) +
   geom_bar(na.rm = TRUE, stat = "density") 
 ```
-Most of the time you will just plot the data as-is (`stat = "identity"`). As soon as you require some form of statistical transformation (e.g., count, density or unique) before plotting, the `stat` argument can handle this for you. It goes hand-in-hand with the respective `geom_*()`.
+Most of the time you will just plot the data as-is (`stat = "identity"`). As soon as you require some form of statistical transformation (e.g., count, density or unique) before plotting, the `stat` argument can handle this for you.
 ]
 .pull-right[
 ```{r ref.label='p_step_u5', echo=F, fig.width=8, fig.asp=0.618, fig.retina=3, fig.align='center'}
@@ -316,7 +321,8 @@ penguins %>%
   ggplot(aes(x = flipper_length_mm,
              y = body_mass_g)) +
   geom_point(aes(shape = species),
-             size = 4, na.rm = TRUE) 
+             size = 4,
+             na.rm = TRUE) 
 ```
 `ggplot2` provides 24 available shapes for customizing your plot (see [shape overview](https://ggplot2.tidyverse.org/reference/scale_shape-6.png)).
 ]
@@ -684,7 +690,7 @@ p
 **Other examples:** High-quality density plot
 ```{r p_step_o10, eval=F}
 p <- p +
-  theme_classic() # also pretty: theme_minimal()
+  theme_classic()  # otherwise: theme_minimal()
 
 p
 ```

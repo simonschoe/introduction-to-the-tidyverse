@@ -267,7 +267,7 @@ penguin_plots[[4]]
 
 ## 4.6 `purrr`: Functional Programming Tools
 
-Finally, `map()` is really powerful in the context of modeling. In the following we fit a linear regression model for each `species`-`island` subset.
+Finally, `map()` is really powerful in the context of modeling. In the following, we fit a linear regression model for each `species`-`island` subset.
 
 First, we create a nested data frame that contains a `tibble` to each `species`-`island` combination.
 ```{r}
